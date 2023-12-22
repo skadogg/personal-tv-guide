@@ -1,3 +1,4 @@
 test.*
-sandbox/
-.vscode/
+sandbox
+.vscode
+__pycache__
