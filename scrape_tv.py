@@ -10,8 +10,10 @@ import time
 # import json
 import random
 
-from modules.generate_shield import generate_shield as shield
-
+import modules.shield
+import modules.html
+import modules.runtime
+import modules.genre
 
 
 # Open main window
@@ -156,56 +158,55 @@ data_tuples = list(zip(show_name,episode_number,episode_left_in_season,episode_t
 
 # sample = df.sample(2)
 
-sample = data_tuples
-
-random.shuffle(sample)
-sample
 
 
-def split_by_genre(list,genre_str):
-    list_with_genre, list_without_genre = [], []
-    for i in range(len(list)):
-        genres = list[i][4]
-        if genre_str in genres:
-            list_with_genre.append(list[i])
-        else:
-            list_without_genre.append(list[i])
-    return [list_with_genre,list_without_genre]
+# sample = data_tuples
 
-genre_reality, remainder = split_by_genre(data_tuples,"Reality TV")
-genre_documentary, remainder = split_by_genre(remainder,"Documentary")
-genre_romance, remainder = split_by_genre(remainder,"Romance")
-genre_family, remainder = split_by_genre(remainder,"Kids & Family")
-genre_comedy, remainder = split_by_genre(remainder,"Comedy")
-genre_drama, remainder = split_by_genre(remainder,"Drama")
+random.shuffle(data_tuples)
+# sample
 
 
-genre_reality
-genre_documentary
-genre_romance
-genre_family
-genre_comedy
-genre_drama
-remainder
-
-shield(genre_reality)
-shield(genre_documentary)
-shield(genre_romance)
-shield(genre_family)
-shield(genre_comedy)
-shield(genre_drama)
 
 
-i = 0
-genre_drama = []
-sample_remainder = []
-for i in range(len(sample)):
-    genres = sample[i][4]
-    if 'Drama' in genres:
-        genre_drama.append(sample.pop())
-    else:
-        sample_remainder.append(sample[i])
-sample = sample_remainder
+genre_reality, remainder = modules.genre.split_by_genre(data_tuples,"Reality TV")
+genre_documentary, remainder = modules.genre.split_by_genre(remainder,"Documentary")
+genre_romance, remainder = modules.genre.split_by_genre(remainder,"Romance")
+genre_family, remainder = modules.genre.split_by_genre(remainder,"Kids & Family")
+genre_comedy, remainder = modules.genre.split_by_genre(remainder,"Comedy")
+genre_drama, remainder = modules.genre.split_by_genre(remainder,"Drama")
 
-shield(genre_comedy)
 
+# genre_reality
+# genre_documentary
+# genre_romance
+# genre_family
+# genre_comedy
+# genre_drama
+# remainder
+
+# shield(genre_reality)
+# shield(genre_documentary)
+# shield(genre_romance)
+# shield(genre_family)
+# shield(genre_comedy)
+# shield(genre_drama)
+
+
+# i = 0
+# genre_drama = []
+# sample_remainder = []
+# for i in range(len(sample)):
+#     genres = sample[i][4]
+#     if 'Drama' in genres:
+#         genre_drama.append(sample.pop())
+#     else:
+#         sample_remainder.append(sample[i])
+# sample = sample_remainder
+
+# shield(genre_comedy)
+
+
+
+when_to_start = 5
+hours_to_print = 7
+modules.html.generate_table_th(when_to_start,hours_to_print)
