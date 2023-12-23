@@ -10,7 +10,7 @@ import time
 # import json
 import random
 
-from function_generate_shield import generate_shield as shield
+from modules.generate_shield import generate_shield as shield
 
 
 
@@ -128,8 +128,8 @@ for j in range(len(show_main_link)):
     # show_age_rating
 
 
-driver.close()
-# driver.quit()
+# driver.close()
+driver.quit()
 
 
 # Pull elements together
