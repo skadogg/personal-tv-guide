@@ -10,6 +10,8 @@ import time
 # import json
 import random
 
+from function_generate_shield import generate_shield
+
 
 
 # Open main window
@@ -159,27 +161,6 @@ sample = data_tuples
 
 random.shuffle(sample)
 sample
-
-def generate_shield(list):
-    i = 0
-    for i in range(len(list)):
-        # ('Making It', 'S3 E1', '+7', 'One In a Million', 'Reality TV, Comedy', '44min', 'TV-PG')
-        show = list[i][0].replace('-','--').replace('?','')
-        
-        rating = list[i][6] if list[i][6] else ' '
-        if rating in ['TV-Y7','TV-G','TV-PG']:
-            rating_color = 'green'
-        elif rating in ['TV-14','PG-13']:
-            rating_color = 'blue'
-        else:
-            rating_color = 'red'
-        rating = rating.replace('-','--')
-        
-        # ep = list[i][1]
-        # ep_title = list[i][3]
-            
-        # print('<img src="https://img.shields.io/badge/' + show + ' - ' + rating + '-' + rating_color + '"><br>' + ep + ' ' + ep_title + '<br>')
-        print('<img src="https://img.shields.io/badge/' + show + ' - ' + rating + '-' + rating_color + '"><br>')
 
 
 def split_by_genre(list,genre_str):
