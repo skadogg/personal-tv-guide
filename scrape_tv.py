@@ -1,6 +1,5 @@
 # inspired by https://towardsdatascience.com/how-to-use-selenium-to-web-scrape-with-example-80f9b23a843a
 
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -9,7 +8,6 @@ from selenium.webdriver.support import expected_conditions as EC
 import pandas as pd
 import time
 # import json
-# from function_length_tv import length_tv
 
 
 # Open main window
@@ -22,13 +20,11 @@ driver.maximize_window()
 # main_window_handle = driver.window_handles[0]
 
 
-
-
-
+# Wait for user to sign in
 input("Sign in, and then press Enter to continue...")
 
 
-
+# Scroll to the end of the page
 items_in_list = 60
 pages = items_in_list // 20
 i = 0
@@ -37,8 +33,7 @@ for i in range(pages):
     time.sleep(1)
 
 
-
-# name, episode number/title, left in season, main show link
+# Get name, episode number/title, left in season, main show link from main watchlist
 show_cards = driver.find_elements(By.XPATH, '//div[@class="title-card-basic title-card-show-episode"]')
 # len(show_cards)
 
@@ -49,11 +44,9 @@ for i in range(len(show_cards)):
     show_card_all_links.append(show_cards[i].find_elements(By.TAG_NAME,'a'))
     show_card_full_text.append(show_cards[i].text)
 
-# show_card_all_links[23][0].get_dom_attribute('href')
 i = 0
 show_main_link = []
 for i in range(len(show_card_all_links)):
-    # show_card_all_links[i][0].get_dom_attribute('href')
     show_main_link.append(show_card_all_links[i][0].get_dom_attribute('href'))
 
 i = 0
@@ -68,7 +61,6 @@ for i in range(len(show_card_full_text)):
     episode_left_in_season.append(this_show_elements[3])
     episode_title.append(this_show_elements[4])
 
-
 # show_name
 # episode_number
 # episode_left_in_season
@@ -76,66 +68,14 @@ for i in range(len(show_card_full_text)):
 # show_main_link
 
 
-# # Show name
-# title_xpath = '//p[@class="title-card-show-episode__title-name"]'
-# titles = driver.find_elements(By.XPATH, title_xpath)
-
-# titles_list = []
-# for p in range(len(titles)):
-#     titles_list.append(titles[p].text)
-
-
-# # Season, episode numbers
-# episode_heading_xpath = '//h2[@class="title-card-heading"]'
-# episode_headings = driver.find_elements(By.XPATH, episode_heading_xpath)
-
-# episode_headings_list = []
-# for p in range(len(episode_headings)):
-#     episode_headings_list.append(episode_headings[p].text)
-
-
-# # Episode name
-# episode_name_xpath = '//p[@class="title-card-show-episode__episode-name"]'
-# episode_names = driver.find_elements(By.XPATH, episode_name_xpath)
-
-# episode_names_list = []
-# for p in range(len(episode_names)):
-#     episode_names_list.append(episode_names[p].text)
-
-
-# # Show URL
-# episode_url_xpath = '//div[@class="title-card-basic title-card-show-episode"]'
-# episode_urls = []
-
-# all_show_data = driver.find_elements(By.XPATH,episode_url_xpath)
-
-# i = 0
-# for i in range(len(all_show_data)):
-#     episode_urls.append(all_show_data[i].find_element(By.TAG_NAME,'a').get_dom_attribute('href'))
-
-
-# title_card = driver.find_element(By.XPATH, '//div[@class="title-card-basic title-card-show-episode"]')
-# title_card.find_element(By.TAG_NAME,'a').get_dom_attribute('href')
-
-
-# Show length
-# driver.switch_to.new_window()
-# tab_handle = driver.window_handles[1]
-# driver.switch_to.window(tab_handle)
-
-
+# Get genres, runtime, age rating from show pages
 # episode_length = []
 j = 0
 show_genres = []
 show_runtime = []
 show_age_rating = []
 for j in range(len(show_main_link)):
-    # driver.switch_to.new_window()
-    # tab_handle = driver.window_handles[1]
-    # driver.switch_to.window(tab_handle)
-    # length_tv(driver,'https://www.justwatch.com' + episode_urls[1])
-
-    # https://www.browserstack.com/guide/selenium-wait-for-page-to-load
+    # from https://www.browserstack.com/guide/selenium-wait-for-page-to-load
     driver.get('https://www.justwatch.com' + show_main_link[j])
     try:
         elem = WebDriverWait(driver, 30).until(
@@ -150,8 +90,6 @@ for j in range(len(show_main_link)):
 
     # episode_length.append(length_minutes + 15 - (length_minutes % 15))
 
-
-    # Genres, runtime, age rating
     title_info = driver.find_element(By.XPATH, '//div[@class="title-info title-info"]')
     detail_infos = title_info.find_elements(By.XPATH,'//div[@class="detail-infos"]')
 
@@ -168,7 +106,6 @@ for j in range(len(show_main_link)):
             title_info_heading.append(split_head)
             title_info_value.append(split_value)
 
-    # shows_dict = dict(zip(title_info_heading[0:],title_info_value[0:]))
     shows_dict = dict(zip(title_info_heading,title_info_value))
     show_genres.append(shows_dict.get('GENRES'))
     show_runtime.append(shows_dict.get('RUNTIME'))
@@ -179,20 +116,11 @@ for j in range(len(show_main_link)):
     # show_age_rating
 
 
-
-# driver.close()
-# driver.switch_to.window(main_window_handle)
-# # time.sleep(1)
+driver.close()
+# driver.quit()
 
 
 # Pull elements together
-# df = pd.DataFrame(columns=['Show Name','Episode Number','Episode Name','Show URL','Runtime']) # creates master dataframe
-
-# data_tuples = list(zip(titles_list[0:],episode_headings_list[0:],episode_names_list[0:],episode_urls[0:],episode_length[0:]))
-df = pd.DataFrame(data_tuples, columns=['Show','Episode Number','Episode Name','URL','Length'])
-# temp_df['Year'] = yr # adds season beginning year to each dataframe
-# df = df.append(temp_df) # appends to master dataframe
-
 
 # show_name
 # episode_number
@@ -202,6 +130,7 @@ df = pd.DataFrame(data_tuples, columns=['Show','Episode Number','Episode Name','
 # show_runtime
 # show_age_rating
 
+# data_tuples = list(zip(titles_list[0:],episode_headings_list[0:],episode_names_list[0:],episode_urls[0:],episode_length[0:]))
 data_tuples = list(zip(show_name,episode_number,episode_left_in_season,episode_title,show_genres,show_runtime,show_age_rating))
 sorted(data_tuples)
 
@@ -214,8 +143,4 @@ html_string = df.to_html()
 # print(jsonObject)
 # print(type(jsonObject))
 
-
-# driver.quit()
-
 df.sample(2)
-
