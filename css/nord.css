@@ -244,4 +244,5 @@ table {
   border-style: solid;
   border-bottom-width: 1px;
   border-color: var(--nord14);
+  background-color: var(--nord1);
 }

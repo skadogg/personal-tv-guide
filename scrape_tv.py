@@ -10,7 +10,7 @@ import time
 # import json
 import random
 
-from function_generate_shield import generate_shield
+from function_generate_shield import generate_shield as shield
 
 
 
@@ -144,11 +144,10 @@ driver.close()
 
 # data_tuples = list(zip(titles_list[0:],episode_headings_list[0:],episode_names_list[0:],episode_urls[0:],episode_length[0:]))
 data_tuples = list(zip(show_name,episode_number,episode_left_in_season,episode_title,show_genres,show_runtime,show_age_rating))
-sorted(data_tuples)
+# sorted(data_tuples)
 
-df = pd.DataFrame(data_tuples, columns=['Show Name','Episode Number','Episodes Remaining','Episode Title','Genres','Runtime','Age Rating'])
-
-html_string = df.to_html()
+# df = pd.DataFrame(data_tuples, columns=['Show Name','Episode Number','Episodes Remaining','Episode Title','Genres','Runtime','Age Rating'])
+# html_string = df.to_html()
 
 
 # jsonObject = json.dumps(data_tuples)
@@ -189,12 +188,12 @@ genre_comedy
 genre_drama
 remainder
 
-generate_shield(genre_reality)
-generate_shield(genre_documentary)
-generate_shield(genre_romance)
-generate_shield(genre_family)
-generate_shield(genre_comedy)
-generate_shield(genre_drama)
+shield(genre_reality)
+shield(genre_documentary)
+shield(genre_romance)
+shield(genre_family)
+shield(genre_comedy)
+shield(genre_drama)
 
 
 i = 0
@@ -208,4 +207,5 @@ for i in range(len(sample)):
         sample_remainder.append(sample[i])
 sample = sample_remainder
 
-generate_shield(genre_comedy)
+shield(genre_comedy)
+

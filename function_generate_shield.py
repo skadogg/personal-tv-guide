@@ -1,4 +1,7 @@
 def generate_shield(list):
+    # --nord3: #4c566a;
+    color_base = '4c566a'
+    
     # --nord11: #bf616a;
     color_red = 'bf616a'
     
@@ -31,4 +34,4 @@ def generate_shield(list):
         # ep_title = list[i][3]
             
         # print('<img src="https://img.shields.io/badge/' + show + ' - ' + rating + '-' + rating_color + '"><br>' + ep + ' ' + ep_title + '<br>')
-        print('<img src="https://img.shields.io/badge/' + show + ' - ' + rating + '-' + rating_color + '">')
+        print('<img src="https://img.shields.io/badge/' + show + ' - ' + rating + '-' + rating_color + '?labelColor=' + color_base + '">')
