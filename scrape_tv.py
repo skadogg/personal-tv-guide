@@ -8,6 +8,8 @@ from selenium.webdriver.support import expected_conditions as EC
 import pandas as pd
 import time
 # import json
+import random
+
 
 
 # Open main window
@@ -56,10 +58,18 @@ episode_left_in_season = []
 episode_title = []
 for i in range(len(show_card_full_text)):
     this_show_elements = show_card_full_text[i].split(sep='\n')
+    # show_name.append(this_show_elements[1])
+    # episode_number.append(this_show_elements[2])
+    # episode_left_in_season.append(this_show_elements[3])
+    # episode_title.append(this_show_elements[4])
     show_name.append(this_show_elements[1])
     episode_number.append(this_show_elements[2])
-    episode_left_in_season.append(this_show_elements[3])
-    episode_title.append(this_show_elements[4])
+    if this_show_elements[3][0] == "+":
+        episode_left_in_season.append(this_show_elements[3])
+        episode_title.append(this_show_elements[4])
+    else:
+        episode_left_in_season.append('')
+        episode_title.append(this_show_elements[3])
 
 # show_name
 # episode_number
@@ -143,4 +153,78 @@ html_string = df.to_html()
 # print(jsonObject)
 # print(type(jsonObject))
 
-df.sample(2)
+# sample = df.sample(2)
+
+sample = data_tuples
+
+random.shuffle(sample)
+sample
+
+def generate_shield(list):
+    i = 0
+    for i in range(len(list)):
+        # ('Making It', 'S3 E1', '+7', 'One In a Million', 'Reality TV, Comedy', '44min', 'TV-PG')
+        show = list[i][0].replace('-','--').replace('?','')
+        
+        rating = list[i][6] if list[i][6] else ' '
+        if rating in ['TV-Y7','TV-G','TV-PG']:
+            rating_color = 'green'
+        elif rating in ['TV-14','PG-13']:
+            rating_color = 'blue'
+        else:
+            rating_color = 'red'
+        rating = rating.replace('-','--')
+        
+        # ep = list[i][1]
+        # ep_title = list[i][3]
+            
+        # print('<img src="https://img.shields.io/badge/' + show + ' - ' + rating + '-' + rating_color + '"><br>' + ep + ' ' + ep_title + '<br>')
+        print('<img src="https://img.shields.io/badge/' + show + ' - ' + rating + '-' + rating_color + '"><br>')
+
+
+def split_by_genre(list,genre_str):
+    list_with_genre, list_without_genre = [], []
+    for i in range(len(list)):
+        genres = list[i][4]
+        if genre_str in genres:
+            list_with_genre.append(list[i])
+        else:
+            list_without_genre.append(list[i])
+    return [list_with_genre,list_without_genre]
+
+genre_reality, remainder = split_by_genre(data_tuples,"Reality TV")
+genre_documentary, remainder = split_by_genre(remainder,"Documentary")
+genre_romance, remainder = split_by_genre(remainder,"Romance")
+genre_family, remainder = split_by_genre(remainder,"Kids & Family")
+genre_comedy, remainder = split_by_genre(remainder,"Comedy")
+genre_drama, remainder = split_by_genre(remainder,"Drama")
+
+
+genre_reality
+genre_documentary
+genre_romance
+genre_family
+genre_comedy
+genre_drama
+remainder
+
+generate_shield(genre_reality)
+generate_shield(genre_documentary)
+generate_shield(genre_romance)
+generate_shield(genre_family)
+generate_shield(genre_comedy)
+generate_shield(genre_drama)
+
+
+i = 0
+genre_drama = []
+sample_remainder = []
+for i in range(len(sample)):
+    genres = sample[i][4]
+    if 'Drama' in genres:
+        genre_drama.append(sample.pop())
+    else:
+        sample_remainder.append(sample[i])
+sample = sample_remainder
+
+generate_shield(genre_comedy)
