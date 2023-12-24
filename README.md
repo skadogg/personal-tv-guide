@@ -4,7 +4,7 @@ This is some simple Python code to scrape my watchlist data from JustWatch and t
 ![screenshot](https://raw.githubusercontent.com/skadogg/personal-tv-guide/main/images/screenshot%202023-12-23.png)
 
 ## Badges
-All badges are from [shields.io](shields.io), which I probably saw originally on [awesome-badges](https://github.com/badges/awesome-badges).
+All badges are from [Shields.io](https://shields.io/), which I probably saw originally on [awesome-badges](https://github.com/badges/awesome-badges).
 
 ## Scraping
 The code does not currently have anything to automate authentication, so it just pauses to allow you to type in your credentials. After that, things go pretty smoothly.
