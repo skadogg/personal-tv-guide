@@ -3,3 +3,4 @@ sandbox
 .vscode
 __pycache__
 secret*
+*.bin

@@ -237,13 +237,30 @@ body {
 h3 {
   color: var(--nord11);
 }
-p, th, td {
+p {
   color: var(--nord7);
+}
+th {
+  color: var(--nord15);
+  width: 100px;
+  font-size: small;
+}
+td {
+  color: var(--nord13);
+  font-size: x-small;
 }
 table, th, td {
   border: 1px solid;
+  padding: 3px;
+  border-spacing: 0px;
+  border-color: var(--nord10);
 }
 table {
   border-color: var(--nord14);
   background-color: var(--nord1);
+  font-size: small;
+}
+.genre {
+  color: var(--nord12);
+  font-size: small;
 }
