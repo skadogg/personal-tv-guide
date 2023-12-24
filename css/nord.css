@@ -237,12 +237,13 @@ body {
 h3 {
   color: var(--nord11);
 }
-p {
+p, th, td {
   color: var(--nord7);
 }
+table, th, td {
+  border: 1px solid;
+}
 table {
-  border-style: solid;
-  border-bottom-width: 1px;
   border-color: var(--nord14);
   background-color: var(--nord1);
 }
