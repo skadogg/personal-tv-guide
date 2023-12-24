@@ -1,17 +1,26 @@
 # Personal TV Guide
 This is some simple Python code to scrape my watchlist data from JustWatch and turn it into HTML to serve as my own TV Guide.
 
-![screenshot](https://raw.githubusercontent.com/skadogg/personal-tv-guide/main/images/screenshot%202023-12-23.png)
+![screenshot](https://raw.githubusercontent.com/skadogg/personal-tv-guide/main/images/screenshot%202023-12-24.png)
 
-## Badges
-All badges are from [Shields.io](https://shields.io/), which I probably saw originally on [awesome-badges](https://github.com/badges/awesome-badges).
+
+## Background
+Remember the weekly TV guide that came with the newspaper? It was the only useful thing in there - aside from the comic section.
+
+(I really need to figure out where to watch some *Kate & Allie* - great show!)
+
+![1987](https://raw.githubusercontent.com/skadogg/personal-tv-guide/main/images/1987-TV-Featured1.jpg)
+
 
 ## Scraping
 The code does not currently have anything to automate authentication, so it just pauses to allow you to type in your credentials. After that, things go pretty smoothly.
 
-## Future
-I plan to scrape my movie watchlist as well. I only began with TV data as my list was much shorter (~60 shows vs. 800+ movies!).
 
-I also need to figure out where to watch some *Kate & Allie* - great show!
+## Acknowledgements
 
-![1987](https://raw.githubusercontent.com/skadogg/personal-tv-guide/main/images/1987-TV-Featured1.jpg)
+### Theme
+The stylesheet is using the [Nord theme](https://www.nordtheme.com/).
+
+### Badges
+All badges are from [Shields.io](https://shields.io/), which I probably saw originally on [awesome-badges](https://github.com/badges/awesome-badges).
+
