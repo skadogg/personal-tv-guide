@@ -11,3 +11,7 @@ The code does not currently have anything to automate authentication, so it just
 
 ## Future
 I plan to scrape my movie watchlist as well. I only began with TV data as my list was much shorter (~60 shows vs. 800+ movies!).
+
+I also need to figure out where to watch some *Kate & Allie* - great show!
+
+![1987](https://raw.githubusercontent.com/skadogg/personal-tv-guide/main/images/1987-TV-Featured1.jpg)
