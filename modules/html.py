@@ -40,7 +40,10 @@ def generate_html_genre_tds(genre_list, genre, hours):
         this_item = genre_list[i]
         this_shield = modules.shield.generate_shield(this_item)
         
-        this_ep = this_item[1] + ' : ' + this_item[3]
+        if this_item[1] != '':
+            this_ep = this_item[1] + ' : ' + this_item[3]
+        else:
+            this_ep = ''
         
         this_runtime = modules.runtime.runtime_to_minutes(this_item[5])
         this_colspan = this_runtime // 15

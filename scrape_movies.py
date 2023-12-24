@@ -13,7 +13,7 @@ import time
 # Open main window
 driver = webdriver.Chrome()
 
-driver.get('https://www.justwatch.com/us/lists/tv-show-tracking?inner_tab=continue_watching')
+driver.get('https://www.justwatch.com/us/lists/my-lists?content_type=movie&sort_by=random&sort_asc=true&sorting_random_seed=1')
 
 driver.maximize_window()
 # driver.implicitly_driwait(1.0)
@@ -25,7 +25,7 @@ input("Sign in, and then press Enter to continue...")
 
 
 # Scroll to the end of the page
-items_in_list = 60
+items_in_list = 30
 pages = items_in_list // 20
 i = 0
 for i in range(pages):
@@ -34,7 +34,8 @@ for i in range(pages):
 
 
 # Get name, episode number/title, left in season, main show link from main watchlist
-show_cards = driver.find_elements(By.XPATH, '//div[@class="title-card-basic title-card-show-episode"]')
+show_cards = driver.find_elements(By.XPATH, '//div[@class="title-card-basic title-card-basic"]')
+
 
 i = 0
 show_card_all_links = []
@@ -55,14 +56,17 @@ episode_left_in_season = []
 episode_title = []
 for i in range(len(show_card_full_text)):
     this_show_elements = show_card_full_text[i].split(sep='\n')
-    show_name.append(this_show_elements[1])
-    episode_number.append(this_show_elements[2])
-    if this_show_elements[3][0] == "+":
-        episode_left_in_season.append(this_show_elements[3])
-        episode_title.append(this_show_elements[4])
-    else:
-        episode_left_in_season.append('')
-        episode_title.append(this_show_elements[3])
+    show_name.append(this_show_elements[0])
+    # episode_number.append(this_show_elements[2])
+    # if this_show_elements[3][0] == "+":
+    #     episode_left_in_season.append(this_show_elements[3])
+    #     episode_title.append(this_show_elements[4])
+    # else:
+    #     episode_left_in_season.append('')
+    #     episode_title.append(this_show_elements[3])
+    episode_number.append('')
+    episode_left_in_season.append('')
+    episode_title.append('')
 
 
 # Get genres, runtime, age rating from show pages
@@ -116,5 +120,5 @@ data_tuples = list(zip(show_name,episode_number,episode_left_in_season,episode_t
 
 # Save my work
 import modules.data_bin_convert
-modules.data_bin_convert.data_to_bin(data_tuples, 'C:\\Users\\gunner\\Documents\\git\\personal-tv-guide\\saved_data_tv.bin')
+modules.data_bin_convert.data_to_bin(data_tuples, 'C:\\Users\\gunner\\Documents\\git\\personal-tv-guide\\saved_data_movies.bin')
 # data_tuples = modules.data_bin_convert.bin_to_data()

@@ -18,7 +18,7 @@ def generate_shield(list):
     show = list[0].replace('-','--').replace('?','')
     
     rating = list[6] if list[6] else ' '
-    if rating in ['TV-Y7','TV-G','TV-PG']:
+    if rating in ['TV-Y7','TV-G','TV-PG','PG','G']:
         rating_color = color_green
     elif rating in ['TV-14','PG-13']:
         rating_color = color_blue
