@@ -116,5 +116,5 @@ data_tuples = list(zip(show_name,episode_number,episode_left_in_season,episode_t
 
 # Save my work
 import modules.data_bin_convert
-modules.data_bin_convert.data_to_bin(data_tuples)
+modules.data_bin_convert.data_to_bin(data_tuples, 'C:\\Users\\gunner\\Documents\\git\\personal-tv-guide\\saved_data_tv.bin')
 # data_tuples = modules.data_bin_convert.bin_to_data()
