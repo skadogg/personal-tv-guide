@@ -8,7 +8,7 @@ def generate_table_th(hour_start = 8, hours = 4):
     
     str_td = ''
     for hour_start in range(hour_start, hour_start + hours):
-        str_td += '<th>' + str(hour_start % 12) + '</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>\n'
+        str_td += '<th>' + str(12 if hour_start == 12 else hour_start % 12) + '</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>\n'
     
     return str_start + str_td + str_end
 
