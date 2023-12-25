@@ -6,6 +6,10 @@ import modules.runtime
 import modules.genre
 
 
+# import scrape_tv
+# import scrape_movies
+
+
 # Restore my work
 import modules.data_bin_convert
 # modules.data_bin_convert.data_to_bin(data_tuples)
@@ -21,9 +25,19 @@ random.shuffle(data_tuples)
 
 random.shuffle(all_genres)
 
+
+
+# Christmas keywords
+use_keyword_lists = True
+genre_christmas, remainder = modules.genre.split_by_keyword(data_tuples,modules.genre.christmas_keywords())
+
+
+
+
 i = 0
 genre_lists = []
-remainder = data_tuples
+if not use_keyword_lists:
+    remainder = data_tuples
 while len(remainder) > 0:
     list_with_genre, remainder = modules.genre.split_by_genre(remainder, all_genres[i])
     genre_lists.append(list_with_genre)
@@ -39,8 +53,8 @@ while len(remainder) > 0:
 
 
 
-when_to_start = 12
-hours_to_print = 6
+when_to_start = 8
+hours_to_print = 16
 
 html_handle = open("C:\\Users\\gunner\\Documents\\git\\personal-tv-guide\\out.html",'+w')
 html_handle.write(modules.html.generate_html_start())
@@ -54,7 +68,8 @@ html_handle.write(modules.html.generate_table_th(when_to_start,hours_to_print))
 # genre = 'Reality TV'
 # hours = 4
 
-
+if use_keyword_lists:
+    html_handle.write(modules.html.generate_html_genre_tds(genre_christmas,'Christmas',hours_to_print))
 
 
 for i in range(len(genre_lists)):

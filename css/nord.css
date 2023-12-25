@@ -247,6 +247,7 @@ th {
 }
 td {
   color: var(--nord13);
+  width: 100px;
   font-size: x-small;
 }
 table, th, td {
@@ -254,6 +255,7 @@ table, th, td {
   padding: 3px;
   border-spacing: 0px;
   border-color: var(--nord10);
+  min-width: 80px;
 }
 table {
   border-color: var(--nord14);

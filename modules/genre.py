@@ -38,3 +38,31 @@ def get_genres_from_scraped_lists():
     #     else:
     #         print(full_genre_list[j] + str(count))
     #         count = 0
+
+
+def christmas_keywords():
+    list = ['Christmas','Holida','Hanukkah','Santa','Claus','Noel','Klaus','Merry','Fitzwilly','Preacher\'s Wife','Every Time a Bell Rings','Family Stone','Haul Out the Holly','Elf','Let It Snow','Scrooge','Baby, It\'s Cold','Winter Love Story','Mingle All the Way','Snow','Shop Around the Corner','Spirited','Home Alone','Five More Minutes','Fallen Angel','Family Man','New Year\'s','Tis the Season','Pottersville','Godmothered','Polar Express']
+    return list
+
+
+def trigger_keywords():
+    list = ['widow','liver','aneurysm']
+
+
+def split_by_keyword(list,keyword_list):
+    list_with_keywords, list_without_keywords = [], []
+    for i in range(len(list)):
+        title = list[i][0]
+        
+        for j in range(len(keyword_list)):
+            if keyword_list[j] in title:
+                found = True
+                break
+            else:
+                found = False
+        
+        if found:
+            list_with_keywords.append(list[i])
+        else:
+            list_without_keywords.append(list[i])
+    return [list_with_keywords,list_without_keywords]

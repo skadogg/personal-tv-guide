@@ -25,7 +25,7 @@ input("Sign in, and then press Enter to continue...")
 
 
 # Scroll to the end of the page
-items_in_list = 30
+items_in_list = 871
 pages = items_in_list // 20
 i = 0
 for i in range(pages):
