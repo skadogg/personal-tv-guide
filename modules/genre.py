@@ -45,8 +45,10 @@ def christmas_keywords():
     return list
 
 
+# TRIGGER WARNING
 def trigger_keywords():
-    list = ['widow','liver','aneurysm']
+    list = ['widow','liver','aneurysm','assault','abuse','cruel','suicide','kidnap','abduct','miscarriage','abortion','torture']
+    return list
 
 
 def split_by_keyword(list,keyword_list):
