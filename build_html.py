@@ -29,8 +29,8 @@ random.shuffle(all_genres)
 
 # Christmas keywords
 use_keyword_lists = True
+# genre_triggers, remainder = modules.genre.split_by_keyword(data_tuples,modules.genre.trigger_keywords())
 genre_christmas, remainder = modules.genre.split_by_keyword(data_tuples,modules.genre.christmas_keywords())
-
 
 
 
@@ -53,8 +53,8 @@ while len(remainder) > 0:
 
 
 
-when_to_start = 8
-hours_to_print = 16
+when_to_start = 4
+hours_to_print = 8
 
 html_handle = open("C:\\Users\\gunner\\Documents\\git\\personal-tv-guide\\out.html",'+w')
 html_handle.write(modules.html.generate_html_start())
@@ -69,6 +69,7 @@ html_handle.write(modules.html.generate_table_th(when_to_start,hours_to_print))
 # hours = 4
 
 if use_keyword_lists:
+    # html_handle.write(modules.html.generate_html_genre_tds(genre_triggers,'Trigger Warning',hours_to_print))
     html_handle.write(modules.html.generate_html_genre_tds(genre_christmas,'Christmas',hours_to_print))
 
 
