@@ -14,7 +14,7 @@ def generate_shield(list):
     # --nord15: #b48ead;
     color_other = 'b48ead'
     
-    # ('Making It', 'S3 E1', '+7', 'One In a Million', 'Reality TV, Comedy', '44min', 'TV-PG')
+    # ('One Day at a Time', 'S2 E2', '+11', 'Schooled', 'Comedy, Drama', '28min', 'TV-PG', '/us/tv-show/one-day-at-a-time-2016', '2017', 'TVSeries', 'In a reimagining of the TV classic, a newly single....')
     show = list[0].replace('-','--').replace('?','')
     
     rating = list[6] if list[6] else ' '
@@ -28,4 +28,4 @@ def generate_shield(list):
         rating_color = color_other
     rating = rating.replace('-','--')
     
-    return '<img src="https://img.shields.io/badge/' + show + ' - ' + rating + '-' + rating_color + '?labelColor=' + color_base + '">'
+    return '<a href="https://www.justwatch.com' + list[7] + '"><img src="https://img.shields.io/badge/' + show + ' - ' + rating + '-' + rating_color + '?labelColor=' + color_base + '"></a>'
