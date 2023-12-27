@@ -1,4 +1,6 @@
 def generate_shield(list):
+    # Given a show list, generates a Shield.io badge with a link to the show
+    
     # --nord3: #4c566a;
     color_base = '4c566a'
     

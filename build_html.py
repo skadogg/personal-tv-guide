@@ -6,8 +6,10 @@ import modules.runtime
 import modules.genre
 
 
-# import scrape_tv
-# import scrape_movies
+# Variables
+when_to_start = 8 # first hour in output table
+hours_to_print = 4 # how many hours worth of data in table
+outfile = "C:\\Users\\gunner\\Documents\\git\\personal-tv-guide\\out.html"
 
 
 # Restore my work
@@ -19,21 +21,18 @@ all_genres = modules.data_bin_convert.bin_to_data('C:\\Users\\gunner\\Documents\
 
 data_tuples = data_tuples_movies + data_tuples_tv
 
-# Randomize the list
+
+# Randomize the lists
 random.shuffle(data_tuples)
-
-
 random.shuffle(all_genres)
 
 
-
-# Christmas keywords
+# Look through data for keyword matches
 use_keyword_lists = True
 genre_christmas, remainder = modules.genre.split_by_keyword(data_tuples,modules.genre.christmas_keywords())
 
 
-
-
+# Loop through all_genres to separate data by genre
 i = 0
 genre_lists = []
 if not use_keyword_lists:
@@ -43,47 +42,24 @@ while len(remainder) > 0:
     genre_lists.append(list_with_genre)
     i += 1
 
-# genre_reality, remainder = modules.genre.split_by_genre(data_tuples,"Reality TV")
-# genre_documentary, remainder = modules.genre.split_by_genre(remainder,"Documentary")
-# genre_romance, remainder = modules.genre.split_by_genre(remainder,"Romance")
-# genre_family, remainder = modules.genre.split_by_genre(remainder,"Kids & Family")
-# genre_comedy, remainder = modules.genre.split_by_genre(remainder,"Comedy")
-# genre_drama, remainder = modules.genre.split_by_genre(remainder,"Drama")
 
-
-
-
-when_to_start = 8
-hours_to_print = 16
-
-html_handle = open("C:\\Users\\gunner\\Documents\\git\\personal-tv-guide\\out.html",'+w')
+# Begin writing data
+html_handle = open(outfile,'+w')
 html_handle.write(modules.html.generate_html_start())
 html_handle.write(modules.html.generate_table_th(when_to_start,hours_to_print))
 
 
-
-# genre_list = genre_reality
-# genre_list = [('Making It', 'S3 E1', '+7', 'One In a Million', 'Reality TV, Comedy', '44min', 'TV-PG'),('Making It2', 'S3 E1', '+7', 'One In a Million', 'Reality TV, Comedy', '144min', 'TV-PG'),('Making It3', 'S3 E1', '+7', 'One In a Million', 'Reality TV, Comedy', '1244min', 'TV-PG')]
-
-# genre = 'Reality TV'
-# hours = 4
-
+# Write table rows for keyword lists
 if use_keyword_lists:
     html_handle.write(modules.html.generate_html_genre_tds(genre_christmas,'Christmas',hours_to_print))
 
 
+# Write table rows for looped genre_lists
 for i in range(len(genre_lists)):
     if genre_lists[i]:
         html_handle.write(modules.html.generate_html_genre_tds(genre_lists[i], all_genres[i], hours_to_print))
 
 
-# html_handle.write(modules.html.generate_html_genre_tds(genre_reality,'Reality TV',hours_to_print))
-# html_handle.write(modules.html.generate_html_genre_tds(genre_documentary, 'Documentary', hours_to_print))
-# html_handle.write(modules.html.generate_html_genre_tds(genre_romance, 'Romance', hours_to_print))
-# html_handle.write(modules.html.generate_html_genre_tds(genre_family, 'Kids & Family', hours_to_print))
-# html_handle.write(modules.html.generate_html_genre_tds(genre_comedy, 'Comedy', hours_to_print))
-# html_handle.write(modules.html.generate_html_genre_tds(genre_drama, 'Drama', hours_to_print))
-
+# Finish writing data
 html_handle.write(modules.html.generate_html_end())
-
 html_handle.close()

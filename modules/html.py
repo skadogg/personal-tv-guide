@@ -3,6 +3,7 @@ import modules.runtime
 
 
 def generate_table_th(hour_start = 8, hours = 4):
+    # Creates the first (header) row of the table
     str_start = '<tr>\n<th>&nbsp;</th>\n'
     str_end = '</tr>\n'
     
@@ -14,25 +15,28 @@ def generate_table_th(hour_start = 8, hours = 4):
 
 
 def generate_table_td(content, colspan = 1):
+    # Wraps your content string in a <td> spanning colspan number of columns
+    # <td colspan="6"><img alt="Static Badge" src="https://img.shields.io/badge/Herbie%20Hancock%3A%20Possibilities%20(2006)%20-%20PG-green"></td>
     str_start = '<td colspan="' + str(colspan) + '">'
     str_end = '</td>\n'
     
-    # <td colspan="6"><img alt="Static Badge" src="https://img.shields.io/badge/Herbie%20Hancock%3A%20Possibilities%20(2006)%20-%20PG-green"></td>
-
     return str_start + content + str_end
 
 
 def generate_html_start():
+    # Creates the first part of the HTML code
     stylesheet_path = "C:\\Users\\gunner\\Documents\\git\\personal-tv-guide\\css\\nord.css"
     return '<head>\n<title>Personal TV Guide</title>\n<link rel="stylesheet" href="' + stylesheet_path + '">\n</head>\n<body>\n<table>\n'
 
 
 def generate_html_end():
+    # Creates the last part of the HTML code
     return '</table>\n</body>\n'
 
 
 def generate_html_genre_tds(genre_list, genre, hours):
-    # ('Making It', 'S3 E1', '+7', 'One In a Million', 'Reality TV, Comedy', '44min', 'TV-PG')
+    # With each genre_list (lists of shows that have been found to have a matching genre), we can now generate the HTML
+    # to put in our table(s). This loops through the genre_list and creates a <tr> for each up to the number of hours specified.
     str = '<tr><td class="genre">' + genre + '</td>\n'
     i = 0
     time_countdown = hours * 4

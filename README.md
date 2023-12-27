@@ -3,6 +3,17 @@ This is some simple Python code to scrape my watchlist data from JustWatch and t
 
 ![screenshot](https://raw.githubusercontent.com/skadogg/personal-tv-guide/main/images/screenshot%202023-12-24.png)
 
+  
+- [Background](#background)
+- [The code](#the-code)
+  - [Scraping](#scraping)
+  - [How to run it](#how-to-run-it)
+    - [Start by scraping the data](#start-by-scraping-the-data)
+    - [Build the HTML output](#build-the-html-output)
+- [Acknowledgements](#acknowledgements)
+  - [Theme](#theme)
+  - [Badges](#badges)
+
 
 ## Background
 Remember the weekly TV guide that came with the newspaper? It was the only useful thing in there - aside from the comic section.
@@ -12,8 +23,27 @@ Remember the weekly TV guide that came with the newspaper? It was the only usefu
 ![1987](https://raw.githubusercontent.com/skadogg/personal-tv-guide/main/images/1987-TV-Featured1.jpg)
 
 
-## Scraping
-The code does not currently have anything to automate authentication, so it just pauses to allow you to type in your credentials. After that, things go pretty smoothly.
+## The code
+
+### Scraping
+The code does not currently have anything to [automate authentication](https://github.com/skadogg/personal-tv-guide/issues/2), so it just pauses to allow you to type in your credentials. After that, things go pretty smoothly.
+
+### How to run it
+
+#### Start by scraping the data
+Each of these will pause and wait for you to sign in, as mentioned above. Once they finish, they will write the data to .bin files. These will be used in the next step.
+
+```
+>>> python scrape_tv.py
+>>> python scrape_movies.py
+```
+
+#### Build the HTML output
+With the data scraped, we can generate an HTML file.
+
+```
+>>> python scrape_movies.py
+```
 
 
 ## Acknowledgements
