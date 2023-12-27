@@ -80,11 +80,11 @@ media_type = []
 synopsis = []
 for j in range(len(show_main_link)):
     full_url = 'https://www.justwatch.com' + show_main_link[j]
-    
+
     # Get year, media type, age rating, and synopsis quickly from ld-json data
     show_ld_json_data = modules.ld_json.get_ld_json(full_url)
-    
-    
+
+
     # Visit each page to get genres and runtimes
     # from https://www.browserstack.com/guide/selenium-wait-for-page-to-load
     driver.get(full_url)
@@ -94,7 +94,7 @@ for j in range(len(show_main_link)):
         )
     finally:
         time.sleep(.5)
-        
+
     title_info = driver.find_element(By.XPATH, '//div[@class="title-info title-info"]')
     detail_infos = title_info.find_elements(By.XPATH,'//div[@class="detail-infos"]')
 
@@ -116,7 +116,7 @@ for j in range(len(show_main_link)):
     show_genres.append(shows_dict.get('GENRES'))
     show_runtime.append(shows_dict.get('RUNTIME'))
     # show_age_rating.append(shows_dict.get('AGE RATING'))
-    
+
     year.append(show_ld_json_data['dateCreated'].split('-')[0])
     media_type.append(show_ld_json_data['@type'])
     show_age_rating.append(show_ld_json_data['contentRating'])
@@ -137,5 +137,5 @@ data_tuples = list(zip(show_name,episode_number,episode_left_in_season,episode_t
 
 # Save my work
 import modules.data_bin_convert
-modules.data_bin_convert.data_to_bin(data_tuples, 'C:\\Users\\gunner\\Documents\\git\\personal-tv-guide\\saved_data_tv.bin')
+modules.data_bin_convert.data_to_bin(data_tuples, './saved_data_tv.bin')
 # data_tuples = modules.data_bin_convert.bin_to_data()
