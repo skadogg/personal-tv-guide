@@ -27,7 +27,7 @@ input("Sign in, and then press Enter to continue...")
 
 # Scroll to the end of the page
 items_in_list = 60
-pages = items_in_list // 20
+pages = (items_in_list // 20) + 1
 i = 0
 for i in range(pages):
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
