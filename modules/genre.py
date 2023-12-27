@@ -48,7 +48,7 @@ def trigger_keywords():
     # A list of keywords that some may find disturbing, used to make a custom row.
     # Example: My wife and I watch Hallmark movies, but they often center around a widow looking for a new love.
     #   Stories about widows make her sad, so I can watch these on my own if I want.
-    list = ['widow','liver','aneurysm','assault','abuse','cruel','suicide','kidnap','abduct','miscarriage','abortion','torture']
+    list = ['widow','aneurysm','assault','abuse','cruel','suicide','kidnap','abduct','miscarriage','abortion','torture']
     return list
 
 
