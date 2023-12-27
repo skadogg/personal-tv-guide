@@ -250,12 +250,13 @@ td {
   width: 100px;
   font-size: x-small;
 }
-table, th, td {
+table, th, td, tr {
   border: 1px solid;
-  padding: 3px;
-  border-spacing: 0px;
+  padding: 5px;
+  border-spacing: 1px;
   border-color: var(--nord10);
   min-width: 80px;
+  border-radius: 10px;
 }
 table {
   border-color: var(--nord14);
