@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 # import pandas as pd
 import time
 # import json
+import modules.ld_json
 
 
 # Open main window
@@ -45,14 +46,18 @@ for i in range(len(show_cards)):
 
 i = 0
 show_main_link = []
+# show_season_link = []
 for i in range(len(show_card_all_links)):
     show_main_link.append(show_card_all_links[i][0].get_dom_attribute('href'))
+    # show_season_link.append(show_card_all_links[i][1].get_dom_attribute('href'))
 
 i = 0
 show_name = []
 episode_number = []
 episode_left_in_season = []
 episode_title = []
+# show_year = []
+# media_type = []
 for i in range(len(show_card_full_text)):
     this_show_elements = show_card_full_text[i].split(sep='\n')
     show_name.append(this_show_elements[1])
@@ -70,19 +75,30 @@ j = 0
 show_genres = []
 show_runtime = []
 show_age_rating = []
+year = []
+media_type = []
+synopsis = []
 for j in range(len(show_main_link)):
+    full_url = 'https://www.justwatch.com' + show_main_link[j]
+    
+    # Get year, media type, age rating, and synopsis quickly from ld-json data
+    show_ld_json_data = modules.ld_json.get_ld_json(full_url)
+    
+    
+    # Visit each page to get genres and runtimes
     # from https://www.browserstack.com/guide/selenium-wait-for-page-to-load
-    driver.get('https://www.justwatch.com' + show_main_link[j])
+    driver.get(full_url)
     try:
         elem = WebDriverWait(driver, 30).until(
             EC.presence_of_element_located((By.XPATH, '//div[@class="title-info title-info"]'))
         )
     finally:
-        time.sleep(1)
-
+        time.sleep(.5)
+        
     title_info = driver.find_element(By.XPATH, '//div[@class="title-info title-info"]')
     detail_infos = title_info.find_elements(By.XPATH,'//div[@class="detail-infos"]')
 
+    # Loop through each section on the page to get headings and text
     k = 0
     title_info_heading = []
     title_info_value = []
@@ -99,7 +115,12 @@ for j in range(len(show_main_link)):
     shows_dict = dict(zip(title_info_heading,title_info_value))
     show_genres.append(shows_dict.get('GENRES'))
     show_runtime.append(shows_dict.get('RUNTIME'))
-    show_age_rating.append(shows_dict.get('AGE RATING'))
+    # show_age_rating.append(shows_dict.get('AGE RATING'))
+    
+    year.append(show_ld_json_data['dateCreated'].split('-')[0])
+    media_type.append(show_ld_json_data['@type'])
+    show_age_rating.append(show_ld_json_data['contentRating'])
+    synopsis.append(show_ld_json_data['description'])
 
 
 # driver.close()
@@ -107,7 +128,7 @@ driver.quit()
 
 
 # Pull elements together
-data_tuples = list(zip(show_name,episode_number,episode_left_in_season,episode_title,show_genres,show_runtime,show_age_rating))
+data_tuples = list(zip(show_name,episode_number,episode_left_in_season,episode_title,show_genres,show_runtime,show_age_rating,show_main_link,year,media_type,synopsis))
 # sorted(data_tuples)
 
 # df = pd.DataFrame(data_tuples, columns=['Show Name','Episode Number','Episodes Remaining','Episode Title','Genres','Runtime','Age Rating'])
