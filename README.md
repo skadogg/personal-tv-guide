@@ -3,7 +3,7 @@ This is some simple Python code to scrape my watchlist data from JustWatch and t
 
 ![screenshot](https://raw.githubusercontent.com/skadogg/personal-tv-guide/main/images/screenshot%202023-12-24.png)
 
-  
+
 - [Background](#background)
 - [The code](#the-code)
   - [Scraping](#scraping)
@@ -42,7 +42,7 @@ Each of these will pause and wait for you to sign in, as mentioned above. Once t
 With the data scraped, we can generate an HTML file.
 
 ```
->>> python scrape_movies.py
+>>> python build_html.py
 ```
 
 
