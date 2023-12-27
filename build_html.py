@@ -9,15 +9,15 @@ import modules.genre
 # Variables
 when_to_start = 8 # first hour in output table
 hours_to_print = 4 # how many hours worth of data in table
-outfile = "C:\\Users\\gunner\\Documents\\git\\personal-tv-guide\\out.html"
+outfile = "./out.html"
 
 
 # Restore my work
 import modules.data_bin_convert
 # modules.data_bin_convert.data_to_bin(data_tuples)
-data_tuples_movies = modules.data_bin_convert.bin_to_data('C:\\Users\\gunner\\Documents\\git\\personal-tv-guide\\saved_data_movies.bin')
-data_tuples_tv = modules.data_bin_convert.bin_to_data('C:\\Users\\gunner\\Documents\\git\\personal-tv-guide\\saved_data_tv.bin')
-all_genres = modules.data_bin_convert.bin_to_data('C:\\Users\\gunner\\Documents\\git\\personal-tv-guide\\saved_data_genres.bin')
+data_tuples_movies = modules.data_bin_convert.bin_to_data('./saved_data_movies.bin')
+data_tuples_tv = modules.data_bin_convert.bin_to_data('./saved_data_tv.bin')
+all_genres = modules.data_bin_convert.bin_to_data('./saved_data_genres.bin')
 
 data_tuples = data_tuples_movies + data_tuples_tv
 
