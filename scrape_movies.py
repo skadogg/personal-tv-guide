@@ -12,13 +12,6 @@ import modules.ld_json
 import auto_sign_in
 
 
-# Using OAuth is a pain in the ass, so here we are
-login_creds = {
-    "email": "ydhaxkdefmcowfebti@cazlv.com",
-    "password": "skadogg@!@#$555"
-}
-
-
 # Open main window
 driver = webdriver.Chrome()
 
