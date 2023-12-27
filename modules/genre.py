@@ -48,7 +48,7 @@ def trigger_keywords():
     # A list of keywords that some may find disturbing, used to make a custom row.
     # Example: My wife and I watch Hallmark movies, but they often center around a widow looking for a new love.
     #   Stories about widows make her sad, so I can watch these on my own if I want.
-    list = ['widow','liver','aneurysm','assault','abuse','cruel','suicide','kidnap','abduct','miscarriage','abortion','torture']
+    list = ['widow','aneurysm','assault','abuse','cruel','suicide','kidnap','abduct','miscarriage','abortion','torture']
     return list
 
 
@@ -58,9 +58,11 @@ def split_by_keyword(list,keyword_list):
     list_with_keywords, list_without_keywords = [], []
     for i in range(len(list)):
         title = list[i][0]
+        synopsis = list[i][10]
         
         for j in range(len(keyword_list)):
-            if keyword_list[j] in title:
+            word = keyword_list[j]
+            if word in title or word in synopsis:
                 found = True
                 break
             else:
