@@ -4,3 +4,4 @@ sandbox
 __pycache__
 secret*
 *.bin
+out.html

@@ -2,6 +2,7 @@ from base64 import b64encode, b64decode, decode
 from modules import data_bin_convert
 from os import path
 from selenium.webdriver.common.by import By
+import time
 
 def sign_in(driver):
     email = ""
@@ -30,3 +31,6 @@ def sign_in(driver):
     driver.find_element(By.CLASS_NAME, "firebaseui-id-submit").click()
     driver.find_element(By.NAME, "password").send_keys(password)
     driver.find_element(By.CLASS_NAME, "firebaseui-id-submit").click()
+    
+    # Wait for successful sign in modal to go away
+    time.sleep(2.5)
