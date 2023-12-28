@@ -1,5 +1,6 @@
 import modules.shield
 import modules.runtime
+import random
 
 
 def generate_table_th(hour_start = 8, hours = 4):
@@ -34,11 +35,19 @@ def generate_html_end():
     return '</table>\n</body>\n'
 
 
-def generate_html_genre_tds(genre_list, genre, hours):
+def generate_html_genre_tds(genre_list, genre, hours, random_start = False):
     # With each genre_list (lists of shows that have been found to have a matching genre), we can now generate the HTML
     # to put in our table(s). This loops through the genre_list and creates a <tr> for each up to the number of hours specified.
     str = '<tr><td class="genre">' + genre + '</td>\n'
-    i = 0
+    
+    if random_start:
+        i = random_start_time()
+        if i > 0:
+            str += generate_table_td('', i)
+    else:
+        i = 0
+
+        
     time_countdown = hours * 4
     for i in range(len(genre_list)):
         this_item = genre_list[i]
@@ -62,3 +71,16 @@ def generate_html_genre_tds(genre_list, genre, hours):
         this_content = this_shield + '<br>' + this_ep
         str += generate_table_td(this_content, this_colspan)
     return '<tr>\n' + str
+
+
+def random_start_time():
+    num = random.randint(1,100)
+    if num < 53: # 53%
+        out = 0
+    elif num < (53 + 27): # next 27%
+        out = 1
+    elif num < (53 + 27 + 13): # next 13%
+        out = 2
+    else: # last 7%
+        out = 3
+    return out

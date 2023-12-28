@@ -7,7 +7,7 @@ import modules.genre
 
 
 # Variables
-when_to_start = 8 # first hour in output table
+when_to_start = 1 # first hour in output table
 hours_to_print = 4 # how many hours worth of data in table
 outfile = "./out.html"
 
@@ -52,14 +52,14 @@ html_handle.write(modules.html.generate_table_th(when_to_start,hours_to_print))
 
 # Write table rows for keyword lists
 if use_keyword_lists:
-    html_handle.write(modules.html.generate_html_genre_tds(genre_triggers,'Trigger Warning',hours_to_print))
-    html_handle.write(modules.html.generate_html_genre_tds(genre_christmas,'Christmas',hours_to_print))
+    html_handle.write(modules.html.generate_html_genre_tds(genre_triggers,'Trigger Warning',hours_to_print,True))
+    html_handle.write(modules.html.generate_html_genre_tds(genre_christmas,'Christmas',hours_to_print,True))
 
 
 # Write table rows for looped genre_lists
 for i in range(len(genre_lists)):
     if genre_lists[i]:
-        html_handle.write(modules.html.generate_html_genre_tds(genre_lists[i], all_genres[i], hours_to_print))
+        html_handle.write(modules.html.generate_html_genre_tds(genre_lists[i], all_genres[i], hours_to_print,True))
 
 
 # Finish writing data
