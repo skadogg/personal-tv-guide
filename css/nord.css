@@ -250,10 +250,10 @@ td {
   width: 100px;
   font-size: x-small;
 }
-table, th, td, tr {
+table, th, td {
   border: 1px solid;
-  padding: 5px;
-  border-spacing: 1px;
+  padding: 3px;
+  border-spacing: 0px;
   border-color: var(--nord10);
   min-width: 80px;
   border-collapse: collapse;
