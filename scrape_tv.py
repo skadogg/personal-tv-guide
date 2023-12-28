@@ -9,6 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 # import json
 import modules.ld_json
+import modules.auto_sign_in
 
 
 # Open main window
@@ -21,8 +22,8 @@ driver.maximize_window()
 # main_window_handle = driver.window_handles[0]
 
 
-# Wait for user to sign in
-input("Sign in, and then press Enter to continue...")
+# Sign in to JustWatch using stored credentials (secret_login.bin)
+modules.auto_sign_in.sign_in(driver)
 
 
 # Scroll to the end of the page
@@ -31,7 +32,7 @@ pages = (items_in_list // 20) + 1
 i = 0
 for i in range(pages):
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
-    time.sleep(1)
+    time.sleep(.5)
 
 
 # Get name, episode number/title, left in season, main show link from main watchlist
