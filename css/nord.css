@@ -256,6 +256,7 @@ table, th, td {
   border-spacing: 0px;
   border-color: var(--nord10);
   min-width: 80px;
+  border-collapse: collapse;
 }
 table {
   border-color: var(--nord14);
