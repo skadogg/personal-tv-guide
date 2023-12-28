@@ -1,11 +1,23 @@
-from selenium import webdriver
+from base64 import b64encode, b64decode, decode
+from modules import data_bin_convert
+from os import path
 from selenium.webdriver.common.by import By
 
 def sign_in(driver):
-    login_creds = {
-        "email": "ydhaxkdefmcowfebti@cazlv.com",
-        "password": "skadogg@!@#$555"
-    }
+    email = ""
+    password = ""
+
+    if(path.isfile('./secret_login.bin')):
+        login_data = data_bin_convert.bin_to_data('./secret_login.bin')
+        email = login_data[0]
+        password = b64decode(login_data[1]).decode("utf-8")
+    else:
+        print("If you enter the wrong password, delete the 'secret_login.bin' file...")
+        email = input("Email Address:")
+        password = input("Password:")
+        hashed_password = b64encode(password.encode("utf-8"))
+        login_data = [email, hashed_password]
+        data_bin_convert.data_to_bin(login_data, './secret_login.bin')
 
     # go to sign in page
     driver.find_element(By.CLASS_NAME, "not-logged-in").click()
@@ -14,7 +26,7 @@ def sign_in(driver):
     driver.find_elements(By.CLASS_NAME, "firebaseui-list-item")[3].click()
 
     # sign in
-    driver.find_element(By.NAME, "email").send_keys(login_creds["email"])
+    driver.find_element(By.NAME, "email").send_keys(email)
     driver.find_element(By.CLASS_NAME, "firebaseui-id-submit").click()
-    driver.find_element(By.NAME, "password").send_keys(login_creds["password"])
+    driver.find_element(By.NAME, "password").send_keys(password)
     driver.find_element(By.CLASS_NAME, "firebaseui-id-submit").click()
