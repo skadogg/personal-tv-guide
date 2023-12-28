@@ -78,6 +78,7 @@ show_age_rating = []
 year = []
 media_type = []
 synopsis = []
+season_data = []
 for j in range(len(show_main_link)):
     full_url = 'https://www.justwatch.com' + show_main_link[j]
 
@@ -121,6 +122,7 @@ for j in range(len(show_main_link)):
     media_type.append(show_ld_json_data['@type'])
     show_age_rating.append(show_ld_json_data['contentRating'])
     synopsis.append(show_ld_json_data['description'])
+    season_data.append(show_ld_json_data['containsSeason'])
 
 
 # driver.close()
@@ -128,7 +130,7 @@ driver.quit()
 
 
 # Pull elements together
-data_tuples = list(zip(show_name,episode_number,episode_left_in_season,episode_title,show_genres,show_runtime,show_age_rating,show_main_link,year,media_type,synopsis))
+data_tuples = list(zip(show_name,episode_number,episode_left_in_season,episode_title,show_genres,show_runtime,show_age_rating,show_main_link,year,media_type,synopsis,season_data))
 # sorted(data_tuples)
 
 # df = pd.DataFrame(data_tuples, columns=['Show Name','Episode Number','Episodes Remaining','Episode Title','Genres','Runtime','Age Rating'])
