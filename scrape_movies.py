@@ -9,7 +9,6 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 # import json
 import modules.ld_json
-import auto_sign_in
 
 
 # Open main window
@@ -18,15 +17,17 @@ driver = webdriver.Chrome()
 driver.get('https://www.justwatch.com/us/lists/my-lists?content_type=movie&sort_by=random&sort_asc=true&sorting_random_seed=1')
 
 driver.maximize_window()
-
-auto_sign_in.sign_in(driver)
-
 # driver.implicitly_driwait(1.0)
 # main_window_handle = driver.window_handles[0]
 
+
+# Wait for user to sign in
+input("Sign in, and then press Enter to continue...")
+
+
 # Scroll to the end of the page
 items_in_list = 60
-pages = items_in_list // 20
+pages = (items_in_list // 20) + 1
 i = 0
 for i in range(pages):
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
@@ -35,7 +36,6 @@ for i in range(pages):
 
 # Get name, episode number/title, left in season, main show link from main watchlist
 show_cards = driver.find_elements(By.XPATH, '//div[@class="title-card-basic title-card-basic"]')
-
 
 i = 0
 show_card_all_links = []

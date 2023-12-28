@@ -9,24 +9,25 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 # import json
 import modules.ld_json
-import auto_sign_in
 
 
+# Open main window
 driver = webdriver.Chrome()
 
 driver.get('https://www.justwatch.com/us/lists/tv-show-tracking?inner_tab=continue_watching')
 
-# Open main window
 driver.maximize_window()
-
-auto_sign_in.sign_in(driver)
-
 # driver.implicitly_driwait(1.0)
 # main_window_handle = driver.window_handles[0]
 
+
+# Wait for user to sign in
+input("Sign in, and then press Enter to continue...")
+
+
 # Scroll to the end of the page
 items_in_list = 60
-pages = items_in_list // 20
+pages = (items_in_list // 20) + 1
 i = 0
 for i in range(pages):
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
