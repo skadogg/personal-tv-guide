@@ -36,8 +36,28 @@ def time_left_in_tv_series(season_data, runtime_min, curr_season = 1, next_episo
     return minutes_left_in_series
 
 
-def percent_complete(amt_done, amt_total):
-    # minutes_left = modules.runtime.time_left_in_tv_series(season_data,50,3,21)
-    # minutes_total = modules.runtime.time_left_in_tv_series(season_data,50)
-    # pct_done = modules.runtime.percent_complete(minutes_left, minutes_total)
-    return (amt_total - amt_done) / amt_total
+def percent_complete(minutes_left, minutes_total):
+    # Example:
+    #     minutes_left = modules.runtime.time_left_in_tv_series(season_data,50,3,21)
+    #     minutes_total = modules.runtime.time_left_in_tv_series(season_data,50)
+    #     pct_done = modules.runtime.percent_complete(minutes_left, minutes_total)
+    return (minutes_total - minutes_left) / minutes_total
+
+
+def time_left_in_tv_series_report(list):
+    time_info = []
+    for i in range(len(list)):
+        show_title = list[i][0]
+        current_season, current_episode = list[i][1].replace('S','').replace('E','').split(' ')
+        season_data = list[i][11]
+        runtime = runtime_to_minutes(list[i][5])
+        # episodes_left
+        
+        minutes_left = time_left_in_tv_series(season_data,runtime,int(current_season),int(current_episode))
+        minutes_total = time_left_in_tv_series(season_data,runtime)
+        pct_done = percent_complete(minutes_left, minutes_total)
+        
+        time_info.append([show_title,minutes_left,minutes_total,pct_done])
+    
+    time_info_sorted = sorted(time_info, key=lambda x:(x[1], x[0]))
+    return time_info_sorted

@@ -62,6 +62,14 @@ for i in range(len(genre_lists)):
         html_handle.write(modules.html.generate_html_genre_tds(genre_lists[i], all_genres[i], hours_to_print))
 
 
+# Write table for time left
+time_info = modules.runtime.time_left_in_tv_series_report(data_tuples_tv)
+html_handle.write('</table><br><br><table>')
+for i in range(len(time_info)):
+    html_handle.write('<tr><td>' + time_info[i][0] + '</td><td>' + str(round(time_info[i][3] * 100,0)) + '%</td></tr>')
+html_handle.write('</table>')
+
+
 # Finish writing data
 html_handle.write(modules.html.generate_html_end())
 html_handle.close()
