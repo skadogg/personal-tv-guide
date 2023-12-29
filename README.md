@@ -6,7 +6,7 @@ This is some simple Python code to scrape my watchlist data from JustWatch and t
 
 - [Background](#background)
 - [The code](#the-code)
-  - [Scraping](#scraping)
+  - [Credentials](#credentials)
   - [How to run it](#how-to-run-it)
     - [Start by scraping the data](#start-by-scraping-the-data)
     - [Build the HTML output](#build-the-html-output)
@@ -25,8 +25,8 @@ Remember the weekly TV guide that came with the newspaper? It was the only usefu
 
 ## The code
 
-### Scraping
-The code does not currently have anything to [automate authentication](https://github.com/skadogg/personal-tv-guide/issues/2), so it just pauses to allow you to type in your credentials. After that, things go pretty smoothly.
+### Credentials
+The first time you run it, you will be prompted to enter your JustWatch credentials. These get stored in a local file that will be ignored in any new commits you might make to the repository.
 
 ### How to run it
 
