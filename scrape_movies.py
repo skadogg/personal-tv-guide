@@ -11,7 +11,12 @@ import time
 import modules.ld_json
 import modules.auto_sign_in
 from alive_progress import alive_bar
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
+
+dev_mode = bool(os.environ.get('DEV_MODE', False))
 
 # Open main window
 driver = webdriver.Chrome()
