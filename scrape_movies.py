@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 # from selenium.webdriver.common.keys import Keys
 # import pandas as pd
 import time
@@ -17,9 +18,21 @@ from dotenv import load_dotenv
 load_dotenv()
 
 dev_mode = bool(os.environ.get('DEV_MODE', False))
+dev_mode = False
 
 # Open main window
-driver = webdriver.Chrome()
+# options = Options()
+# options.headless = True
+
+chrome_options = webdriver.ChromeOptions()
+# this will disable image loading
+chrome_options.add_argument('--blink-settings=imagesEnabled=false')
+# or alternatively we can set direct preference:
+chrome_options.add_experimental_option(
+    "prefs", {"profile.managed_default_content_settings.images": 2}
+)
+
+driver = webdriver.Chrome(options=chrome_options)
 
 driver.get('https://www.justwatch.com/us/lists/my-lists?content_type=movie&sort_by=random&sort_asc=true&sorting_random_seed=1')
 
