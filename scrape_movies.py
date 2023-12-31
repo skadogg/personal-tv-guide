@@ -17,8 +17,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-dev_mode = bool(os.environ.get('DEV_MODE', False))
-dev_mode = False
+dev_mode = os.environ.get('DEV_MODE').lower() == 'true'
 
 # Open main window
 # options = Options()
