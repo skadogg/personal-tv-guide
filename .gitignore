@@ -6,4 +6,4 @@ secret*
 *.bin
 out.html
 .env
-chromdriver/chromdriver.exe
+chromedriver/chromedriver.exe
