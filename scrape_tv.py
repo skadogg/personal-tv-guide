@@ -125,7 +125,7 @@ with alive_bar(len(show_main_link), spinner='waves', bar='squares') as bar:
         show_runtime.append(shows_dict.get('RUNTIME'))
         # show_age_rating.append(shows_dict.get('AGE RATING'))
 
-        year.append(show_ld_json_data['dateCreated'].split('-')[0])
+        year.append(str(show_ld_json_data['dateCreated']).split('-')[0])
         media_type.append(show_ld_json_data['@type'])
         show_age_rating.append(show_ld_json_data['contentRating'])
         synopsis.append(show_ld_json_data['description'])
