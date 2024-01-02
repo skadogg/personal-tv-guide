@@ -5,7 +5,7 @@
 ## About
 Scrape your watchlist data from JustWatch and turn it into HTML to serve as your own TV Guide!
 
-![screenshot](https://raw.githubusercontent.com/skadogg/personal-tv-guide/main/images/screenshot%202023-12-24.png)
+![screenshot](images/screenshot%202023-12-24.png)
 
 
 - [About](#about)
@@ -13,7 +13,8 @@ Scrape your watchlist data from JustWatch and turn it into HTML to serve as your
 - [The code](#the-code)
   - [Credentials](#credentials)
   - [How to run it](#how-to-run-it)
-    - [Start by scraping the data](#start-by-scraping-the-data)
+    - [Make .env file](#make-env-file)
+    - [Scrape the data](#scrape-the-data)
     - [Build the HTML output](#build-the-html-output)
 - [Acknowledgements](#acknowledgements)
   - [Icon](#icon)
@@ -27,7 +28,7 @@ Remember the weekly TV guide that came with the newspaper? It was the only usefu
 
 (I really need to figure out where to watch some *Kate & Allie* - great show!)
 
-![1987](https://raw.githubusercontent.com/skadogg/personal-tv-guide/main/images/1987-TV-Featured1.jpg)
+![1987](images/1987-TV-Featured1.jpg)
 
 
 ## The code
@@ -37,7 +38,20 @@ The first time you run it, you will be prompted to enter your JustWatch credenti
 
 ### How to run it
 
-#### Start by scraping the data
+#### Make .env file
+
+To get started, make a copy of *.env-sample* and name it *.env*. This is where to set up your variables before continuing with the other steps.
+
+| Variable | Required? | Description |
+| --- | :---: | --- |
+| WHEN_TO_START | y | The first hour in your guide's timeline |
+| HOURS_TO_PRINT | y | How many hours worth of data to include in timeline |
+| OUTFILE | y | The name of the HTML file you want to generate |
+| DEV_MODE | n | Set to False for normal use. When developing and testing, set to True to limit the number of titles read from the source. |
+| *genre*_KEYWORDS | n | If creating custom rows in the table, enter a comma-separated list of strings to match. This is currently case-sensitive. |
+
+
+#### Scrape the data
 Each of these will pause and wait for you to sign in, as mentioned above. Once they finish, they will write the data to .bin files. These will be used in the next step.
 
 ```
