@@ -10,6 +10,7 @@ import time
 # import json
 import modules.ld_json
 import modules.auto_sign_in
+import modules.justwatch
 from alive_progress import alive_bar
 import os
 from dotenv import load_dotenv
@@ -33,7 +34,7 @@ modules.auto_sign_in.sign_in(driver)
 
 
 # Scroll to the end of the page
-items_in_list = 900
+items_in_list = modules.justwatch.get_titles_count(driver)
 if dev_mode:
     items_in_list = 5
 pages = (items_in_list // 20) + 1
