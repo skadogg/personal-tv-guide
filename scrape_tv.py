@@ -18,8 +18,15 @@ load_dotenv()
 
 dev_mode = os.environ.get('DEV_MODE').lower() == 'true'
 
+options = webdriver.ChromeOptions()
+
+# Run the browser in the background without opening a new window
+options.add_argument("--headless=new") 
+# this will disable image loading
+options.add_argument('--blink-settings=imagesEnabled=false')
+
 # Open main window
-driver = webdriver.Chrome()
+driver = webdriver.Chrome(options=options)
 
 driver.get('https://www.justwatch.com/us/lists/tv-show-tracking?inner_tab=continue_watching')
 
