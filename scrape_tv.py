@@ -33,7 +33,7 @@ modules.auto_sign_in.sign_in(driver)
 
 
 # Scroll to the end of the page
-items_in_list = 60
+items_in_list = modules.justwatch.get_titles_count(driver)
 if dev_mode:
     items_in_list = 5
 pages = (items_in_list // 20) + 1
