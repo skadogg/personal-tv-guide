@@ -4,3 +4,6 @@ sandbox
 __pycache__
 secret*
 *.bin
+out.html
+.env
+chromedriver/chromedriver.exe
