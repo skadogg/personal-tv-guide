@@ -1,3 +1,9 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
 def split_by_genre(list,genre_str):
     # Takes the list and splits into two lists: one with the given genre_str, and one without
     # >>> genre_romance, remainder = modules.genre.split_by_genre(data_tuples,"Romance")
@@ -39,8 +45,7 @@ def get_genres_from_scraped_lists():
 
 def christmas_keywords():
     # A list of Christmas keywords, used to make a custom row
-    list = ['Christmas','Holida','Hanukkah','Santa','Claus','Noel','Klaus','Merry','Fitzwilly','Preacher\'s Wife','Every Time a Bell Rings','Family Stone','Haul Out the Holly','Elf','Let It Snow','Scrooge','Baby, It\'s Cold','Winter Love Story','Mingle All the Way','Snow','Shop Around the Corner','Spirited','Home Alone','Five More Minutes','Fallen Angel','Family Man','New Year\'s','Tis the Season','Pottersville','Godmothered','Polar Express']
-    return list
+    return os.environ.get('CHRISTMAS_KEYWORDS').split(',')
 
 
 # TRIGGER WARNING
@@ -48,8 +53,7 @@ def trigger_keywords():
     # A list of keywords that some may find disturbing, used to make a custom row.
     # Example: My wife and I watch Hallmark movies, but they often center around a widow looking for a new love.
     #   Stories about widows make her sad, so I can watch these on my own if I want.
-    list = ['widow','aneurysm','assault','abuse','cruel','suicide','kidnap','abduct','miscarriage','abortion','torture']
-    return list
+    return os.environ.get('TRIGGER_KEYWORDS').split(',')
 
 
 def split_by_keyword(list,keyword_list):

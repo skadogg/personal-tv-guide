@@ -1,15 +1,18 @@
 import random
+import os
 
 import modules.shield
 import modules.html
 import modules.runtime
 import modules.genre
 
+from dotenv import load_dotenv
 
 # Variables
-when_to_start = 8 # first hour in output table
-hours_to_print = 4 # how many hours worth of data in table
-outfile = "./out.html"
+load_dotenv()
+when_to_start = int(os.environ.get('WHEN_TO_START')) # first hour in output table
+hours_to_print = int(os.environ.get('HOURS_TO_PRINT')) # how many hours worth of data in table
+outfile = str(os.environ.get('OUTFILE'))
 
 
 # Restore my work
