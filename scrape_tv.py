@@ -11,6 +11,7 @@ import time
 # import json
 import modules.ld_json
 import modules.auto_sign_in
+import modules.justwatch
 from alive_progress import alive_bar
 import os
 from dotenv import load_dotenv
