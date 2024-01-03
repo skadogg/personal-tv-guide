@@ -1,0 +1,72 @@
+/* 
+HEX colors from the creator, Ann Magill:
+https://www.reddit.com/r/disability/comments/uhhdbv/the_disability_pride_flag_by_ann_magill_me_has/
+
+Field: #585858 (80, 80, 80)
+Red: #CF7280 (207, 114, 123)
+Yellow: #EEDF77 (238, 223, 119)
+White: #E9E9E9 (233, 233, 233)
+Blue: #7AC1E0 (122, 193, 224)
+Green: #3AAF7D (58, 175, 125)
+*/
+
+:root {
+  /* Field: #585858 (80, 80, 80) */
+  --flag-field: #585858;
+
+  /* Red: #CF7280 (207, 114, 123) */
+  --flag-red: #CF7280;
+
+  /* Yellow: #EEDF77 (238, 223, 119) */
+  --flag-yellow: #EEDF77;
+
+  /* White: #E9E9E9 (233, 233, 233) */
+  --flag-white: #E9E9E9;
+
+  /* Blue: #7AC1E0 (122, 193, 224) */
+  --flag-blue: #7AC1E0;
+
+  /* Green: #3AAF7D (58, 175, 125) */
+  --flag-green: #3AAF7D;
+}
+  
+body {
+  background-color: var(--flag-field);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+h3 {
+  color: var(--flag-white);
+}
+p {
+  color: var(--flag-white);
+}
+th {
+  color: var(--flag-white);
+  width: 100px;
+  font-size: large;
+}
+td {
+  color: var(--flag-white);
+  width: 100px;
+  font-size: medium;
+}
+table, th, td {
+  border: 1px solid;
+  padding: 6px;
+  border-spacing: 0px;
+  border-color: var(--flag-blue);
+  min-width: 120px;
+  border-collapse: collapse;
+}
+table {
+  border-color: var(--flag-blue);
+  background-color: var(--flag-field);
+  font-size: medium;
+}
+.genre {
+  color: var(--flag-white);
+  font-size: large;
+}
+img {
+  zoom: 2;
+}
