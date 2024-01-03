@@ -19,19 +19,15 @@ load_dotenv()
 
 dev_mode = os.environ.get('DEV_MODE').lower() == 'true'
 
-# Open main window
-# options = Options()
-# options.headless = True
+options = webdriver.ChromeOptions()
 
-chrome_options = webdriver.ChromeOptions()
+# Run the browser in the background without opening a new window
+options.add_argument("--headless=new") 
 # this will disable image loading
-chrome_options.add_argument('--blink-settings=imagesEnabled=false')
-# or alternatively we can set direct preference:
-chrome_options.add_experimental_option(
-    "prefs", {"profile.managed_default_content_settings.images": 2}
-)
+options.add_argument('--blink-settings=imagesEnabled=false')
 
-driver = webdriver.Chrome(options=chrome_options)
+# Open main window
+driver = webdriver.Chrome(options=options)
 
 driver.get('https://www.justwatch.com/us/lists/tv-show-tracking?inner_tab=continue_watching')
 
@@ -45,7 +41,7 @@ modules.auto_sign_in.sign_in(driver)
 
 
 # Scroll to the end of the page
-items_in_list = 60
+items_in_list = modules.justwatch.get_titles_count(driver)
 if dev_mode:
     items_in_list = 5
 pages = (items_in_list // 20) + 1
