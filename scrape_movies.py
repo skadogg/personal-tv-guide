@@ -10,6 +10,7 @@ import time
 # import json
 import modules.ld_json
 import modules.auto_sign_in
+import modules.justwatch
 from alive_progress import alive_bar
 import os
 from dotenv import load_dotenv
@@ -18,8 +19,15 @@ load_dotenv()
 
 dev_mode = os.environ.get('DEV_MODE').lower() == 'true'
 
+options = webdriver.ChromeOptions()
+
+# Run the browser in the background without opening a new window
+options.add_argument("--headless=new")
+# this will disable image loading
+options.add_argument('--blink-settings=imagesEnabled=false')
+
 # Open main window
-driver = webdriver.Chrome()
+driver = webdriver.Chrome(options=options)
 
 driver.get('https://www.justwatch.com/us/lists/my-lists?content_type=movie&sort_by=random&sort_asc=true&sorting_random_seed=1')
 
@@ -31,9 +39,10 @@ driver.maximize_window()
 # Sign in to JustWatch using stored credentials (secret_login.bin)
 modules.auto_sign_in.sign_in(driver)
 
+time.sleep(5)
 
 # Scroll to the end of the page
-items_in_list = 900
+items_in_list = modules.justwatch.get_titles_count(driver)
 if dev_mode:
     items_in_list = 5
 pages = (items_in_list // 20) + 1

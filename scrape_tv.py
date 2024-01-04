@@ -10,6 +10,7 @@ import time
 # import json
 import modules.ld_json
 import modules.auto_sign_in
+import modules.justwatch
 from alive_progress import alive_bar
 import os
 from dotenv import load_dotenv
@@ -18,8 +19,15 @@ load_dotenv()
 
 dev_mode = os.environ.get('DEV_MODE').lower() == 'true'
 
+options = webdriver.ChromeOptions()
+
+# Run the browser in the background without opening a new window
+options.add_argument("--headless=new") 
+# this will disable image loading
+options.add_argument('--blink-settings=imagesEnabled=false')
+
 # Open main window
-driver = webdriver.Chrome()
+driver = webdriver.Chrome(options=options)
 
 driver.get('https://www.justwatch.com/us/lists/tv-show-tracking?inner_tab=continue_watching')
 
@@ -33,7 +41,7 @@ modules.auto_sign_in.sign_in(driver)
 
 
 # Scroll to the end of the page
-items_in_list = 60
+items_in_list = modules.justwatch.get_titles_count(driver)
 if dev_mode:
     items_in_list = 5
 pages = (items_in_list // 20) + 1
