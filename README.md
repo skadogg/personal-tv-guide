@@ -1,5 +1,5 @@
 # Personal TV Guide
-![Created by Pedrovisc from Noun Project](images/Tv-Guide-Created-by-Pedrovisc-from-Noun-Project-cropped-200px.png)
+![Created by Pedrovisc from Noun Project](images/personal_tv_guide.png)
 
 
 ## About
