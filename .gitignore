@@ -7,3 +7,4 @@ secret*
 out.html
 .env
 chromedriver/chromedriver.exe
+my_env/
