@@ -1,10 +1,7 @@
-# inspired by https://towardsdatascience.com/how-to-use-selenium-to-web-scrape-with-example-80f9b23a843a
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-# from selenium.webdriver.common.keys import Keys
 # import pandas as pd
 import time
 # import json
@@ -57,6 +54,7 @@ with alive_bar(pages, spinner='waves', bar='squares') as bar:
 
 # Get name, episode number/title, left in season, main show link from main watchlist
 show_cards = driver.find_elements(By.XPATH, '//div[@class="title-card-basic title-card-basic"]')
+
 if dev_mode:
     show_cards = show_cards[0:5]
 
@@ -113,7 +111,6 @@ with alive_bar(len(show_main_link), spinner='waves', bar='squares') as bar:
         
         try:
             # Visit each page to get genres and runtimes
-            # from https://www.browserstack.com/guide/selenium-wait-for-page-to-load
             driver.get(full_url)
             try:
                 elem = WebDriverWait(driver, 30).until(
@@ -141,6 +138,7 @@ with alive_bar(len(show_main_link), spinner='waves', bar='squares') as bar:
         except Exception as e:
             print("Error getting data for " + show_main_link[j] + " skipping...")
             continue
+        
         shows_dict = dict(zip(title_info_heading,title_info_value))
         show_genres.append(shows_dict.get('GENRES'))
         show_runtime.append(shows_dict.get('RUNTIME'))
