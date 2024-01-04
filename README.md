@@ -60,6 +60,7 @@ To get started, make a copy of */sample_files/.env-sample* and name it */.env*. 
 | OUTFILE | y | The name of the HTML file you want to generate |
 | DEV_MODE | n | Set to False for normal use. When developing and testing, set to True to limit the number of titles read from the source. |
 | *genre*_KEYWORDS | n | If creating custom rows in the table, enter a comma-separated list of strings to match. This is currently case-sensitive. |
+| USE_KEYWORD_LIST | n | It is currently hard-coded in build_html.py. |
 
 
 #### Scrape the data
