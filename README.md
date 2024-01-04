@@ -11,10 +11,12 @@ Scrape your watchlist data from JustWatch and turn it into HTML to serve as your
 - [About](#about)
 - [Background](#background)
 - [The code](#the-code)
+  - [Requirements](#requirements)
   - [Credentials](#credentials)
   - [How to run it](#how-to-run-it)
     - [Make .env file](#make-env-file)
     - [Scrape the data](#scrape-the-data)
+    - [List the genres](#list-the-genres)
     - [Build the HTML output](#build-the-html-output)
 - [Acknowledgements](#acknowledgements)
   - [Icon](#icon)
@@ -33,6 +35,15 @@ Remember the weekly TV guide that came with the newspaper? It was the only usefu
 
 ## The code
 
+### Requirements
+- Python interpreter
+- Various modules
+  - Selenium
+  - Requests
+  - beautifulsoup4
+  - alive_progress
+  - dotenv
+
 ### Credentials
 The first time you run it, you will be prompted to enter your JustWatch credentials. These get stored in a local file that will be ignored in any new commits you might make to the repository.
 
@@ -40,7 +51,7 @@ The first time you run it, you will be prompted to enter your JustWatch credenti
 
 #### Make .env file
 
-To get started, make a copy of *.env-sample* and name it *.env*. This is where to set up your variables before continuing with the other steps.
+To get started, make a copy of */sample_files/.env-sample* and name it */.env*. This is where to set up your variables before continuing with the other steps.
 
 | Variable | Required? | Description |
 | --- | :---: | --- |
@@ -57,6 +68,11 @@ Each of these will pause and wait for you to sign in, as mentioned above. Once t
 ```
 >>> python scrape_tv.py
 >>> python scrape_movies.py
+```
+
+#### List the genres
+```
+>>> python create_genre_list.py
 ```
 
 #### Build the HTML output
