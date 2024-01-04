@@ -1,10 +1,10 @@
-test.*
 sandbox
 .vscode
 __pycache__
 secret*
-*.bin
+/*.bin
 out.html
 .env
 chromedriver/chromedriver.exe
 my_env/
+/.env
