@@ -13,6 +13,7 @@ load_dotenv()
 when_to_start = int(os.environ.get('WHEN_TO_START')) # first hour in output table
 hours_to_print = int(os.environ.get('HOURS_TO_PRINT')) # how many hours worth of data in table
 outfile = str(os.environ.get('OUTFILE'))
+use_keyword_lists = int(os.environ.get('USE_KEYWORD_LIST'))
 
 
 # Restore my work
@@ -31,7 +32,7 @@ random.shuffle(all_genres)
 
 
 # Look through data for keyword matches
-use_keyword_lists = True
+# use_keyword_lists = True
 genre_triggers, remainder = modules.genre.split_by_keyword(data_tuples,modules.genre.trigger_keywords())
 genre_christmas, remainder = modules.genre.split_by_keyword(remainder,modules.genre.christmas_keywords())
 

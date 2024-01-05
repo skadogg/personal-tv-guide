@@ -59,6 +59,7 @@ To get started, make a copy of */sample_files/.env-sample* and name it */.env*. 
 | HOURS_TO_PRINT | y | How many hours worth of data to include in timeline |
 | OUTFILE | y | The name of the HTML file you want to generate |
 | DEV_MODE | n | Set to False for normal use. When developing and testing, set to True to limit the number of titles read from the source. |
+| USE_KEYWORD_LIST | n | set to True to enable keyword lists. |
 | *genre*_KEYWORDS | n | If creating custom rows in the table, enter a comma-separated list of strings to match. This is currently case-sensitive. |
 
 
