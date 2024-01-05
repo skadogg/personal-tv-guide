@@ -20,17 +20,20 @@ def sign_in(driver):
         login_data = [email, hashed_password]
         data_bin_convert.data_to_bin(login_data, './secret_login.bin')
 
-    # go to sign in page
-    driver.find_element(By.CLASS_NAME, "not-logged-in").click()
-    driver.implicitly_wait(2.0)
-    driver.find_elements(By.CLASS_NAME, "text-wrapper")[0].click()
-    driver.find_elements(By.CLASS_NAME, "firebaseui-list-item")[3].click()
-
-    # sign in
-    driver.find_element(By.NAME, "email").send_keys(email)
-    driver.find_element(By.CLASS_NAME, "firebaseui-id-submit").click()
-    driver.find_element(By.NAME, "password").send_keys(password)
-    driver.find_element(By.CLASS_NAME, "firebaseui-id-submit").click()
-    
-    # Wait for successful sign in modal to go away
-    time.sleep(2.5)
+    try:
+        # go to sign in page
+        driver.find_element(By.CLASS_NAME, "not-logged-in").click()
+        driver.implicitly_wait(2.0)
+        driver.find_elements(By.CLASS_NAME, "text-wrapper")[0].click()
+        driver.find_elements(By.CLASS_NAME, "firebaseui-list-item")[3].click()
+        
+        # sign in
+        driver.find_element(By.NAME, "email").send_keys(email)
+        driver.find_element(By.CLASS_NAME, "firebaseui-id-submit").click()
+        driver.find_element(By.NAME, "password").send_keys(password)
+        driver.find_element(By.CLASS_NAME, "firebaseui-id-submit").click()
+    except:
+        print("Error signing in")
+    else:
+        # Wait for successful sign in modal to go away
+        time.sleep(7)
