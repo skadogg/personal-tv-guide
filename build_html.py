@@ -32,7 +32,7 @@ random.shuffle(all_genres)
 
 
 # Look through data for keyword matches
-use_keyword_lists = True
+# use_keyword_lists = True
 genre_triggers, remainder = modules.genre.split_by_keyword(data_tuples,modules.genre.trigger_keywords())
 genre_christmas, remainder = modules.genre.split_by_keyword(remainder,modules.genre.christmas_keywords())
 
