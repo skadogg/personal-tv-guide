@@ -14,7 +14,7 @@ when_to_start = int(os.environ.get('WHEN_TO_START')) # first hour in output tabl
 hours_to_print = int(os.environ.get('HOURS_TO_PRINT')) # how many hours worth of data in table
 outfile = str(os.environ.get('OUTFILE'))
 stylesheet_path = str(os.environ.get('STYLESHEET_PATH'))
-use_keyword_lists = int(os.environ.get('USE_KEYWORD_LIST'))
+use_keyword_lists = bool(os.environ.get('USE_KEYWORD_LIST'))
 
 
 # Restore my work
