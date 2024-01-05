@@ -11,7 +11,7 @@ Scrape your watchlist data from JustWatch and turn it into HTML to serve as your
 - [About](#about)
 - [Background](#background)
 - [The code](#the-code)
-  - [Requirements](#requirements)
+  - [Install the required Python modules](#install-the-required-python-modules)
   - [Credentials](#credentials)
   - [How to run it](#how-to-run-it)
     - [Make .env file](#make-env-file)
@@ -35,14 +35,10 @@ Remember the weekly TV guide that came with the newspaper? It was the only usefu
 
 ## The code
 
-### Requirements
-- Python interpreter
-- Various modules
-  - Selenium
-  - Requests
-  - beautifulsoup4
-  - alive_progress
-  - dotenv
+### Install the required Python modules
+```
+pip install -r requirements.txt
+```
 
 ### Credentials
 The first time you run it, you will be prompted to enter your JustWatch credentials. These get stored in a local file that will be ignored in any new commits you might make to the repository.
