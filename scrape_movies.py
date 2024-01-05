@@ -37,8 +37,6 @@ driver.maximize_window()
 # Sign in to JustWatch using stored credentials (secret_login.bin)
 modules.auto_sign_in.sign_in(driver)
 
-time.sleep(5)
-
 # Scroll to the end of the page
 items_in_list = modules.justwatch.get_titles_count(driver)
 if dev_mode:
