@@ -11,7 +11,7 @@ Scrape your watchlist data from JustWatch and turn it into HTML to serve as your
 - [About](#about)
 - [Background](#background)
 - [The code](#the-code)
-  - [Requirements](#requirements)
+  - [Install the required Python modules](#install-the-required-python-modules)
   - [Credentials](#credentials)
   - [How to run it](#how-to-run-it)
     - [Make .env file](#make-env-file)
@@ -35,14 +35,10 @@ Remember the weekly TV guide that came with the newspaper? It was the only usefu
 
 ## The code
 
-### Requirements
-- Python interpreter
-- Various modules
-  - Selenium
-  - Requests
-  - beautifulsoup4
-  - alive_progress
-  - dotenv
+### Install the required Python modules
+```
+pip install -r requirements.txt
+```
 
 ### Credentials
 The first time you run it, you will be prompted to enter your JustWatch credentials. These get stored in a local file that will be ignored in any new commits you might make to the repository.
@@ -59,6 +55,7 @@ To get started, make a copy of */sample_files/.env-sample* and name it */.env*. 
 | HOURS_TO_PRINT | y | How many hours worth of data to include in timeline |
 | OUTFILE | y | The name of the HTML file you want to generate |
 | DEV_MODE | n | Set to False for normal use. When developing and testing, set to True to limit the number of titles read from the source. |
+| USE_KEYWORD_LIST | n | set to True to enable keyword lists. |
 | *genre*_KEYWORDS | n | If creating custom rows in the table, enter a comma-separated list of strings to match. This is currently case-sensitive. |
 
 
