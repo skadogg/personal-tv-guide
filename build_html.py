@@ -13,7 +13,8 @@ load_dotenv()
 when_to_start = int(os.environ.get('WHEN_TO_START')) # first hour in output table
 hours_to_print = int(os.environ.get('HOURS_TO_PRINT')) # how many hours worth of data in table
 outfile = str(os.environ.get('OUTFILE'))
-use_keyword_lists = int(os.environ.get('USE_KEYWORD_LIST'))
+stylesheet_path = str(os.environ.get('STYLESHEET_PATH'))
+use_keyword_lists = bool(os.environ.get('USE_KEYWORD_LIST'))
 
 
 # Restore my work
@@ -50,7 +51,7 @@ while len(remainder) > 0:
 
 # Begin writing data
 html_handle = open(outfile,'+w')
-html_handle.write(modules.html.generate_html_start())
+html_handle.write(modules.html.generate_html_start(stylesheet_path))
 html_handle.write(modules.html.generate_table_th(when_to_start,hours_to_print))
 
 

@@ -23,9 +23,9 @@ def generate_table_td(content, colspan = 1):
     return str_start + content + str_end
 
 
-def generate_html_start():
+def generate_html_start(stylesheet_path):
     # Creates the first part of the HTML code
-    stylesheet_path = "./css/nord.css"
+    # stylesheet_path = "./css/nord.css"
     return '<head>\n<title>Personal TV Guide</title>\n<link rel="stylesheet" href="' + stylesheet_path + '">\n</head>\n<body>\n<table>\n'
 
 
