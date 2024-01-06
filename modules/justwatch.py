@@ -39,3 +39,24 @@ def generate_movies_by_runtime_table(movie_list):
         content += modules.html.sort_by_runtime_table_row(title_and_runtime_list)
 
     return str_start + content + str_end
+
+
+def balance_movie_and_tv_lists(movie_list, tv_list, good_ratio = 0.8):
+    # Takes two show lists and returns a more balanced list
+    # Currently based on number of titles
+    # TODO: Create comparison by runtime
+    if len(movie_list) > len(tv_list):
+        bigger_list = movie_list
+        smaller_list = tv_list
+    else:
+        bigger_list = tv_list
+        smaller_list = movie_list
+    
+    # smaller_list_no_episode_info = []
+    # for i in range(len(smaller_list)):
+        
+    
+    while(len(smaller_list) / len(bigger_list) < good_ratio):
+        smaller_list = smaller_list + smaller_list
+    
+    return bigger_list + smaller_list

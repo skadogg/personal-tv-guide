@@ -24,7 +24,7 @@ data_tuples_movies = modules.data_bin_convert.bin_to_data('./saved_data_movies.b
 data_tuples_tv = modules.data_bin_convert.bin_to_data('./saved_data_tv.bin')
 all_genres = modules.data_bin_convert.bin_to_data('./saved_data_genres.bin')
 
-data_tuples = data_tuples_movies + data_tuples_tv
+data_tuples = modules.justwatch.balance_movie_and_tv_lists(data_tuples_movies, data_tuples_tv, 0.7)
 
 
 # Randomize the lists

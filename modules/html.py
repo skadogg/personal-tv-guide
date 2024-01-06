@@ -89,7 +89,7 @@ def generate_html_genre_tds(genre_list, genre, hours):
         else:
             time_countdown = col_left
 
-        this_content = this_shield + '<br>' + this_ep
+        this_content = this_shield # + '<br>' + this_ep
         str += generate_table_td(this_content, this_colspan)
     return str + '</tr>\n'
 
