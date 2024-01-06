@@ -14,6 +14,28 @@ def generate_table_th(hour_start = 8, hours = 4):
     return str_start + str_td + str_end
 
 
+def sort_by_runtime_table_header(headers_list):
+    # Creates the first (header) row of the table
+    str_start = '<tr>\n'
+    str_end = '</tr>\n'
+
+    str_tr = ''
+    for i in range(len(headers_list)):
+        str_tr += '<th>' + headers_list[i] + '</th>\n'
+
+    return str_start + str_tr + str_end
+
+
+def sort_by_runtime_table_row(row_list):
+    # Creates the first (header) row of the table
+    str_start = '<tr>\n'
+    str_end = '</tr>\n'
+
+    str_tr = '<td>' + row_list[0] + '</td><td>' + row_list[1] + '</td>\n'
+
+    return str_start + str_tr + str_end
+
+
 def generate_table_td(content, colspan = 1):
     # Wraps your content string in a <td> spanning colspan number of columns
     # <td colspan="6"><img alt="Static Badge" src="https://img.shields.io/badge/Herbie%20Hancock%3A%20Possibilities%20(2006)%20-%20PG-green"></td>
@@ -35,11 +57,11 @@ def generate_html_end():
 
 
 def generate_table_start():
-    return '<table>\n'
+    return '<p>\n<table>\n'
 
 
 def generate_table_end():
-    return '</table>\n'
+    return '</table>\n</p>\n\n'
 
 
 def generate_html_genre_tds(genre_list, genre, hours):
@@ -73,7 +95,8 @@ def generate_html_genre_tds(genre_list, genre, hours):
 
 
 def generate_featured_film_table(show):
-    str_start = '<p align="center">\n<table width="800px">\n<tr><th colspan="2">Featured Film</th></tr>\n'
+    # Create the HTML code string for the featured film
+    str_start = '<p>\n<table width="800px">\n<tr><th colspan="2">Featured Film</th></tr>\n'
     content = '<tr><td>' + modules.shield.generate_shield(show) + '</td>'
     content += '<td rowspan="3">' + show[10] + '</td></tr>\n' # synopsis
     content += '<tr><td>' + show[4] + '</td></tr>\n' # genre

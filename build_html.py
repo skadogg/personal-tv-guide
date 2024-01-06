@@ -1,6 +1,5 @@
 import random
 import os
-
 import modules.shield
 import modules.html
 import modules.runtime
@@ -72,8 +71,12 @@ for i in range(len(genre_lists)):
 html_handle.write(modules.html.generate_table_end())
 
 
-# Movie of the Week
+# Featured Film
 html_handle.write(modules.html.generate_featured_film_table(modules.justwatch.get_random_show(data_tuples_movies)))
+
+
+# Movies sorted by runtime
+html_handle.write(modules.justwatch.generate_movies_by_runtime_table(data_tuples_movies))
 
 
 # Finish writing data
