@@ -14,16 +14,7 @@ def get_titles_count(driver):
         return titles_count
 
 
-def get_title_cover(title): # TODO:
-    # Takes a movie list and looks up the URL for the cover iamge
-    url = ''
-    return url
-
-
-def movie_of_the_week(list):
-    # Takes a random movie from the list and returns the chosen movie and the URL for the cover iamge
-    # Example: movie_of_the_week, img_url = movie_of_the_week(list)
-    random.shuffle(list)
-    show = list[0]
-    cover_url = get_title_cover(show)
-    return show, cover_url
+def get_random_show(list):
+    # Takes a random show from the list and returns the chosen show
+    r = random.randint(0,len(list))
+    return list[r]
