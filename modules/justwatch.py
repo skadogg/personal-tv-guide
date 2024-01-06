@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+import random
 
 
 def get_titles_count(driver):
@@ -11,3 +12,9 @@ def get_titles_count(driver):
         print("Error getting title count")
     else:
         return titles_count
+
+
+def get_random_show(list):
+    # Takes a random show from the list and returns the chosen show
+    r = random.randint(0,len(list))
+    return list[r]

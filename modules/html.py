@@ -26,12 +26,20 @@ def generate_table_td(content, colspan = 1):
 def generate_html_start(stylesheet_path):
     # Creates the first part of the HTML code
     # stylesheet_path = "./css/nord.css"
-    return '<head>\n<title>Personal TV Guide</title>\n<link rel="stylesheet" href="' + stylesheet_path + '">\n</head>\n<body>\n<table>\n'
+    return '<html><head>\n<title>Personal TV Guide</title>\n<link rel="stylesheet" href="' + stylesheet_path + '">\n</head>\n<body>\n'
 
 
 def generate_html_end():
     # Creates the last part of the HTML code
-    return '</table>\n</body>\n'
+    return '</body>\n</html>'
+
+
+def generate_table_start():
+    return '<table>\n'
+
+
+def generate_table_end():
+    return '</table>\n'
 
 
 def generate_html_genre_tds(genre_list, genre, hours):
@@ -61,4 +69,15 @@ def generate_html_genre_tds(genre_list, genre, hours):
 
         this_content = this_shield + '<br>' + this_ep
         str += generate_table_td(this_content, this_colspan)
-    return '<tr>\n' + str
+    return str + '</tr>\n'
+
+
+def generate_featured_film_table(show):
+    str_start = '<p align="center">\n<table width="800px">\n<tr><th colspan="2">Featured Film</th></tr>\n'
+    content = '<tr><td>' + modules.shield.generate_shield(show) + '</td>'
+    content += '<td rowspan="3">' + show[10] + '</td></tr>\n' # synopsis
+    content += '<tr><td>' + show[4] + '</td></tr>\n' # genre
+    content += '<tr><td>' + show[5] + '</td></tr>\n' # runtime
+    str_end = '</table>\n</p>\n'
+    
+    return str_start + content + str_end
