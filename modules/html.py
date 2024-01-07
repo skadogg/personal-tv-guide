@@ -48,13 +48,8 @@ def generate_table_td(content, colspan = 1):
 def generate_html_start(stylesheet_path):
     # Creates the first part of the HTML code
     # stylesheet_path = "./css/nord.css"
-    html_start = '<html><head>\n<title>Personal TV Guide</title>\n<link rel="stylesheet" href="' + stylesheet_path + '">\n</head>\n<body>\n'
-    
-    navbar_html = '<div class="navbar">\n'
-    navbar_html += '<img src="./images/icon.png" alt="Navbar Icon" class="navbar-icon">\n'
-    navbar_html += '</div>\n'
-    
-    return html_start + navbar_html
+    return '<html><head>\n<title>Personal TV Guide</title>\n<link rel="stylesheet" href="' + stylesheet_path + '">\n</head>\n<body>\n'
+
 
 def generate_html_end():
     # Creates the last part of the HTML code
