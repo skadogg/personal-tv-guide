@@ -37,6 +37,8 @@ random.shuffle(all_genres)
 genre_triggers, remainder = modules.genre.split_by_keyword(data_tuples,modules.genre.trigger_keywords())
 genre_christmas, remainder = modules.genre.split_by_keyword(remainder,modules.genre.christmas_keywords())
 
+#sorting list of genres in alphabetical order
+all_genres.sort()
 
 # Loop through all_genres to separate data by genre
 i = 0
