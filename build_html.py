@@ -75,16 +75,26 @@ html_handle.write(modules.html.generate_table_end())
 html_handle.write(modules.html.generate_featured_film_table(modules.justwatch.get_random_show(data_tuples_movies)))
 
 
+html_handle.write('<table>\n<tr>\n<td>\n')
+
 # Movies sorted by runtime
 html_handle.write(modules.justwatch.generate_movies_by_runtime_table(data_tuples_movies))
 
 
+html_handle.write('</td>\n<td width="50px"></td>\n<td>\n')
+
+
 # Write table for time left
 time_info = modules.runtime.time_left_in_tv_series_report(data_tuples_tv)
-html_handle.write('</table><br><br><table>')
+html_handle.write('<p>\n<table>\n<th>Title</th><th>Minutes Left</th>\n')
 for i in range(len(time_info)):
-    html_handle.write('<tr><td>' + time_info[i][0] + '</td><td>' + str(round(time_info[i][3] * 100,0)) + '%</td></tr>')
-html_handle.write('</table>')
+    # html_handle.write('<tr><td>' + time_info[i][0] + '</td><td>' + str(round(time_info[i][3] * 100,0)) + '%</td></tr>') #percent done
+    html_handle.write('<tr><td>' + time_info[i][0] + '</td><td>' + str(time_info[i][1]) + '</td></tr>') #minutes left
+html_handle.write('</table>\n</p>\n')
+
+
+html_handle.write('</td>\n</tr>\n</table>\n')
+
 
 
 # Finish writing data
