@@ -1,3 +1,5 @@
+import modules.shield
+
 def runtime_to_minutes(runtime_str, round_up = True):
     # Parses the JustWatch runtime_str into minutes
     # Input format: runtime_str = '2h 28min'
@@ -47,10 +49,10 @@ def percent_complete(minutes_left, minutes_total):
 def time_left_in_tv_series_report(list):
     time_info = []
     for i in range(len(list)):
-        show_title = list[i][0]
+        show_title = modules.shield.generate_shield(list[i])
         current_season, current_episode = list[i][1].replace('S','').replace('E','').split(' ')
         season_data = list[i][11]
-        runtime = runtime_to_minutes(list[i][5])
+        runtime = runtime_to_minutes(list[i][5],False)
         # episodes_left
         
         minutes_left = time_left_in_tv_series(season_data,runtime,int(current_season),int(current_episode))
