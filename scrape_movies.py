@@ -1,10 +1,7 @@
-# inspired by https://towardsdatascience.com/how-to-use-selenium-to-web-scrape-with-example-80f9b23a843a
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-# from selenium.webdriver.common.keys import Keys
 # import pandas as pd
 import time
 # import json
@@ -25,11 +22,12 @@ options = webdriver.ChromeOptions()
 options.add_argument("--headless=new")
 # this will disable image loading
 options.add_argument('--blink-settings=imagesEnabled=false')
-
+options.add_experimental_option('excludeSwitches', ['enable-logging'])
+options.add_argument('--no-sandbox')
 # Open main window
 driver = webdriver.Chrome(options=options)
-
-driver.get('https://www.justwatch.com/us/lists/my-lists?content_type=movie&sort_by=popular_30_day')
+driver.set_page_load_timeout(60)
+driver.get('https://www.justwatch.com/us/lists/my-lists?content_type=movie&sort_by=random&sort_asc=true&sorting_random_seed=1')
 
 driver.maximize_window()
 # driver.implicitly_driwait(1.0)
@@ -38,8 +36,6 @@ driver.maximize_window()
 
 # Sign in to JustWatch using stored credentials (secret_login.bin)
 modules.auto_sign_in.sign_in(driver)
-
-time.sleep(5)
 
 # Scroll to the end of the page
 items_in_list = modules.justwatch.get_titles_count(driver)
@@ -56,6 +52,7 @@ with alive_bar(pages, spinner='waves', bar='squares') as bar:
 
 # Get name, episode number/title, left in season, main show link from main watchlist
 show_cards = driver.find_elements(By.XPATH, '//div[@class="title-card-basic title-card-basic"]')
+
 if dev_mode:
     show_cards = show_cards[0:5]
 
@@ -103,38 +100,44 @@ season_data = []
 with alive_bar(len(show_main_link), spinner='waves', bar='squares') as bar:
     for j in range(len(show_main_link)):
         full_url = 'https://www.justwatch.com' + show_main_link[j]
-
-        # Get year, media type, age rating, and synopsis quickly from ld-json data
-        show_ld_json_data = modules.ld_json.get_ld_json(full_url)
-
-
-        # Visit each page to get genres and runtimes
-        # from https://www.browserstack.com/guide/selenium-wait-for-page-to-load
-        driver.get(full_url)
+        
         try:
-            elem = WebDriverWait(driver, 30).until(
-                EC.presence_of_element_located((By.XPATH, '//div[@class="title-info title-info"]'))
-            )
-        finally:
-            time.sleep(.5)
+            # Get year, media type, age rating, and synopsis quickly from ld-json data
+            show_ld_json_data = modules.ld_json.get_ld_json(full_url)
+        except Exception as e:
+            print("Error getting data for " + show_main_link[j] + " skipping...")
+            continue
+        
+        try:
+            # Visit each page to get genres and runtimes
+            driver.get(full_url)
+            try:
+                elem = WebDriverWait(driver, 30).until(
+                    EC.presence_of_element_located((By.XPATH, '//div[@class="title-info title-info"]'))
+                )
+            finally:
+                time.sleep(.5)
 
-        title_info = driver.find_element(By.XPATH, '//div[@class="title-info title-info"]')
-        detail_infos = title_info.find_elements(By.XPATH,'//div[@class="detail-infos"]')
+            title_info = driver.find_element(By.XPATH, '//div[@class="title-info title-info"]')
+            detail_infos = title_info.find_elements(By.XPATH,'//div[@class="detail-infos"]')
 
-        # Loop through each section on the page to get headings and text
-        k = 0
-        title_info_heading = []
-        title_info_value = []
-        shows_dict = []
-        for k in range(len(detail_infos)):
-            text = detail_infos[k].text
-            if len(text) > 0:
-                text_split = text.split(sep='\n')
-                split_head = text_split[0]
-                split_value = text_split[1]
-                title_info_heading.append(split_head)
-                title_info_value.append(split_value)
-
+            # Loop through each section on the page to get headings and text
+            k = 0
+            title_info_heading = []
+            title_info_value = []
+            shows_dict = []
+            for k in range(len(detail_infos)):
+                text = detail_infos[k].text
+                if len(text) > 0:
+                    text_split = text.split(sep='\n')
+                    split_head = text_split[0]
+                    split_value = text_split[1]
+                    title_info_heading.append(split_head)
+                    title_info_value.append(split_value)
+        except Exception as e:
+            print("Error getting data for " + show_main_link[j] + " skipping...")
+            continue
+        
         shows_dict = dict(zip(title_info_heading,title_info_value))
         show_genres.append(shows_dict.get('GENRES'))
         show_runtime.append(shows_dict.get('RUNTIME'))

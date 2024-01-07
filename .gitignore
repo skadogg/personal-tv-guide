@@ -4,4 +4,7 @@ __pycache__
 secret*
 /*.bin
 out.html
+.env
+chromedriver/chromedriver.exe
+my_env/
 /.env
