@@ -270,6 +270,6 @@ table {
 
 .navbar {
   text-align: center;
-  background-color: #2e3440; 
+  background-color: var(nord0); 
   padding: 5px;
 }
