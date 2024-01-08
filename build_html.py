@@ -1,10 +1,10 @@
 import random
 import os
-
 import modules.shield
 import modules.html
 import modules.runtime
 import modules.genre
+import modules.justwatch
 
 from dotenv import load_dotenv
 
@@ -13,6 +13,8 @@ load_dotenv()
 when_to_start = int(os.environ.get('WHEN_TO_START')) # first hour in output table
 hours_to_print = int(os.environ.get('HOURS_TO_PRINT')) # how many hours worth of data in table
 outfile = str(os.environ.get('OUTFILE'))
+stylesheet_path = str(os.environ.get('STYLESHEET_PATH'))
+use_keyword_lists = bool(os.environ.get('USE_KEYWORD_LIST'))
 
 
 # Restore my work
@@ -22,7 +24,7 @@ data_tuples_movies = modules.data_bin_convert.bin_to_data('./saved_data_movies.b
 data_tuples_tv = modules.data_bin_convert.bin_to_data('./saved_data_tv.bin')
 all_genres = modules.data_bin_convert.bin_to_data('./saved_data_genres.bin')
 
-data_tuples = data_tuples_movies + data_tuples_tv
+data_tuples = modules.justwatch.balance_movie_and_tv_lists(data_tuples_movies, data_tuples_tv, 0.7)
 
 
 # Randomize the lists
@@ -31,7 +33,7 @@ random.shuffle(all_genres)
 
 
 # Look through data for keyword matches
-use_keyword_lists = True
+# use_keyword_lists = True
 genre_triggers, remainder = modules.genre.split_by_keyword(data_tuples,modules.genre.trigger_keywords())
 genre_christmas, remainder = modules.genre.split_by_keyword(remainder,modules.genre.christmas_keywords())
 
@@ -49,20 +51,32 @@ while len(remainder) > 0:
 
 # Begin writing data
 html_handle = open(outfile,'+w')
-html_handle.write(modules.html.generate_html_start())
-html_handle.write(modules.html.generate_table_th(when_to_start,hours_to_print))
+html_handle.write(modules.html.generate_html_start(stylesheet_path))
 
+
+# TV Guide
+html_handle.write(modules.html.generate_table_start())
+html_handle.write(modules.html.generate_table_th(when_to_start,hours_to_print))
 
 # Write table rows for keyword lists
 if use_keyword_lists:
     html_handle.write(modules.html.generate_html_genre_tds(genre_triggers,'Trigger Warning',hours_to_print,True))
     html_handle.write(modules.html.generate_html_genre_tds(genre_christmas,'Christmas',hours_to_print,True))
 
-
 # Write table rows for looped genre_lists
 for i in range(len(genre_lists)):
     if genre_lists[i]:
         html_handle.write(modules.html.generate_html_genre_tds(genre_lists[i], all_genres[i], hours_to_print,True))
+
+html_handle.write(modules.html.generate_table_end())
+
+
+# Featured Film
+html_handle.write(modules.html.generate_featured_film_table(modules.justwatch.get_random_show(data_tuples_movies)))
+
+
+# Movies sorted by runtime
+html_handle.write(modules.justwatch.generate_movies_by_runtime_table(data_tuples_movies))
 
 
 # Finish writing data

@@ -15,6 +15,28 @@ def generate_table_th(hour_start = 8, hours = 4):
     return str_start + str_td + str_end
 
 
+def sort_by_runtime_table_header(headers_list):
+    # Creates the first (header) row of the table
+    str_start = '<tr>\n'
+    str_end = '</tr>\n'
+
+    str_tr = ''
+    for i in range(len(headers_list)):
+        str_tr += '<th>' + headers_list[i] + '</th>\n'
+
+    return str_start + str_tr + str_end
+
+
+def sort_by_runtime_table_row(row_list):
+    # Creates the first (header) row of the table
+    str_start = '<tr>\n'
+    str_end = '</tr>\n'
+
+    str_tr = '<td>' + row_list[0] + '</td><td>' + row_list[1] + '</td>\n'
+
+    return str_start + str_tr + str_end
+
+
 def generate_table_td(content, colspan = 1):
     # Wraps your content string in a <td> spanning colspan number of columns
     # <td colspan="6"><img alt="Static Badge" src="https://img.shields.io/badge/Herbie%20Hancock%3A%20Possibilities%20(2006)%20-%20PG-green"></td>
@@ -24,15 +46,23 @@ def generate_table_td(content, colspan = 1):
     return str_start + content + str_end
 
 
-def generate_html_start():
+def generate_html_start(stylesheet_path):
     # Creates the first part of the HTML code
-    stylesheet_path = "./css/nord.css"
-    return '<head>\n<title>Personal TV Guide</title>\n<link rel="stylesheet" href="' + stylesheet_path + '">\n</head>\n<body>\n<table>\n'
+    # stylesheet_path = "./css/nord.css"
+    return '<html><head>\n<title>Personal TV Guide</title>\n<link rel="stylesheet" href="' + stylesheet_path + '">\n</head>\n<body>\n'
 
 
 def generate_html_end():
     # Creates the last part of the HTML code
-    return '</table>\n</body>\n'
+    return '</body>\n</html>'
+
+
+def generate_table_start():
+    return '<p>\n<table>\n'
+
+
+def generate_table_end():
+    return '</table>\n</p>\n\n'
 
 
 def generate_html_genre_tds(genre_list, genre, hours, random_start = False):
@@ -68,9 +98,22 @@ def generate_html_genre_tds(genre_list, genre, hours, random_start = False):
         else:
             time_countdown = col_left
 
-        this_content = this_shield + '<br>' + this_ep
+        this_content = this_shield # + '<br>' + this_ep
         str += generate_table_td(this_content, this_colspan)
-    return '<tr>\n' + str
+    return str + '</tr>\n'
+
+
+def generate_featured_film_table(show):
+    # Create the HTML code string for the featured film
+    str_start = '<p>\n<table width="800px">\n<tr><th colspan="2">Featured Film</th></tr>\n'
+    content = '<tr><td>' + modules.shield.generate_shield(show) + '</td>'
+    content += '<td rowspan="3">' + show[10] + '</td></tr>\n' # synopsis
+    content += '<tr><td>' + show[4] + '</td></tr>\n' # genre
+    content += '<tr><td>' + show[5] + '</td></tr>\n' # runtime
+    str_end = '</table>\n</p>\n'
+    
+    return str_start + content + str_end
+
 
 
 def random_start_time():
