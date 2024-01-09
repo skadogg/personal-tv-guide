@@ -34,11 +34,10 @@ random.shuffle(all_genres)
 
 # Look through data for keyword matches
 # use_keyword_lists = True
+# TODO: only do these if use_keyword_lists is True. Otherwise, this serves to exclude shows by keyword.
 genre_triggers, remainder = modules.genre.split_by_keyword(data_tuples,modules.genre.trigger_keywords())
 genre_christmas, remainder = modules.genre.split_by_keyword(remainder,modules.genre.christmas_keywords())
 
-#sorting list of genres in alphabetical order
-all_genres.sort()
 
 # Loop through all_genres to separate data by genre
 i = 0
@@ -60,6 +59,11 @@ html_handle.write(modules.html.generate_html_start(stylesheet_path))
 html_handle.write(modules.html.generate_table_start())
 html_handle.write(modules.html.generate_table_th(when_to_start,hours_to_print))
 
+# Write table rows for keyword lists
+if use_keyword_lists:
+    html_handle.write(modules.html.generate_html_genre_tds(genre_triggers,'Trigger Warning',hours_to_print))
+    html_handle.write(modules.html.generate_html_genre_tds(genre_christmas,'Christmas',hours_to_print))
+    
 # Write table rows for looped genre_lists, sorted alphabetically
 genre_lists_str = []
 i = 0
