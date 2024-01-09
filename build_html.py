@@ -14,7 +14,7 @@ when_to_start = int(os.environ.get('WHEN_TO_START')) # first hour in output tabl
 hours_to_print = int(os.environ.get('HOURS_TO_PRINT')) # how many hours worth of data in table
 outfile = str(os.environ.get('OUTFILE'))
 stylesheet_path = str(os.environ.get('STYLESHEET_PATH'))
-use_keyword_lists = bool(os.environ.get('USE_KEYWORD_LIST'))
+use_keyword_lists = os.environ.get('USE_KEYWORD_LIST').lower() == 'true'
 
 
 # Restore my work
@@ -34,11 +34,10 @@ random.shuffle(all_genres)
 
 # Look through data for keyword matches
 # use_keyword_lists = True
+# TODO: only do these if use_keyword_lists is True. Otherwise, this serves to exclude shows by keyword.
 genre_triggers, remainder = modules.genre.split_by_keyword(data_tuples,modules.genre.trigger_keywords())
 genre_christmas, remainder = modules.genre.split_by_keyword(remainder,modules.genre.christmas_keywords())
 
-#sorting list of genres in alphabetical order
-all_genres.sort()
 
 # Loop through all_genres to separate data by genre
 i = 0
@@ -64,11 +63,19 @@ html_handle.write(modules.html.generate_table_th(when_to_start,hours_to_print))
 if use_keyword_lists:
     html_handle.write(modules.html.generate_html_genre_tds(genre_triggers,'Trigger Warning',hours_to_print))
     html_handle.write(modules.html.generate_html_genre_tds(genre_christmas,'Christmas',hours_to_print))
-
-# Write table rows for looped genre_lists
+    
+# Write table rows for looped genre_lists, sorted alphabetically
+genre_lists_str = []
+i = 0
 for i in range(len(genre_lists)):
     if genre_lists[i]:
-        html_handle.write(modules.html.generate_html_genre_tds(genre_lists[i], all_genres[i], hours_to_print))
+        genre_lists_str.append(str(modules.html.generate_html_genre_tds(genre_lists[i], all_genres[i], hours_to_print)))
+
+genre_lists_str_sorted = sorted(genre_lists_str)
+
+i = 0
+for i in range(len(genre_lists_str_sorted)):
+    html_handle.write(genre_lists_str_sorted[i])
 
 html_handle.write(modules.html.generate_table_end())
 
