@@ -70,7 +70,7 @@ def generate_table_end():
     return '</table>\n</p>\n\n'
 
 
-def generate_html_genre_tds(genre_list, genre, hours, random_start = False):
+def generate_html_genre_tds(genre_list, genre, hours, random_start = True):
     # With each genre_list (lists of shows that have been found to have a matching genre), we can now generate the HTML
     # to put in our table(s). This loops through the genre_list and creates a <tr> for each up to the number of hours specified.
     str = '<tr><td class="genre">' + genre + '</td>\n'
