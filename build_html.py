@@ -9,7 +9,7 @@ import modules.justwatch
 from dotenv import load_dotenv
 
 # Variables
-load_dotenv()
+load_dotenv(dotenv_path='./my_data/.env')
 when_to_start = int(os.environ.get('WHEN_TO_START')) # first hour in output table
 hours_to_print = int(os.environ.get('HOURS_TO_PRINT')) # how many hours worth of data in table
 outfile = str(os.environ.get('OUTFILE'))
@@ -19,10 +19,11 @@ use_keyword_lists = os.environ.get('USE_KEYWORD_LIST').lower() == 'true'
 
 # Restore my work
 import modules.data_bin_convert
+# TODO: rename this tuples stuff
 # modules.data_bin_convert.data_to_bin(data_tuples)
-data_tuples_movies = modules.data_bin_convert.bin_to_data('./saved_data_movies.bin')
-data_tuples_tv = modules.data_bin_convert.bin_to_data('./saved_data_tv.bin')
-all_genres = modules.data_bin_convert.bin_to_data('./saved_data_genres.bin')
+data_tuples_movies = modules.data_bin_convert.bin_to_data('./my_data/saved_data_movies.bin')
+data_tuples_tv = modules.data_bin_convert.bin_to_data('./my_data/saved_data_tv.bin')
+all_genres = modules.data_bin_convert.bin_to_data('./my_data/saved_data_genres.bin')
 
 data_tuples = modules.justwatch.balance_movie_and_tv_lists(data_tuples_movies, data_tuples_tv, 0.7)
 

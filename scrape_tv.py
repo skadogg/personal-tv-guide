@@ -34,7 +34,7 @@ driver.maximize_window()
 # main_window_handle = driver.window_handles[0]
 
 
-# Sign in to JustWatch using stored credentials (secret_login.bin)
+# Sign in to JustWatch using stored credentials (my_data/secret_login.bin)
 modules.auto_sign_in.sign_in(driver)
 
 # Scroll to the end of the page
@@ -162,5 +162,5 @@ data_tuples = list(zip(show_name,episode_number,episode_left_in_season,episode_t
 
 # Save my work
 import modules.data_bin_convert
-modules.data_bin_convert.data_to_bin(data_tuples, './saved_data_tv.bin')
+modules.data_bin_convert.data_to_bin(data_tuples, './my_data/saved_data_tv.bin')
 # data_tuples = modules.data_bin_convert.bin_to_data()

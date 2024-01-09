@@ -26,8 +26,8 @@ def get_genres_from_scraped_lists():
     # Restore my work
     import modules.data_bin_convert
     # modules.data_bin_convert.data_to_bin(data_tuples)
-    data_tuples_movies = modules.data_bin_convert.bin_to_data('./saved_data_movies.bin')
-    data_tuples_tv = modules.data_bin_convert.bin_to_data('./saved_data_tv.bin')
+    data_tuples_movies = modules.data_bin_convert.bin_to_data('./my_data/saved_data_movies.bin')
+    data_tuples_tv = modules.data_bin_convert.bin_to_data('./my_data/saved_data_tv.bin')
 
     data_tuples = data_tuples_movies + data_tuples_tv
 
@@ -40,7 +40,7 @@ def get_genres_from_scraped_lists():
     while '' in genre_list:
         genre_list.remove('')
 
-    modules.data_bin_convert.data_to_bin(genre_list, './saved_data_genres.bin')
+    modules.data_bin_convert.data_to_bin(genre_list, './my_data/saved_data_genres.bin')
 
 
 def christmas_keywords():
