@@ -6,7 +6,7 @@ load_dotenv()
 
 def split_by_genre(list,genre_str):
     # Takes the list and splits into two lists: one with the given genre_str, and one without
-    # >>> genre_romance, remainder = modules.genre.split_by_genre(data_tuples,"Romance")
+    # >>> genre_romance, remainder = modules.genre.split_by_genre(data_list_everything,"Romance")
     list_with_genre, list_without_genre = [], []
     for i in range(len(list)):
         genres = list[i][4]
@@ -25,15 +25,15 @@ def get_genres_from_scraped_lists():
 
     # Restore my work
     import modules.data_bin_convert
-    # modules.data_bin_convert.data_to_bin(data_tuples)
-    data_tuples_movies = modules.data_bin_convert.bin_to_data('./my_data/saved_data_movies.bin')
-    data_tuples_tv = modules.data_bin_convert.bin_to_data('./my_data/saved_data_tv.bin')
+    # modules.data_bin_convert.data_to_bin(data_list_everything)
+    data_list_movies = modules.data_bin_convert.bin_to_data('./my_data/saved_data_movies.bin')
+    data_list_tv = modules.data_bin_convert.bin_to_data('./my_data/saved_data_tv.bin')
 
-    data_tuples = data_tuples_movies + data_tuples_tv
+    data_list_everything = data_list_movies + data_list_tv
 
     genre_str = ''
-    for i in range(len(data_tuples)):
-        genre_str += data_tuples[i][4] + ', '
+    for i in range(len(data_list_everything)):
+        genre_str += data_list_everything[i][4] + ', '
 
     genre_list = sorted(list(set((genre_str.split(', ')))))
 
@@ -58,7 +58,7 @@ def trigger_keywords():
 
 def split_by_keyword(list,keyword_list):
     # Takes the list and splits into two lists: one with the given keywords, and one without
-    # >>> genre_christmas, remainder = modules.genre.split_by_keyword(data_tuples,modules.genre.christmas_keywords())
+    # >>> genre_christmas, remainder = modules.genre.split_by_keyword(data_list_everything,modules.genre.christmas_keywords())
     list_with_keywords, list_without_keywords = [], []
     for i in range(len(list)):
         title = list[i][0]

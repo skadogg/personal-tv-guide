@@ -228,17 +228,17 @@ def scrape_justwatch(media):
 
 
     # Pull elements together
-    data_tuples = list(zip(show_name,episode_number,episode_left_in_season,episode_title,show_genres,show_runtime,show_age_rating,show_main_link,year,media_type,synopsis))
-    # sorted(data_tuples)
+    data_list_everything = list(zip(show_name,episode_number,episode_left_in_season,episode_title,show_genres,show_runtime,show_age_rating,show_main_link,year,media_type,synopsis))
+    # sorted(data_list_everything)
 
-    # df = pd.DataFrame(data_tuples, columns=['Show Name','Episode Number','Episodes Remaining','Episode Title','Genres','Runtime','Age Rating'])
+    # df = pd.DataFrame(data_list_everything, columns=['Show Name','Episode Number','Episodes Remaining','Episode Title','Genres','Runtime','Age Rating'])
     # html_string = df.to_html()
 
 
     # Save my work
     import modules.data_bin_convert
     if media == 'movies':
-        modules.data_bin_convert.data_to_bin(data_tuples, './my_data/saved_data_movies.bin')
+        modules.data_bin_convert.data_to_bin(data_list_everything, './my_data/saved_data_movies.bin')
     else:
-        modules.data_bin_convert.data_to_bin(data_tuples, './my_data/saved_data_tv.bin')
-    # data_tuples = modules.data_bin_convert.bin_to_data()
+        modules.data_bin_convert.data_to_bin(data_list_everything, './my_data/saved_data_tv.bin')
+    # data_list_everything = modules.data_bin_convert.bin_to_data()
