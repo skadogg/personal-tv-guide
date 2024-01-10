@@ -4,10 +4,13 @@ from os import path
 from selenium.webdriver.common.by import By
 import time
 
-def sign_in(driver):
-    email = ""
-    password = ""
 
+def sign_in(driver):
+    # Sign in to JustWatch
+    email = ''
+    password = ''
+
+    # Look for stored credentials and prompt if none are found
     if(path.isfile('./my_data/secret_login.bin')):
         login_data = data_bin_convert.bin_to_data('./my_data/secret_login.bin')
         email = login_data[0]
@@ -21,13 +24,13 @@ def sign_in(driver):
         data_bin_convert.data_to_bin(login_data, './my_data/secret_login.bin')
 
     try:
-        # go to sign in page
+        # Open sign in modal
         driver.find_element(By.CLASS_NAME, "not-logged-in").click()
         driver.implicitly_wait(2.0)
         driver.find_elements(By.CLASS_NAME, "text-wrapper")[0].click()
         driver.find_elements(By.CLASS_NAME, "firebaseui-list-item")[3].click()
         
-        # sign in
+        # Sign in with user credentials
         driver.find_element(By.NAME, "email").send_keys(email)
         driver.find_element(By.CLASS_NAME, "firebaseui-id-submit").click()
         driver.find_element(By.NAME, "password").send_keys(password)
@@ -35,5 +38,5 @@ def sign_in(driver):
     except:
         print("Error signing in")
     else:
-        # Wait for successful sign in modal to go away
+        # Wait for successful sign in modal to go away - usually takes five to seven seconds (for me)
         time.sleep(7)

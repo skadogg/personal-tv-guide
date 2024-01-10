@@ -81,7 +81,7 @@ def scrape_justwatch(media):
     options = webdriver.ChromeOptions()
 
     # Run the browser in the background without opening a new window
-    # options.add_argument("--headless=new")
+    options.add_argument("--headless=new")
     # this will disable image loading
     options.add_argument('--blink-settings=imagesEnabled=false')
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
