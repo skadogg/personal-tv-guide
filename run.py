@@ -1,12 +1,12 @@
-import random
-import os
-import modules.shield
-import modules.html
-import modules.runtime
-import modules.genre
-import modules.justwatch
-
 from dotenv import load_dotenv
+import modules.genre
+import modules.html
+import modules.justwatch
+import modules.runtime
+import modules.shield
+import os
+import random
+
 
 # Variables
 load_dotenv(dotenv_path='./my_data/.env')
@@ -15,6 +15,14 @@ hours_to_print = int(os.environ.get('HOURS_TO_PRINT')) # how many hours worth of
 outfile = str(os.environ.get('OUTFILE'))
 stylesheet_path = str(os.environ.get('STYLESHEET_PATH'))
 use_keyword_lists = os.environ.get('USE_KEYWORD_LIST').lower() == 'true'
+
+
+modules.justwatch.scrape_justwatch('Movies')
+modules.justwatch.scrape_justwatch('TV')
+
+
+# Create genres bin file
+modules.genre.get_genres_from_scraped_lists()
 
 
 # Restore my work
