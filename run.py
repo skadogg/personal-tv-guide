@@ -72,19 +72,19 @@ html_handle.write(modules.html.generate_html_start(stylesheet_path))
 
 # Begin writing the main table for your personal TV guide
 html_handle.write(modules.html.generate_table_start())
-html_handle.write(modules.html.generate_table_th(when_to_start,hours_to_print))
+html_handle.write(modules.html.generate_table_header_row(when_to_start,hours_to_print))
 
 # Write table rows for keyword lists (if using)
 if use_keyword_lists:
-    html_handle.write(modules.html.generate_html_genre_tds(genre_triggers,'Trigger Warning',hours_to_print))
-    html_handle.write(modules.html.generate_html_genre_tds(genre_christmas,'Christmas',hours_to_print))
+    html_handle.write(modules.html.generate_table_genre_row(genre_triggers,'Trigger Warning',hours_to_print))
+    html_handle.write(modules.html.generate_table_genre_row(genre_christmas,'Christmas',hours_to_print))
     
 # Write table rows for previously-separated genre lists, sorted alphabetically
 genre_lists_str = []
 i = 0
 for i in range(len(genre_lists)):
     if genre_lists[i]:
-        genre_lists_str.append(str(modules.html.generate_html_genre_tds(genre_lists[i], all_genres[i], hours_to_print)))
+        genre_lists_str.append(str(modules.html.generate_table_genre_row(genre_lists[i], all_genres[i], hours_to_print)))
 
 genre_lists_str_sorted = sorted(genre_lists_str)
 

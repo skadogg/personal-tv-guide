@@ -71,6 +71,8 @@ def balance_movie_and_tv_lists(movie_list, tv_list, good_ratio = 0.8):
 
 
 def scrape_justwatch(media):
+    # Scrape your data from JustWatch.
+    # media should be either 'tv' or 'movies'
     import modules.auto_sign_in
     
     media = media.lower()

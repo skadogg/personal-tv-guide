@@ -1,6 +1,7 @@
+from bs4 import BeautifulSoup
 import json
 import requests
-from bs4 import BeautifulSoup
+
 
 def get_ld_json(url: str) -> dict:
     # Takes in a URL, reads the ld+json data, and returns useable json data
