@@ -97,7 +97,7 @@ def generate_html_genre_tds(genre_list, genre, hours, random_start = True):
         this_colspan = this_runtime // 15
 
         col_left = time_countdown - this_colspan
-        if col_left < 0:
+        if col_left <= 0:
             this_colspan = time_countdown
             break
         else:
