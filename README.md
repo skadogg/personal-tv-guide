@@ -35,15 +35,16 @@ Remember the weekly TV guide that came with the newspaper? It was the only usefu
 
 ## The code
 
-### Install the required Python modules
-```
-pip install -r requirements.txt
-```
 
 ### Credentials
 The first time you run it, you will be prompted to enter your JustWatch credentials. These get stored in a local file that will be ignored in any new commits you might make to the repository.
 
 ### How to run it
+
+### Install the required Python modules
+```
+pip install -r requirements.txt
+```
 
 #### Make .env file
 
@@ -83,7 +84,7 @@ With the data scraped, we can generate an HTML file.
 ## Acknowledgements
 
 ### Icon
-The *Tv Guide* icon was created by Pedrovisc from the [Noun Project](https://thenounproject.com/icon/tv-guide-193845/).
+The *Tv Guide* icon was created by  [Khalil Habib](https://github.com/Khaleelhabeeb/).
 
 ### Theme
 The stylesheet is using the [Nord theme](https://www.nordtheme.com/).

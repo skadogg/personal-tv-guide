@@ -267,3 +267,9 @@ table {
   color: var(--nord12);
   font-size: small;
 }
+
+.navbar {
+  text-align: center;
+  background-color: var(--nord0); 
+  padding: 5px;
+}
