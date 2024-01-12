@@ -3,8 +3,7 @@ import modules.data_bin_convert
 import modules.genre
 import modules.html
 import modules.justwatch
-# import modules.runtime
-# import modules.shield
+import modules.runtime
 import os
 import random
 
@@ -102,6 +101,15 @@ html_handle.write(modules.html.generate_featured_film_table(modules.justwatch.ge
 
 # Movies sorted by runtime
 html_handle.write(modules.justwatch.generate_movies_by_runtime_table(data_list_movies))
+
+
+# Write table for time left in TV series
+time_info = modules.runtime.time_left_in_tv_series_report(data_list_tv)
+html_handle.write('<p>\n<table>\n<th>Title</th><th>Minutes Left</th>\n')
+for i in range(len(time_info)):
+    # html_handle.write('<tr><td>' + time_info[i][0] + '</td><td>' + str(round(time_info[i][3] * 100,0)) + '%</td></tr>') #percent done
+    html_handle.write('<tr><td>' + time_info[i][0] + '</td><td>' + str(time_info[i][1]) + '</td></tr>') #minutes left
+html_handle.write('</table>\n</p>\n')
 
 
 # Finish writing HTML output

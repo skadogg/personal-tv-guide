@@ -170,6 +170,7 @@ def scrape_justwatch(media):
     year = []
     media_type = []
     synopsis = []
+    season_data = []
     with alive_bar(len(show_main_link), spinner='waves', bar='squares') as bar:
         for j in range(len(show_main_link)):
             bar.text = show_main_link[j]
@@ -223,6 +224,10 @@ def scrape_justwatch(media):
             media_type.append(show_ld_json_data['@type'])
             show_age_rating.append(show_ld_json_data['contentRating'])
             synopsis.append(show_ld_json_data['description'])
+            if media == 'movies':
+                season_data.append('')
+            else:
+                season_data.append(show_ld_json_data['containsSeason'])
 
 
     # driver.close()
@@ -230,7 +235,7 @@ def scrape_justwatch(media):
 
 
     # Pull elements together
-    data_list_everything = list(zip(show_name,episode_number,episode_left_in_season,episode_title,show_genres,show_runtime,show_age_rating,show_main_link,year,media_type,synopsis))
+    data_list_everything = list(zip(show_name,episode_number,episode_left_in_season,episode_title,show_genres,show_runtime,show_age_rating,show_main_link,year,media_type,synopsis,season_data))
     # sorted(data_list_everything)
 
     # df = pd.DataFrame(data_list_everything, columns=['Show Name','Episode Number','Episodes Remaining','Episode Title','Genres','Runtime','Age Rating'])
