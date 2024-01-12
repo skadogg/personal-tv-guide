@@ -3,8 +3,8 @@ import modules.data_bin_convert
 import modules.genre
 import modules.html
 import modules.justwatch
-import modules.runtime
-import modules.shield
+# import modules.runtime
+# import modules.shield
 import os
 import random
 
