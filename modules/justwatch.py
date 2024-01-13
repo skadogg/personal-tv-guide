@@ -194,6 +194,7 @@ def scrape_justwatch(media):
                     )
                 finally:
                     time.sleep(.5)
+                    continue
 
                 title_info = driver.find_element(By.XPATH, '//div[@class="title-info title-info"]')
                 detail_infos = title_info.find_elements(By.XPATH,'//div[@class="detail-infos"]')
