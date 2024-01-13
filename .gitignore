@@ -8,3 +8,4 @@ out.html
 chromedriver/chromedriver.exe
 my_env/
 /.env
+my_data/
