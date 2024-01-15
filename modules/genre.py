@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+import logging
 import modules.data_bin_convert
 import os
 
@@ -6,12 +7,15 @@ import os
 def split_by_genre(list,genre_str):
     # Takes the list and splits into two lists: one with the given genre_str, and one without
     # >>> genre_romance, remainder = modules.genre.split_by_genre(data_list_everything,"Romance")
+    logging.debug('Genre: ' + genre_str)
     list_with_genre, list_without_genre = [], []
     for i in range(len(list)):
         genres = list[i][4]
         if genre_str in genres:
+            logging.debug('Match: ' + str(list[i][0:4]))
             list_with_genre.append(list[i])
         else:
+            logging.debug('Skip: ' + list[i][4])
             list_without_genre.append(list[i])
     return [list_with_genre,list_without_genre]
 
@@ -32,6 +36,8 @@ def get_genres_from_scraped_lists():
 
     while '' in genre_list:
         genre_list.remove('')
+    
+    logging.debug(genre_list)
 
     modules.data_bin_convert.data_to_bin(genre_list, './my_data/saved_data_genres.bin')
 
@@ -60,7 +66,10 @@ def split_by_keyword(list,keyword_list):
 
         for j in range(len(keyword_list)):
             word = keyword_list[j]
+            logging.debug(word)
             if word in title or word in synopsis:
+                logging.debug(title)
+                logging.debug(synopsis)
                 found = True
                 break
             else:
@@ -70,4 +79,7 @@ def split_by_keyword(list,keyword_list):
             list_with_keywords.append(list[i])
         else:
             list_without_keywords.append(list[i])
+        
+        logging.debug(len(list_with_keywords) + ' matches')
+        logging.debug(len(list_without_keywords) + ' remaining')
     return [list_with_keywords,list_without_keywords]
