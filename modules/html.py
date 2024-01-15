@@ -1,3 +1,4 @@
+import logging
 import modules.runtime
 import modules.shield
 import random
@@ -77,13 +78,16 @@ def generate_table_genre_row(genre_list, genre, hours, random_start = True):
     
     if random_start:
         i = random_start_time()
+        logging.debug(f'{i=}')
         if i > 0:
             str += generate_table_row('', i)
     else:
+        logging.debug('No random start')
         i = 0
 
         
     time_countdown = hours * 4
+    logging.debug(f'{time_countdown=}')
     for i in range(len(genre_list)):
         this_item = genre_list[i]
         this_shield = modules.shield.generate_shield(this_item)
@@ -95,8 +99,10 @@ def generate_table_genre_row(genre_list, genre, hours, random_start = True):
 
         this_runtime = modules.runtime.runtime_to_minutes(this_item[5])
         this_colspan = this_runtime // 15
+        logging.debug(f'{this_runtime=} {this_colspan=}')
 
         col_left = time_countdown - this_colspan
+        logging.debug(f'{col_left=}')
         if col_left <= 0:
             this_colspan = time_countdown
             break
