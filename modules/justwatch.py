@@ -19,7 +19,7 @@ def get_titles_count(driver):
         logging.debug('Trying  to read number of titles')
         titles_count_str = driver.find_element(By.XPATH, '//div[@class="titles-count"]').text
         titles_count = int(titles_count_str.split(' titles')[0])
-        logging.debug('titles_count: ' + titles_count)
+        logging.debug(f'{titles_count=}')
     except:
         logging.error('Error getting title count')
     else:
@@ -57,8 +57,8 @@ def balance_movie_and_tv_lists(movie_list, tv_list, good_ratio = 0.8):
     # Takes two show lists and returns a more balanced list
     # Currently based on number of titles
     # TODO: Create comparison by runtime
-    logging.debug(str(len(movie_list)) + ' movies')
-    logging.debug(str(len(tv_list)) + ' tv shows')
+    logging.debug(f'{str(len(movie_list))=}')
+    logging.debug(f'{str(len(tv_list))=}')
     if len(movie_list) > len(tv_list):
         bigger_list = movie_list
         smaller_list = tv_list
@@ -71,7 +71,7 @@ def balance_movie_and_tv_lists(movie_list, tv_list, good_ratio = 0.8):
         
     while(len(smaller_list) / len(bigger_list) < good_ratio):
         smaller_list = smaller_list + smaller_list
-        logging.debug('len(smaller_list) now: ' + str(len(smaller_list)))
+        logging.debug(f'{len(smaller_list)=}')
     
     return bigger_list + smaller_list
 
@@ -82,7 +82,7 @@ def scrape_justwatch(media):
     import modules.auto_sign_in
     
     media = media.lower()
-    logging.debug('media: ' + media)
+    logging.debug(f'{media=}')
     load_dotenv(dotenv_path='./my_data/.env')
 
     dev_mode = os.environ.get('DEV_MODE').lower() == 'true'
@@ -152,7 +152,7 @@ def scrape_justwatch(media):
     show_main_link = []
     for i in range(len(show_card_all_links)):
         show_main_link.append(show_card_all_links[i][0].get_dom_attribute('href'))
-        logging.debug('adding to show_main_link ' + show_main_link[i])
+        logging.debug(f'{show_main_link[i]=}')
 
     i = 0
     show_name = []
@@ -163,15 +163,15 @@ def scrape_justwatch(media):
         this_show_elements = show_card_full_text[i].split(sep='\n')
         if media == 'movies':
             show_name.append(this_show_elements[0])
-            logging.debug('movie name: ' + show_name[i])
+            logging.debug(f'{show_name[i]=}')
             episode_number.append('')
             episode_left_in_season.append('')
             episode_title.append('')
         else:
             show_name.append(this_show_elements[1])
-            logging.debug('tv show name: ' + show_name[i])
+            logging.debug(f'{show_name[i]=}')
             episode_number.append(this_show_elements[2])
-            logging.debug('episode_number: ' + episode_number[i])
+            logging.debug(f'{episode_number[i]=}')
             if this_show_elements[3][0] == "+":
                 episode_left_in_season.append(this_show_elements[3])
                 episode_title.append(this_show_elements[4])
@@ -202,7 +202,8 @@ def scrape_justwatch(media):
                 logging.debug('Trying to read ld_json metadata')
                 show_ld_json_data = modules.ld_json.get_ld_json(full_url)
             except Exception as e:
-                logging.error('Error getting data for ' + show_main_link[j] + '. Skipping...')
+                print('Error getting data for ' + show_main_link[j] + '. Skipping...')
+                logging.error(f'{show_main_link[j]=}')
                 continue
             
             try:
@@ -235,16 +236,19 @@ def scrape_justwatch(media):
                         split_value = text_split[1]
                         title_info_heading.append(split_head)
                         title_info_value.append(split_value)
-                        logging.debug(title_info_heading[k] + ' | ' + title_info_value[k])
+                        logging.debug(f'{title_info_heading[k]=}')
+                        logging.debug(f'{title_info_value[k]=}')
             except Exception as e:
                 print("Error getting data for " + show_main_link[j] + " skipping...")
                 continue
             
             shows_dict = dict(zip(title_info_heading,title_info_value))
             show_genres.append(shows_dict.get('GENRES'))
-            logging.debug('Appending to show_genres: ' + show_genres[j])
+            logging.debug('Appending to show_genres:')
+            logging.debug(f'{show_genres[j]=}')
             show_runtime.append(shows_dict.get('RUNTIME'))
-            logging.debug('Appending to show_runtime: ' + show_runtime[j])
+            logging.debug('Appending to show_runtime:')
+            logging.debug(f'{show_runtime[j]=}')
             # show_age_rating.append(shows_dict.get('AGE RATING'))
 
             year.append(str(show_ld_json_data['dateCreated']).split('-')[0])
