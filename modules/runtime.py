@@ -6,14 +6,14 @@ def runtime_to_minutes(runtime_str, round_up = True):
     # Input format: runtime_str = '2h 28min'
     # If round_up, rounds up to the next 15 minute increment
     logging.debug('Converting runtime:')
-    logging.debug(f'{runtime_str}')
+    logging.debug(f'{runtime_str=}')
     if 'h' in runtime_str:
         # split into hours/minutes
         runtime_split = runtime_str.split("h")
         runtime_minutes = (int(runtime_split[0]) * 60) + int(runtime_split[1].split("min")[0])
     else:
         runtime_minutes = int(runtime_str.split("min")[0])
-    logging.debug(str(runtime_minutes) + ' minutes')
+    logging.debug(f'{str(runtime_minutes)=}')
     
     if round_up:
         logging.debug('Rounding:')
@@ -35,7 +35,8 @@ def time_left_in_tv_series(season_data, runtime_min, curr_season = 1, next_episo
     logging.debug(f'{str(last_season_number)=}')
     episodes_left = 0
     for j in range(curr_season, last_season_number+1):
-        logging.debug('season: ' + str(j))
+        logging.debug('season:')
+        logging.debug(f'{str(j)=}')
         if curr_season == j:
             episodes_left_in_season = season_lookup[j] - next_episode + 1
             episodes_left += episodes_left_in_season

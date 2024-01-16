@@ -20,7 +20,6 @@ def get_titles_count(driver):
         titles_count_str = driver.find_element(By.XPATH, '//div[@class="titles-count"]').text
         titles_count = int(titles_count_str.split(' titles')[0])
         logging.debug(f'{titles_count=}')
-        # logging.debug(f'{titles_count=}')
     except:
         logging.error('Error getting title count')
     else:
@@ -58,8 +57,8 @@ def balance_movie_and_tv_lists(movie_list, tv_list, good_ratio = 0.8):
     # Takes two show lists and returns a more balanced list
     # Currently based on number of titles
     # TODO: Create comparison by runtime
-    logging.debug(str(len(movie_list)) + ' movies')
-    logging.debug(str(len(tv_list)) + ' tv shows')
+    logging.debug(f'{str(len(movie_list))=}')
+    logging.debug(f'{str(len(tv_list))=}')
     if len(movie_list) > len(tv_list):
         bigger_list = movie_list
         smaller_list = tv_list
@@ -153,7 +152,7 @@ def scrape_justwatch(media):
     show_main_link = []
     for i in range(len(show_card_all_links)):
         show_main_link.append(show_card_all_links[i][0].get_dom_attribute('href'))
-        logging.debug('adding to show_main_link ' + show_main_link[i])
+        logging.debug(f'{show_main_link[i]=}')
 
     i = 0
     show_name = []
@@ -203,7 +202,8 @@ def scrape_justwatch(media):
                 logging.debug('Trying to read ld_json metadata')
                 show_ld_json_data = modules.ld_json.get_ld_json(full_url)
             except Exception as e:
-                logging.error('Error getting data for ' + show_main_link[j] + '. Skipping...')
+                print('Error getting data for ' + show_main_link[j] + '. Skipping...')
+                logging.error(f'{show_main_link[j]=}')
                 continue
             
             try:
@@ -236,7 +236,8 @@ def scrape_justwatch(media):
                         split_value = text_split[1]
                         title_info_heading.append(split_head)
                         title_info_value.append(split_value)
-                        logging.debug(title_info_heading[k] + ' | ' + title_info_value[k])
+                        logging.debug(f'{title_info_heading[k]=}')
+                        logging.debug(f'{title_info_value[k]=}')
             except Exception as e:
                 print("Error getting data for " + show_main_link[j] + " skipping...")
                 continue

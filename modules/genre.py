@@ -82,6 +82,6 @@ def split_by_keyword(list,keyword_list):
         else:
             list_without_keywords.append(list[i])
         
-        logging.debug(len(list_with_keywords) + ' matches')
-        logging.debug(len(list_without_keywords) + ' remaining')
+        logging.debug(f'{str(len(list_with_keywords))=}')
+        logging.debug(f'{str(len(list_without_keywords))=}')
     return [list_with_keywords,list_without_keywords]
