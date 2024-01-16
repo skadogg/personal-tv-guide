@@ -17,8 +17,9 @@ def runtime_to_minutes(runtime_str, round_up = True):
     
     if round_up:
         logging.debug('Rounding:')
-        logging.debug(f'{str(runtime_minutes + 15 - (runtime_minutes % 15))=}') # TODO: combine duplicate code into new var
-        return runtime_minutes + 15 - (runtime_minutes % 15)
+        runtime_rounded_up = runtime_minutes + 15 - (runtime_minutes % 15)
+        logging.debug(f'{str(runtime_rounded_up)=}')
+        return runtime_rounded_up
     else:
         return runtime_minutes
 
