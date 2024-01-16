@@ -7,15 +7,15 @@ import os
 def split_by_genre(list,genre_str):
     # Takes the list and splits into two lists: one with the given genre_str, and one without
     # >>> genre_romance, remainder = modules.genre.split_by_genre(data_list_everything,"Romance")
-    logging.debug('Genre: ' + genre_str)
+    logging.debug(f'{genre_str=}')
     list_with_genre, list_without_genre = [], []
     for i in range(len(list)):
         genres = list[i][4]
         if genre_str in genres:
-            logging.debug('Match: ' + str(list[i][0:4]))
+            logging.debug(f'Match: {str(list[i][0:4])}')
             list_with_genre.append(list[i])
         else:
-            logging.debug('Skip: ' + list[i][4])
+            logging.debug(f'Skip: {list[i][4]}')
             list_without_genre.append(list[i])
     return [list_with_genre,list_without_genre]
 
