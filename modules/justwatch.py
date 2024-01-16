@@ -243,9 +243,11 @@ def scrape_justwatch(media):
             
             shows_dict = dict(zip(title_info_heading,title_info_value))
             show_genres.append(shows_dict.get('GENRES'))
-            logging.debug(f'Appending to show_genres: {show_genres[j]=}')
+            logging.debug('Appending to show_genres:')
+            logging.debug(f'{show_genres[j]=}')
             show_runtime.append(shows_dict.get('RUNTIME'))
-            logging.debug(f'Appending to show_runtime: {show_runtime[j]=}')
+            logging.debug('Appending to show_runtime:')
+            logging.debug(f'{show_runtime[j]=}')
             # show_age_rating.append(shows_dict.get('AGE RATING'))
 
             year.append(str(show_ld_json_data['dateCreated']).split('-')[0])

@@ -12,10 +12,12 @@ def split_by_genre(list,genre_str):
     for i in range(len(list)):
         genres = list[i][4]
         if genre_str in genres:
-            logging.debug(f'Match: {str(list[i][0:4])}')
+            logging.debug('Match:')
+            logging.debug(f'{str(list[i][0:4])=}')
             list_with_genre.append(list[i])
         else:
-            logging.debug(f'Skip: {list[i][4]}')
+            logging.debug(f'Skip:')
+            logging.debug(f'{list[i][4]=}')
             list_without_genre.append(list[i])
     return [list_with_genre,list_without_genre]
 
