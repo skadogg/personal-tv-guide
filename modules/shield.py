@@ -33,26 +33,26 @@ def generate_shield(list):
     return '<a href="https://www.justwatch.com' + list[7] + '"><img src="https://img.shields.io/badge/' + show + ' - ' + rating + '-' + rating_color + '?labelColor=' + color_base + '"></a>'
 
 
-def generate_shield_table(list):
-    # Given a show list, generates a HTML table badge with a link to the show
+def generate_shield_text(list):
+    # Given a show list, generates text with a link to the show and its rating
     
     # --nord3: #4c566a;
-    color_base = '4c566a'
+    color_base = '#4c566a'
     
     # --nord11: #bf616a;
-    color_red = 'bf616a'
+    color_red = '#bf616a'
     
     # --nord14: #a3be8c;
-    color_green = 'a3be8c'
+    color_green = '#a3be8c'
     
     # --nord10: #5e81ac;
-    color_blue = '5e81ac'
+    color_blue = '#5e81ac'
     
     # --nord15: #b48ead;
-    color_other = 'b48ead'
+    color_other = '#b48ead'
     
     # --nord4: #d8dee9;
-    color_text = 'd8dee9'
+    color_text = '#d8dee9'
     
     # ('One Day at a Time', 'S2 E2', '+11', 'Schooled', 'Comedy, Drama', '28min', 'TV-PG', '/us/tv-show/one-day-at-a-time-2016', '2017', 'TVSeries', 'In a reimagining of the TV classic, a newly single....')
     # show = list[0].replace('-','--').replace('?','')
@@ -68,11 +68,9 @@ def generate_shield_table(list):
         rating_color = color_other
     # rating = rating.replace('-','--')
     
-    table_str = '<a href="https://www.justwatch.com' + list[7] + '">'
-    table_str += '<table width="10" style="color: #' + color_text + ';"><tr>'
-    table_str += '<td width="5" nowrap bgcolor="' + color_base +'">' + list[0] + '</td>'
-    table_str += '<td width="5" nowrap bgcolor="' + rating_color + '">' + rating + '</td>'
-    table_str += '</tr></table>'
-    table_str += '</a>'
+    output_str = '<a href="https://www.justwatch.com' + list[7] + '">'
+    output_str += '<span style="text-decoration:none; display: inline-block; background-color: ' + color_base + '; color: ' + color_text + '">&nbsp;' + list[0] + '&nbsp;</span>'
+    output_str += '<span style="text-decoration:none; display: inline-block; background-color: ' + rating_color + '; color: ' + color_text + '">&nbsp;' + rating + '&nbsp;</span>'
+    output_str += '</a>'
     
-    return table_str
+    return output_str

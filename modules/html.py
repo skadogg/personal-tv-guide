@@ -86,7 +86,7 @@ def generate_html_genre_tds(genre_list, genre, hours, random_start = True):
     time_countdown = hours * 4
     for i in range(len(genre_list)):
         this_item = genre_list[i]
-        this_shield = modules.shield.generate_shield_table(this_item)
+        this_shield = modules.shield.generate_shield_text(this_item)
 
         if this_item[1] != '':
             this_ep = this_item[1] + ' : ' + this_item[3]
