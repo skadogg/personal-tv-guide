@@ -40,3 +40,7 @@ def sign_in(driver):
         data_bin_convert.data_to_bin(login_data, './secret_login.bin')
         # Wait for successful sign in modal to go away
         time.sleep(7)
+
+
+def click_through_privacy_model(driver):  #TODO: figure out how to automatically click through privacy settings - #79
+    input('Please acknowledge the privacy settings, and press Enter to continue.')

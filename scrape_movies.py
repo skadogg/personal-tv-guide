@@ -19,7 +19,7 @@ dev_mode = os.environ.get('DEV_MODE').lower() == 'true'
 options = webdriver.ChromeOptions()
 
 # Run the browser in the background without opening a new window
-options.add_argument("--headless=new")
+# options.add_argument("--headless=new")  # TODO:  re-enable after fixing #79
 # this will disable image loading
 options.add_argument('--blink-settings=imagesEnabled=false')
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
@@ -32,6 +32,10 @@ driver.get('https://www.justwatch.com/us/lists/my-lists?content_type=movie&sort_
 driver.maximize_window()
 # driver.implicitly_driwait(1.0)
 # main_window_handle = driver.window_handles[0]
+
+
+# Handle privacy modal  #TODO: part of #79
+modules.auto_sign_in.click_through_privacy_model(driver)
 
 
 # Sign in to JustWatch using stored credentials (secret_login.bin)
