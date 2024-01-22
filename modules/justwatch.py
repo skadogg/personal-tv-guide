@@ -33,7 +33,7 @@ def generate_movies_by_runtime_table(movie_list):
     content = modules.html.sort_by_runtime_table_header(headers_list)
 
     for i in range(len(data_movies_by_runtime)):
-        shield = modules.shield.generate_shield(data_movies_by_runtime[i])
+        shield = modules.shield.generate_shield_text(data_movies_by_runtime[i])
         runtime_str = str(modules.runtime.runtime_to_minutes(data_movies_by_runtime[i][5],False))
         title_and_runtime_list = [shield,runtime_str]
         content += modules.html.sort_by_runtime_table_row(title_and_runtime_list)
