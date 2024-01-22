@@ -86,7 +86,7 @@ def generate_html_genre_tds(genre_list, genre, hours, random_start = True):
     time_countdown = hours * 4
     for i in range(len(genre_list)):
         this_item = genre_list[i]
-        this_shield = modules.shield.generate_shield(this_item)
+        this_shield = modules.shield.generate_shield_text(this_item)
 
         if this_item[1] != '':
             this_ep = this_item[1] + ' : ' + this_item[3]
@@ -111,7 +111,7 @@ def generate_html_genre_tds(genre_list, genre, hours, random_start = True):
 def generate_featured_film_table(show):
     # Create the HTML code string for the featured film
     str_start = '<p>\n<table width="800px">\n<tr><th colspan="2">Featured Film</th></tr>\n'
-    content = '<tr><td>' + modules.shield.generate_shield(show) + '</td>'
+    content = '<tr><td>' + modules.shield.generate_shield_text(show) + '</td>'
     content += '<td rowspan="3">' + show[10] + '</td></tr>\n' # synopsis
     content += '<tr><td>' + show[4] + '</td></tr>\n' # genre
     content += '<tr><td>' + show[5] + '</td></tr>\n' # runtime
