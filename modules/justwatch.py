@@ -45,7 +45,7 @@ def generate_movies_by_runtime_table(movie_list):
     content = modules.html.sort_by_runtime_table_header(headers_list)
 
     for i in range(len(data_movies_by_runtime)):
-        shield = modules.shield.generate_shield(data_movies_by_runtime[i])
+        shield = modules.shield.generate_shield_text(data_movies_by_runtime[i])
         runtime_str = str(modules.runtime.runtime_to_minutes(data_movies_by_runtime[i][5],False))
         title_and_runtime_list = [shield,runtime_str]
         content += modules.html.sort_by_runtime_table_row(title_and_runtime_list)
@@ -90,7 +90,7 @@ def scrape_justwatch(media):
     options = webdriver.ChromeOptions()
 
     # Run the browser in the background without opening a new window
-    options.add_argument("--headless=new")
+    # options.add_argument("--headless=new")  # TODO:  re-enable after fixing #79
     # this will disable image loading
     options.add_argument('--blink-settings=imagesEnabled=false')
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
@@ -108,6 +108,10 @@ def scrape_justwatch(media):
     driver.maximize_window()
     # driver.implicitly_driwait(1.0)
     # main_window_handle = driver.window_handles[0]
+
+
+    # Handle privacy modal  #TODO: part of #79
+    modules.auto_sign_in.click_through_privacy_model(driver)
 
 
     # Sign in to JustWatch using stored credentials (my_data/secret_login.bin)

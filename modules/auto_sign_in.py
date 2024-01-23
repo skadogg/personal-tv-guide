@@ -4,7 +4,7 @@ from os import path
 from selenium.webdriver.common.by import By
 import logging
 import time
-
+import getpass
 
 def sign_in(driver):
     # Sign in to JustWatch
@@ -25,10 +25,10 @@ def sign_in(driver):
         print("If you enter the wrong password, delete secret login file:")
         print(f'{secret_login_file=}')
         email = input("Email Address:")
-        password = input("Password:")
+        # password = input("Password:")
+        password = getpass.getpass("Password: ")
         hashed_password = b64encode(password.encode("utf-8"))
         login_data = [email, hashed_password]
-        data_bin_convert.data_to_bin(login_data, secret_login_file)
 
     try:
         logging.debug('Trying to sign in')
@@ -46,7 +46,13 @@ def sign_in(driver):
     except:
         logging.error('Error signing in')
     else:
+        print("Signed in successfully")
+        data_bin_convert.data_to_bin(login_data, secret_login_file)
         # Wait for successful sign in modal to go away - usually takes five to seven seconds (for me)
         logging.debug('Sleeping for x seconds:')
         logging.debug(f'{sleep_at_the_end=}')
         time.sleep(sleep_at_the_end)
+
+
+def click_through_privacy_model(driver):  #TODO: figure out how to automatically click through privacy settings - #79
+    input('Please acknowledge the privacy settings, and press Enter to continue.')
