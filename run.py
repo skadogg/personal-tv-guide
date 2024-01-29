@@ -10,7 +10,7 @@ import random
 
 
 # Get user variables from .env
-load_dotenv(dotenv_path='./my_data/.env')
+load_dotenv(dotenv_path='./.env')
 when_to_start = int(os.environ.get('WHEN_TO_START'))
 hours_to_print = int(os.environ.get('HOURS_TO_PRINT'))
 outfile = str(os.environ.get('OUTFILE'))
@@ -29,8 +29,8 @@ else:
 # Scrape your data from JustWatch and stor in .bin files for later
 # These can take a while, so it can sometimes be useful to store your data, especially while developing
 logging.info('Scraping data from JustWatch')
-modules.justwatch.scrape_justwatch('Movies')
 modules.justwatch.scrape_justwatch('TV')
+modules.justwatch.scrape_justwatch('Movies')
 
 
 # Read all genres from scraped data and store in .bin file for later
@@ -58,6 +58,7 @@ random.shuffle(data_list_everything)
 random.shuffle(all_genres)
 
 
+# TODO: turn back on and test/fix
 # Look through data for keyword matches
 # This can be used for special lists (e.g. movies you only watch during the holidays),
 # or for things you might want to filter out (e.g. trigger warnings)
@@ -122,6 +123,7 @@ html_handle.write(modules.html.generate_table_end())
 # End of writing the main table for your personal TV guide
 
 
+# TODO: fix genre formatting
 # Featured Film
 logging.info('Writing Featured Film table')
 html_handle.write(modules.html.generate_featured_film_table(modules.justwatch.get_random_show(data_list_movies)))
@@ -132,14 +134,15 @@ logging.info('Writing Movies sorted by runtime table')
 html_handle.write(modules.justwatch.generate_movies_by_runtime_table(data_list_movies))
 
 
-# Write table for time left in TV series
-logging.info('Writing time left in TV series table')
-time_info = modules.runtime.time_left_in_tv_series_report(data_list_tv)
-html_handle.write('<p>\n<table>\n<th>Title</th><th>Minutes Left</th>\n')
-for i in range(len(time_info)):
-    # html_handle.write('<tr><td>' + time_info[i][0] + '</td><td>' + str(round(time_info[i][3] * 100,0)) + '%</td></tr>') #percent done
-    html_handle.write('<tr><td>' + time_info[i][0] + '</td><td>' + str(time_info[i][1]) + '</td></tr>') #minutes left
-html_handle.write('</table>\n</p>\n')
+# TODO: add this back
+# # Write table for time left in TV series
+# logging.info('Writing time left in TV series table')
+# time_info = modules.runtime.time_left_in_tv_series_report(data_list_tv)
+# html_handle.write('<p>\n<table>\n<th>Title</th><th>Minutes Left</th>\n')
+# for i in range(len(time_info)):
+#     # html_handle.write('<tr><td>' + time_info[i][0] + '</td><td>' + str(round(time_info[i][3] * 100,0)) + '%</td></tr>') #percent done
+#     html_handle.write('<tr><td>' + time_info[i][0] + '</td><td>' + str(time_info[i][1]) + '</td></tr>') #minutes left
+# html_handle.write('</table>\n</p>\n')
 
 
 # Finish writing HTML output

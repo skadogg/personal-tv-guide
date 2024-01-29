@@ -35,9 +35,9 @@ def generate_shield(list):
     return '<a href="https://www.justwatch.com' + list[7] + '"><img src="https://img.shields.io/badge/' + show + ' - ' + rating + '-' + rating_color + '?labelColor=' + color_base + '"></a>'
 
 
-def generate_shield_text(list):
+def generate_shield_text(input_activity):
     # Given a show list, generates text with a link to the show and its rating
-    rating = list[6] if list[6] else '&nbsp;'
+    rating = input_activity.age_rating if input_activity.age_rating else '&nbsp;'
     if rating in ['TV-Y7','TV-G','TV-PG','PG','G']:
         rating_color = 'badge_green'
     elif rating in ['TV-14','PG-13']:
@@ -47,8 +47,8 @@ def generate_shield_text(list):
     else:
         rating_color = 'badge_other'
     
-    output_str = '<div class="badge"><a href="https://www.justwatch.com' + list[7] + '">'
-    output_str += '<span class="badge_main">' + list[0] + '</span>'
+    output_str = '<div class="badge"><a href="' + input_activity.source_url + '">'
+    output_str += '<span class="badge_main">' + input_activity.activity_name + ' (' + str(input_activity.year) + ')' + '</span>'
     output_str += '<span class="' + rating_color + '">' + rating + '</span>'
     output_str += '</a></div>\n'
     

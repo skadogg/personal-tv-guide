@@ -11,6 +11,7 @@ import modules.ld_json
 import os
 import random
 import time
+from classes.activity import Activity, Tvshow
 
 
 def get_titles_count(driver):
@@ -28,7 +29,7 @@ def get_titles_count(driver):
 
 def get_random_show(list):
     # Takes a random show from the list and returns the chosen show
-    r = random.randint(0,len(list))
+    r = random.randint(0,len(list)-1)
     return list[r]
 
 
@@ -36,7 +37,7 @@ def get_random_show(list):
 def generate_movies_by_runtime_table(movie_list):
     # Create the HTML table string containing the list of shows sorted by runtime (shortest to longest)
     logging.debug('Generating movies by runtime table')
-    data_movies_by_runtime = sorted(movie_list,key=lambda x:(modules.runtime.runtime_to_minutes(x[5],False)))
+    data_movies_by_runtime = sorted(movie_list,key=lambda x:(x.duration))
 
     str_start = modules.html.generate_table_start()
     str_end = modules.html.generate_table_end()
@@ -46,7 +47,7 @@ def generate_movies_by_runtime_table(movie_list):
 
     for i in range(len(data_movies_by_runtime)):
         shield = modules.shield.generate_shield_text(data_movies_by_runtime[i])
-        runtime_str = str(modules.runtime.runtime_to_minutes(data_movies_by_runtime[i][5],False))
+        runtime_str = str(data_movies_by_runtime[i].duration)
         title_and_runtime_list = [shield,runtime_str]
         content += modules.html.sort_by_runtime_table_row(title_and_runtime_list)
 
@@ -83,7 +84,7 @@ def scrape_justwatch(media):
     
     media = media.lower()
     logging.debug(f'{media=}')
-    load_dotenv(dotenv_path='./my_data/.env')
+    load_dotenv(dotenv_path='./.env')
 
     dev_mode = os.environ.get('DEV_MODE').lower() == 'true'
 
@@ -124,7 +125,7 @@ def scrape_justwatch(media):
     if dev_mode:
         items_in_list = 5
     pages = (items_in_list // 20) + 1
-    i = 0
+
     with alive_bar(pages, spinner='waves', bar='squares') as bar:
         for i in range(pages):
             bar()
@@ -140,79 +141,95 @@ def scrape_justwatch(media):
         show_cards = driver.find_elements(By.XPATH, '//div[@class="title-card-basic title-card-show-episode"]')
 
     if dev_mode:
-        dev_items = 10
+        dev_items = 5
         logging.debug('Dev mode: only looking at first dev_items items in list')
         show_cards = show_cards[0:dev_items]
 
     logging.debug('Getting all show links from each card')
-    i = 0
-    show_card_all_links = []
-    show_card_full_text = []
-    for i in range(len(show_cards)):
-        show_card_all_links.append(show_cards[i].find_elements(By.TAG_NAME,'a'))
-        show_card_full_text.append(show_cards[i].text)
+    # show_card_all_links = []
+    # show_card_full_text = []
+    show_card_data = []
+    for i in range(len(show_cards)):    
+        show_card_main_link = show_cards[i].find_elements(By.TAG_NAME,'a')[0].get_dom_attribute('href')
+        show_card_full_text = show_cards[i].text
+        show_card_data.append([show_card_main_link, show_card_full_text])
+    
+    '''
+    show_card_data = [['/us/movie/oppenheimer', "Oppenheimer (2023)\nThe story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II.\n8.4\n29 offers available"], ['/us/movie/killers-of-the-flower-moon', 'Killers of the Flower Moon (2023)\nWhen oil is discovered in 1920s Oklahoma under Osage Nation land, the Osage people are murdered one by one—until the FBI steps in to unravel the mystery.\n7.7\nWatch now'], ['/us/movie/everything-everywhere-all-at-once', "Everything Everywhere All at Once (2022)\nAn aging Chinese immigrant is swept up in an insane adventure, where she alone can save what's important to her by connecting with the lives she could have led in other universes.\n7.8\nWatch now"], ['/us/movie/asteroid-city', 'Asteroid City (2023)\nIn an American desert town circa 1955, the itinerary of a Junior Stargazer/Space Cadet convention is spectacularly disrupted by world-changing events.\n6.5\nWatch now'], ['/us/movie/dumb-money', "Dumb Money (2023)\nDavid vs. Goliath tale about everyday people who flipped the script on Wall Street and got rich by turning GameStop (the video game store) into the world's hottest company.\n6.9\nWatch now"]]
+    show_card_data = [['/us/tv-show/love-on-the-spectrum', 'TV\nLove on the Spectrum\nS1 E4\n+1\nEpisode 4\nWatch now'], ['/us/tv-show/kath-and-kim', 'TV\nKath & Kim\nS1 E2\n+6\nGay\nWatch now'], ['/us/tv-show/wizards-of-waverly-place', "TV\nWizards of Waverly Place\nS1 E19\n+2\nAlex's Spring Fling\nWatch now"], ['/us/tv-show/the-mick', 'TV\nThe Mick\nS1 E13\n+4\nThe Bully\nWatch now'], ['/us/tv-show/westworld', 'TV\nWestworld\nS2 E2\n+8\nReunion\nWatch now']]
+    '''
 
-    i = 0
-    show_main_link = []
-    for i in range(len(show_card_all_links)):
-        show_main_link.append(show_card_all_links[i][0].get_dom_attribute('href'))
-        logging.debug(f'{show_main_link[i]=}')
+    # i = 0
+    # show_main_link = []
+    # for i in range(len(show_card_all_links)):
+    #     show_main_link.append(show_card_all_links[i][0].get_dom_attribute('href'))
+    #     logging.debug(f'{show_main_link[i]=}')
 
-    i = 0
-    show_name = []
-    episode_number = []
-    episode_left_in_season = []
-    episode_title = []
-    for i in range(len(show_card_full_text)):
-        this_show_elements = show_card_full_text[i].split(sep='\n')
-        if media == 'movies':
-            show_name.append(this_show_elements[0])
-            logging.debug(f'{show_name[i]=}')
-            episode_number.append('')
-            episode_left_in_season.append('')
-            episode_title.append('')
-        else:
-            show_name.append(this_show_elements[1])
-            logging.debug(f'{show_name[i]=}')
-            episode_number.append(this_show_elements[2])
-            logging.debug(f'{episode_number[i]=}')
-            if this_show_elements[3][0] == "+":
-                episode_left_in_season.append(this_show_elements[3])
-                episode_title.append(this_show_elements[4])
-            else:
-                episode_left_in_season.append('')
-                episode_title.append(this_show_elements[3])
-
-
-    # Get genres, runtime, age rating from show pages
-    j = 0
-    show_genres = []
-    show_runtime = []
-    show_age_rating = []
-    year = []
-    media_type = []
-    synopsis = []
-    season_data = []
-    with alive_bar(len(show_main_link), spinner='waves', bar='squares') as bar:
-        for j in range(len(show_main_link)):
-            logging.debug(show_main_link)
-            bar.text = show_main_link[j]
+    activity_list = []
+    # show_name = []
+    # episode_number = []
+    # episode_left_in_season = []
+    # episode_title = []
+    
+    with alive_bar(len(show_card_data), spinner='waves', bar='squares') as bar:
+        for i in range(len(show_card_data)):
+            this_show_url = 'https://www.justwatch.com' + show_card_data[i][0]
+            # print(f"{this_show_url=}")
+            logging.debug(this_show_url)
+            bar.text = this_show_url
             bar()
-            
-            full_url = 'https://www.justwatch.com' + show_main_link[j]
-            
+            '''
+            # this_show_elements = show_card_data[i][1].split(sep='\n')
+            # if media == 'movies':
+            #     show_name = this_show_elements[0].split(sep=' (')[0]
+            #     # year = int(this_show_elements[0].split(sep=' (')[1].split(sep=')')[0])
+            #     logging.debug(f'{show_name[i]=}')
+            #     # episode_number.append('')
+            #     # episode_left_in_season.append('')
+            #     # episode_title.append('')
+            # else:
+            # if media == 'tv':
+            #     # show_name = this_show_elements[1]
+            #     # logging.debug(f'{show_name[i]=}')
+            #     episode_number = this_show_elements[2]
+            #     logging.debug(f'{episode_number[i]=}')
+            #     if this_show_elements[3][0] == "+":
+            #         episode_left_in_season = this_show_elements[3]
+            #         episode_title = this_show_elements[4]
+            #     else:
+            #         episode_left_in_season = ''
+            #         episode_title = this_show_elements[3]
+
+
+        # Get genres, runtime, age rating from show pages
+        # j = 0
+        # show_genres = []
+        # show_runtime = []
+        # show_age_rating = []
+        # year = []
+        # media_type = []
+        # synopsis = []
+        # season_data = []
+        # with alive_bar(len(show_main_link), spinner='waves', bar='squares') as bar:
+        #     for j in range(len(show_main_link)):
+        #         logging.debug(show_main_link)
+        #         bar.text = show_main_link[j]
+        #         bar()
+                
+                # full_url = 'https://www.justwatch.com' + show_main_link[j]
+            '''
             try:
                 # Get year, media type, age rating, and synopsis quickly from ld-json data
                 logging.debug('Trying to read ld_json metadata')
-                show_ld_json_data = modules.ld_json.get_ld_json(full_url)
+                show_ld_json_data = modules.ld_json.get_ld_json(this_show_url)
             except Exception as e:
-                print('Error getting data for ' + show_main_link[j] + '. Skipping...')
-                logging.error(f'{show_main_link[j]=}')
-                continue
+                print('Error getting data for ' + this_show_url + '. Skipping...')
+                logging.error(f'{this_show_url=}')
+                # continue
             
             try:
                 # Visit each page to get genres and runtimes
-                driver.get(full_url)
+                driver.get(this_show_url)
                 try:
                     logging.debug('Trying to read text data from show page')
                     elem = WebDriverWait(driver, 30).until(
@@ -220,6 +237,7 @@ def scrape_justwatch(media):
                     )
                 except:
                     logging.error('Error reading text data from show page')
+                    continue
                 finally:
                     time.sleep(.5)
 
@@ -228,7 +246,6 @@ def scrape_justwatch(media):
 
                 # Loop through each section on the page to get headings and text
                 logging.debug('Looping through each section on the page to get headings and text')
-                k = 0
                 title_info_heading = []
                 title_info_value = []
                 shows_dict = []
@@ -243,37 +260,54 @@ def scrape_justwatch(media):
                         logging.debug(f'{title_info_heading[k]=}')
                         logging.debug(f'{title_info_value[k]=}')
             except Exception as e:
-                print("Error getting data for " + show_main_link[j] + " skipping...")
+                print("Error getting data for " + this_show_url + " skipping...")
                 continue
-            
+        
             shows_dict = dict(zip(title_info_heading,title_info_value))
-            show_genres.append(shows_dict.get('GENRES'))
+            show_genres = shows_dict.get('GENRES').split(', ')
             logging.debug('Appending to show_genres:')
-            logging.debug(f'{show_genres[j]=}')
-            show_runtime.append(shows_dict.get('RUNTIME'))
+            logging.debug(f'{show_genres=}')
+            show_runtime = shows_dict.get('RUNTIME')
             logging.debug('Appending to show_runtime:')
-            logging.debug(f'{show_runtime[j]=}')
+            logging.debug(f'{show_runtime=}')
             # show_age_rating.append(shows_dict.get('AGE RATING'))
 
-            year.append(str(show_ld_json_data['dateCreated']).split('-')[0])
-            media_type.append(show_ld_json_data['@type'])
-            show_age_rating.append(show_ld_json_data['contentRating'])
-            synopsis.append(show_ld_json_data['description'])
+            # year.append(str(show_ld_json_data['dateCreated']).split('-')[0])
+            # media_type.append(show_ld_json_data['@type'])
+            show_name = show_ld_json_data['name']
+            
+            date_created = str(show_ld_json_data['dateCreated'])
+            # print(date_created)
+            year = int(date_created.split('-')[0])
+                            
+            show_age_rating = show_ld_json_data['contentRating']
+            synopsis = show_ld_json_data['description']
+            # if media == 'movies':
+            #     season_data.append('')
+            # else:
+            if media == 'tv':
+                season_data = (show_ld_json_data['containsSeason'])
+            logging.debug('Appending season_data')
+
+            show_runtime_minutes = Activity.runtime_to_minutes(show_runtime, round_up=False)
             if media == 'movies':
-                season_data.append('')
+                activity_list.append(Activity(activity_type='movie', activity_name=show_name, year=year, age_rating=show_age_rating, 
+                                            duration=show_runtime_minutes, source_url=this_show_url, categories=show_genres, description=synopsis))
             else:
-                season_data.append(show_ld_json_data['containsSeason'])
-                logging.debug('Appending season_data')
+                activity_list.append(Tvshow(activity_type='tv', activity_name=show_name, year=year, age_rating=show_age_rating,
+                                                    duration=show_runtime_minutes, source_url=this_show_url, categories=show_genres, description=synopsis,
+                                                    season_data=season_data))
 
-
+    # TODO: quit whenever there's a large exception?
     # driver.close()
     driver.quit()
+    
     logging.debug('Closing main window')
 
 
     # Pull elements together
-    logging.debug('Pulling it all together into one list')
-    data_list_everything = list(zip(show_name,episode_number,episode_left_in_season,episode_title,show_genres,show_runtime,show_age_rating,show_main_link,year,media_type,synopsis,season_data))
+    # logging.debug('Pulling it all together into one list')
+    # data_list_everything = list(zip(show_name,episode_number,episode_left_in_season,episode_title,show_genres,show_runtime,show_age_rating,show_main_link,year,media_type,synopsis,season_data))
     # sorted(data_list_everything)
 
     # df = pd.DataFrame(data_list_everything, columns=['Show Name','Episode Number','Episodes Remaining','Episode Title','Genres','Runtime','Age Rating'])
@@ -283,7 +317,7 @@ def scrape_justwatch(media):
     # Save my work
     import modules.data_bin_convert
     if media == 'movies':
-        modules.data_bin_convert.data_to_bin(data_list_everything, './my_data/saved_data_movies.bin')
+        modules.data_bin_convert.data_to_bin(activity_list, './my_data/saved_data_movies.bin')
     else:
-        modules.data_bin_convert.data_to_bin(data_list_everything, './my_data/saved_data_tv.bin')
+        modules.data_bin_convert.data_to_bin(activity_list, './my_data/saved_data_tv.bin')
     # data_list_everything = modules.data_bin_convert.bin_to_data()

@@ -4,21 +4,22 @@ import modules.data_bin_convert
 import os
 
 
-def split_by_genre(list,genre_str):
+def split_by_genre(input_list, genre_str):
     # Takes the list and splits into two lists: one with the given genre_str, and one without
     # >>> genre_romance, remainder = modules.genre.split_by_genre(data_list_everything,"Romance")
     logging.debug(f'{genre_str=}')
     list_with_genre, list_without_genre = [], []
-    for i in range(len(list)):
-        genres = list[i][4]
+    for i in range(len(input_list)):
+        # genres = list[i][4]
+        genres = input_list[i].categories
         if genre_str in genres:
             logging.debug('Match:')
-            logging.debug(f'{str(list[i][0:4])=}')
-            list_with_genre.append(list[i])
+            logging.debug(f'{str(input_list[i].activity_name)=}')
+            list_with_genre.append(input_list[i])
         else:
             logging.debug(f'Skip:')
-            logging.debug(f'{list[i][4]=}')
-            list_without_genre.append(list[i])
+            logging.debug(f'{input_list[i].categories=}')
+            list_without_genre.append(input_list[i])
     return [list_with_genre,list_without_genre]
 
 
@@ -30,14 +31,17 @@ def get_genres_from_scraped_lists():
 
     data_list_everything = data_list_movies + data_list_tv
 
-    genre_str = ''
+    # genre_str = ''
+    genre_list = []
     for i in range(len(data_list_everything)):
-        genre_str += data_list_everything[i][4] + ', '
+    #     # genre_str += data_list_everything[i][4] + ', '
+    #     genre_str += data_list_everything[i].categories + ', '
+        genre_list += data_list_everything[i].categories
 
-    genre_list = sorted(list(set((genre_str.split(', ')))))
+    # genre_list = sorted(list(set((genre_str.split(', ')))))
 
-    while '' in genre_list:
-        genre_list.remove('')
+    # while '' in genre_list:
+    #     genre_list.remove('')
     
     logging.debug(genre_list)
 
@@ -46,7 +50,7 @@ def get_genres_from_scraped_lists():
 
 def christmas_keywords():
     # A list of Christmas keywords, used to make a custom row
-    load_dotenv(dotenv_path='./my_data/.env')
+    load_dotenv(dotenv_path='./.env')
     return os.environ.get('CHRISTMAS_KEYWORDS').split(',')
 
 
@@ -54,7 +58,7 @@ def trigger_keywords():
     # A list of keywords that some may find disturbing, used to make a custom row.
     # Example: My wife and I watch Hallmark movies, but they often center around a widow looking for a new love.
     #   Stories about widows make her sad, so I can watch these on my own if I want.
-    load_dotenv(dotenv_path='./my_data/.env')
+    load_dotenv(dotenv_path='./.env')
     return os.environ.get('TRIGGER_KEYWORDS').split(',')
 
 

@@ -1,27 +1,28 @@
 import logging
+from classes.activity import Activity
 import modules.shield
 
-def runtime_to_minutes(runtime_str, round_up = True):
-    # Parses the JustWatch runtime_str into minutes
-    # Input format: runtime_str = '2h 28min'
-    # If round_up, rounds up to the next 15 minute increment
-    logging.debug('Converting runtime:')
-    logging.debug(f'{runtime_str=}')
-    if 'h' in runtime_str:
-        # split into hours/minutes
-        runtime_split = runtime_str.split("h")
-        runtime_minutes = (int(runtime_split[0]) * 60) + int(runtime_split[1].split("min")[0])
-    else:
-        runtime_minutes = int(runtime_str.split("min")[0])
-    logging.debug(f'{str(runtime_minutes)=}')
+# def runtime_to_minutes(runtime_str, round_up = False):
+#     # Parses the JustWatch runtime_str into minutes
+#     # Input format: runtime_str = '2h 28min'
+#     # If round_up, rounds up to the next 15 minute increment
+#     logging.debug('Converting runtime:')
+#     logging.debug(f'{runtime_str=}')
+#     if 'h' in runtime_str:
+#         # split into hours/minutes
+#         runtime_split = runtime_str.split("h")
+#         runtime_minutes = (int(runtime_split[0]) * 60) + int(runtime_split[1].split("min")[0])
+#     else:
+#         runtime_minutes = int(runtime_str.split("min")[0])
+#     logging.debug(f'{str(runtime_minutes)=}')
     
-    if round_up:
-        logging.debug('Rounding:')
-        runtime_rounded_up = runtime_minutes + 15 - (runtime_minutes % 15)
-        logging.debug(f'{str(runtime_rounded_up)=}')
-        return runtime_rounded_up
-    else:
-        return runtime_minutes
+#     if round_up:
+#         logging.debug('Rounding:')
+#         runtime_rounded_up = runtime_minutes + 15 - (runtime_minutes % 15)
+#         logging.debug(f'{str(runtime_rounded_up)=}')
+#         return runtime_rounded_up
+#     else:
+#         return runtime_minutes
 
 
 def time_left_in_tv_series(season_data, runtime_min, curr_season = 1, next_episode = 1):
@@ -59,10 +60,10 @@ def percent_complete(minutes_left, minutes_total):
 def time_left_in_tv_series_report(list):
     time_info = []
     for i in range(len(list)):
-        show_title = modules.shield.generate_shield(list[i])
+        show_title = modules.shield.generate_shield_text(list[i])
         current_season, current_episode = list[i][1].replace('S','').replace('E','').split(' ')
         season_data = list[i][11]
-        runtime = runtime_to_minutes(list[i][5],False)
+        runtime = Activity.runtime_to_minutes(list[i][5], round_up=False)
         # episodes_left
         
         minutes_left = time_left_in_tv_series(season_data,runtime,int(current_season),int(current_episode))
