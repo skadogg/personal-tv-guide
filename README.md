@@ -1,11 +1,11 @@
 # Personal TV Guide
-![Created by Khalil Habib](images/personal_tv_guide.png)
+![logo](images/logo_text.png)
 
 
 ## About
 Scrape your watchlist data from JustWatch and turn it into HTML to serve as your own Personal TV Guide!
 
-![screenshot](images/screenshot%202023-12-24.png)
+![screenshot](images/screenshot 2024-01-29.png)
 
 
 - [About](#about)
@@ -17,7 +17,6 @@ Scrape your watchlist data from JustWatch and turn it into HTML to serve as your
   - [Run it](#run-it)
     - [A note on credentials](#a-note-on-credentials)
 - [Acknowledgements](#acknowledgements)
-  - [Icon](#icon)
   - [Theme](#theme)
   - [Badges](#badges)
   - [gitmoji](#gitmoji)
@@ -69,9 +68,6 @@ If all goes well, you'll have an output file (probably in *my_data*) that will s
 
 
 ## Acknowledgements
-
-### Icon
-The *TV Guide* image was created by [Khalil Habib](https://github.com/Khaleelhabeeb/).
 
 ### Theme
 The default stylesheet is using the [Nord theme](https://www.nordtheme.com/).
