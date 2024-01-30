@@ -42,7 +42,7 @@ Create this folder. This is where your private info goes
 
 ### Make *.env* file
 
-To get started, make a copy of */sample_files/.env-sample* and name it */my_data/.env*. This is where to set up your variables before continuing with the other steps.
+To get started, make a copy of */sample_files/.env-sample* and name it */.env*. This is where to set up your variables before continuing with the other steps.
 
 | Variable | Required? | Description |
 | --- | :---: | --- |
@@ -77,7 +77,7 @@ The *TV Guide* image was created by [Khalil Habib](https://github.com/Khaleelhab
 The default stylesheet is using the [Nord theme](https://www.nordtheme.com/).
 
 ### Badges
-All badges are from [Shields.io](https://shields.io/), which I probably saw originally on [awesome-badges](https://github.com/badges/awesome-badges).
+Custom activity badges are inspired by [Shields.io](https://shields.io/), which I probably saw originally on [awesome-badges](https://github.com/badges/awesome-badges).
 
 ### gitmoji
 🎨 We use [gitmoji](https://gitmoji.dev/) to enhance our commit statements. 🚀
