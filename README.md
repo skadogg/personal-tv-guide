@@ -5,7 +5,7 @@
 ## About
 Scrape your watchlist data from JustWatch and turn it into HTML to serve as your own Personal TV Guide!
 
-![screenshot](images/screenshot 2024-01-29.png)
+![screenshot](images/screenshot2024-01-29.png)
 
 
 - [About](#about)
