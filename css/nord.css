@@ -275,7 +275,7 @@ table {
 }
 
 .badge_main {
-  padding: 3px;
+  padding: 5px;
   text-decoration: none;
   display: inline-block;
   background: linear-gradient(to bottom, var(--nord3), var(--nord2) 95%);
