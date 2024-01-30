@@ -80,6 +80,8 @@ class Tvshow(Activity):
     # def __init__(self, show_name, year, age_rating, runtime, source_url, genres, synopsis, season_data):
     #     super().__init__(self, 'tv', show_name, year, age_rating, runtime, source_url, genres, synopsis)
     #     self.season_data = season_data
+    next_episode: str
+    left_in_season: int
     season_data: list
     
 

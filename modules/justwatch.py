@@ -178,7 +178,7 @@ def scrape_justwatch(media):
             logging.debug(this_show_url)
             bar.text = this_show_url
             bar()
-            '''
+            
             # this_show_elements = show_card_data[i][1].split(sep='\n')
             # if media == 'movies':
             #     show_name = this_show_elements[0].split(sep=' (')[0]
@@ -188,36 +188,38 @@ def scrape_justwatch(media):
             #     # episode_left_in_season.append('')
             #     # episode_title.append('')
             # else:
-            # if media == 'tv':
-            #     # show_name = this_show_elements[1]
-            #     # logging.debug(f'{show_name[i]=}')
-            #     episode_number = this_show_elements[2]
-            #     logging.debug(f'{episode_number[i]=}')
-            #     if this_show_elements[3][0] == "+":
-            #         episode_left_in_season = this_show_elements[3]
-            #         episode_title = this_show_elements[4]
-            #     else:
-            #         episode_left_in_season = ''
-            #         episode_title = this_show_elements[3]
+            if media == 'tv':
+                this_show_elements = show_card_data[i][1].split(sep='\n')
+                # show_name = this_show_elements[1]
+                # logging.debug(f'{show_name[i]=}')
+                episode_number = this_show_elements[2]
+                logging.debug(f'{episode_number=}')
+                if this_show_elements[3][0] == "+":
+                    episode_left_in_season = int(this_show_elements[3].split('+')[1])
+                    # episode_title = this_show_elements[4]
+                else:
+                    episode_left_in_season = 0
+                    # episode_title = this_show_elements[3]
 
-
-        # Get genres, runtime, age rating from show pages
-        # j = 0
-        # show_genres = []
-        # show_runtime = []
-        # show_age_rating = []
-        # year = []
-        # media_type = []
-        # synopsis = []
-        # season_data = []
-        # with alive_bar(len(show_main_link), spinner='waves', bar='squares') as bar:
-        #     for j in range(len(show_main_link)):
-        #         logging.debug(show_main_link)
-        #         bar.text = show_main_link[j]
-        #         bar()
+            '''
+            # Get genres, runtime, age rating from show pages
+            # j = 0
+            # show_genres = []
+            # show_runtime = []
+            # show_age_rating = []
+            # year = []
+            # media_type = []
+            # synopsis = []
+            # season_data = []
+            # with alive_bar(len(show_main_link), spinner='waves', bar='squares') as bar:
+            #     for j in range(len(show_main_link)):
+            #         logging.debug(show_main_link)
+            #         bar.text = show_main_link[j]
+            #         bar()
                 
                 # full_url = 'https://www.justwatch.com' + show_main_link[j]
             '''
+
             try:
                 # Get year, media type, age rating, and synopsis quickly from ld-json data
                 logging.debug('Trying to read ld_json metadata')
@@ -295,8 +297,8 @@ def scrape_justwatch(media):
                                             duration=show_runtime_minutes, source_url=this_show_url, categories=show_genres, description=synopsis))
             else:
                 activity_list.append(Tvshow(activity_type='tv', activity_name=show_name, year=year, age_rating=show_age_rating,
-                                                    duration=show_runtime_minutes, source_url=this_show_url, categories=show_genres, description=synopsis,
-                                                    season_data=season_data))
+                                                    duration=show_runtime_minutes, source_url=this_show_url, categories=show_genres,
+                                                    description=synopsis, next_episode=episode_number, left_in_season=episode_left_in_season, season_data=season_data))
 
     # TODO: quit whenever there's a large exception?
     # driver.close()

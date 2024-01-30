@@ -57,13 +57,13 @@ def percent_complete(minutes_left, minutes_total):
     return (minutes_total - minutes_left) / minutes_total
 
 
-def time_left_in_tv_series_report(list):
+def time_left_in_tv_series_report(show_list):
     time_info = []
-    for i in range(len(list)):
-        show_title = modules.shield.generate_shield_text(list[i])
-        current_season, current_episode = list[i][1].replace('S','').replace('E','').split(' ')
-        season_data = list[i][11]
-        runtime = Activity.runtime_to_minutes(list[i][5], round_up=False)
+    for i in range(len(show_list)):
+        show_title = modules.shield.generate_shield_text(show_list[i])
+        current_season, current_episode = show_list[i].next_episode.replace('S','').replace('E','').split(' ')
+        season_data = show_list[i].season_data
+        runtime = show_list[i].duration
         # episodes_left
         
         minutes_left = time_left_in_tv_series(season_data,runtime,int(current_season),int(current_episode))

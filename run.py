@@ -122,25 +122,24 @@ html_handle.write(modules.html.generate_table_end())
 # End of writing the main table for your personal TV guide
 
 
-# Featured Film
+# # Featured Film
 logging.info('Writing Featured Film table')
 html_handle.write(modules.html.generate_featured_film_table(modules.justwatch.get_random_show(data_list_movies)))
 
 
-# Movies sorted by runtime
+# Write table for time left in TV series
+logging.info('Writing time left in TV series table')
+time_info = modules.runtime.time_left_in_tv_series_report(data_list_tv)
+html_handle.write('<p>\n<table>\n<th>Title</th><th>Minutes Left</th>\n')
+for i in range(len(time_info)):
+    # html_handle.write('<tr><td>' + time_info[i][0] + '</td><td>' + str(round(time_info[i][3] * 100,0)) + '%</td></tr>') #percent done
+    html_handle.write('<tr><td>' + time_info[i][0] + '</td><td>' + str(time_info[i][1]) + '</td></tr>') #minutes left
+html_handle.write('</table>\n</p>\n')
+
+
+# # Movies sorted by runtime
 logging.info('Writing Movies sorted by runtime table')
 html_handle.write(modules.justwatch.generate_movies_by_runtime_table(data_list_movies))
-
-
-# TODO: add this back
-# # Write table for time left in TV series
-# logging.info('Writing time left in TV series table')
-# time_info = modules.runtime.time_left_in_tv_series_report(data_list_tv)
-# html_handle.write('<p>\n<table>\n<th>Title</th><th>Minutes Left</th>\n')
-# for i in range(len(time_info)):
-#     # html_handle.write('<tr><td>' + time_info[i][0] + '</td><td>' + str(round(time_info[i][3] * 100,0)) + '%</td></tr>') #percent done
-#     html_handle.write('<tr><td>' + time_info[i][0] + '</td><td>' + str(time_info[i][1]) + '</td></tr>') #minutes left
-# html_handle.write('</table>\n</p>\n')
 
 
 # Finish writing HTML output
