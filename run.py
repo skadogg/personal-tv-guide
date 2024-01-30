@@ -29,8 +29,8 @@ else:
 # Scrape your data from JustWatch and stor in .bin files for later
 # These can take a while, so it can sometimes be useful to store your data, especially while developing
 logging.info('Scraping data from JustWatch')
-modules.justwatch.scrape_justwatch('TV')
-modules.justwatch.scrape_justwatch('Movies')
+# modules.justwatch.scrape_justwatch('TV')
+# modules.justwatch.scrape_justwatch('Movies')
 
 
 # Read all genres from scraped data and store in .bin file for later
@@ -58,7 +58,6 @@ random.shuffle(data_list_everything)
 random.shuffle(all_genres)
 
 
-# TODO: turn back on and test/fix
 # Look through data for keyword matches
 # This can be used for special lists (e.g. movies you only watch during the holidays),
 # or for things you might want to filter out (e.g. trigger warnings)
@@ -123,7 +122,6 @@ html_handle.write(modules.html.generate_table_end())
 # End of writing the main table for your personal TV guide
 
 
-# TODO: fix genre formatting
 # Featured Film
 logging.info('Writing Featured Film table')
 html_handle.write(modules.html.generate_featured_film_table(modules.justwatch.get_random_show(data_list_movies)))

@@ -62,13 +62,16 @@ def trigger_keywords():
     return os.environ.get('TRIGGER_KEYWORDS').split(',')
 
 
-def split_by_keyword(list,keyword_list):
+def split_by_keyword(input_list,keyword_list):
     # Takes the list and splits into two lists: one with the given keywords, and one without
     # >>> genre_christmas, remainder = modules.genre.split_by_keyword(data_list_everything,modules.genre.christmas_keywords())
+    logging.debug(f'{keyword_list=}')
     list_with_keywords, list_without_keywords = [], []
-    for i in range(len(list)):
-        title = list[i][0]
-        synopsis = list[i][10]
+    for i in range(len(input_list)):
+        # title = input_list[i][0]
+        title = input_list[i].activity_name
+        # synopsis = input_list[i][10]
+        synopsis = input_list[i].description
 
         for j in range(len(keyword_list)):
             word = keyword_list[j]
@@ -82,9 +85,9 @@ def split_by_keyword(list,keyword_list):
                 found = False
 
         if found:
-            list_with_keywords.append(list[i])
+            list_with_keywords.append(input_list[i])
         else:
-            list_without_keywords.append(list[i])
+            list_without_keywords.append(input_list[i])
         
         logging.debug(f'{str(len(list_with_keywords))=}')
         logging.debug(f'{str(len(list_without_keywords))=}')
