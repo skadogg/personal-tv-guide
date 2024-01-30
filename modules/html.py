@@ -120,7 +120,7 @@ def generate_featured_film_table(show):
     str_start = '<p>\n<table width="800px">\n<tr><th colspan="2">Featured Film</th></tr>\n'
     content = '<tr><td>' + modules.shield.generate_shield_text(show) + '</td>'
     content += '<td rowspan="3">' + show.description + '</td></tr>\n' # synopsis
-    content += '<tr><td>' + str(show.categories) + '</td></tr>\n' # genre
+    content += '<tr><td>' + show.get_category_str() + '</td></tr>\n' # genre
     duration_hr_min = classes.activity.Activity.minutes_to_hour_and_minute(show.duration)
     content += '<tr><td>' + str(duration_hr_min[0]) + 'hr ' + str(duration_hr_min[1]) + 'min' + '</td></tr>\n' # runtime
     str_end = '</table>\n</p>\n'

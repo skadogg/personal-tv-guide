@@ -52,6 +52,10 @@ class Activity():
     @staticmethod
     def round_to_next_quarter_hr(runtime_minutes):
         return runtime_minutes + 15 - (runtime_minutes % 15)
+    
+    def get_category_str(self):
+        separator = ', '
+        return separator.join(self.categories)
 
 
 # @dataclass
