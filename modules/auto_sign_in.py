@@ -54,5 +54,9 @@ def sign_in(driver):
         time.sleep(sleep_at_the_end)
 
 
-def click_through_privacy_model(driver):  #TODO: figure out how to automatically click through privacy settings - #79
-    input('Please acknowledge the privacy settings, and press Enter to continue.')
+def click_through_privacy_model(driver):
+    # input('Please acknowledge the privacy settings, and press Enter to continue.')
+    
+    # shadow_root = driver.find_element(By.ID, "usercentrics-root").shadow_root
+    save_settings_button = driver.execute_script("""return document.querySelector('#usercentrics-root').shadowRoot.querySelector("button[data-testid='uc-save-button']")""")
+    save_settings_button.click()

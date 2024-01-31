@@ -91,7 +91,7 @@ def scrape_justwatch(media):
     options = webdriver.ChromeOptions()
 
     # Run the browser in the background without opening a new window
-    # options.add_argument("--headless=new")  # TODO:  re-enable after fixing #79
+    options.add_argument("--headless=new")
     # this will disable image loading
     options.add_argument('--blink-settings=imagesEnabled=false')
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
@@ -111,7 +111,7 @@ def scrape_justwatch(media):
     # main_window_handle = driver.window_handles[0]
 
 
-    # Handle privacy modal  #TODO: part of #79
+    # Handle privacy modal
     modules.auto_sign_in.click_through_privacy_model(driver)
 
 
