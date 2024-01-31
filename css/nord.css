@@ -248,7 +248,7 @@ th {
 td {
   color: var(--nord13);
   width: 100px;
-  font-size: x-small;
+  font-size: small;
 }
 table, th, td {
   border: 1px solid;
@@ -272,4 +272,48 @@ table {
   text-align: center;
   background-color: var(--nord0); 
   padding: 5px;
+}
+
+.badge_main {
+  padding: 5px;
+  text-decoration: none;
+  display: inline-block;
+  background: linear-gradient(to bottom, var(--nord3), var(--nord2) 95%);
+  color: var(--nord4);
+}
+
+.badge_red {
+  padding: 3px;
+  text-decoration: none;
+  display: inline-block;
+  background: linear-gradient(to bottom, var(--nord11), var(--nord3) 95%);
+  color: var(--nord4);
+}
+
+.badge_blue {
+  padding: 3px;
+  text-decoration: none;
+  display: inline-block;
+  background: linear-gradient(to bottom, var(--nord10), var(--nord3) 95%);
+  color: var(--nord4);
+}
+
+.badge_green {
+  padding: 3px;
+  text-decoration: none;
+  display: inline-block;
+  background: linear-gradient(to bottom, var(--nord14), var(--nord3) 95%);
+  color: var(--nord4);
+}
+
+.badge_other {
+  padding: 3px;
+  text-decoration: none;
+  display: inline-block;
+  background: linear-gradient(to bottom, var(--nord15), var(--nord3) 95%);
+  color: var(--nord4);
+}
+
+div.badge {
+  white-space: nowrap;
 }
