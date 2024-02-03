@@ -317,3 +317,8 @@ table {
 div.badge {
   white-space: nowrap;
 }
+
+img.featured_film {
+  height: 200px;
+  width: auto;
+}
