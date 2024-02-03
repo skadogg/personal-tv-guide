@@ -124,13 +124,14 @@ def scrape_justwatch(media):
     items_in_list = get_titles_count(driver)
     if dev_mode:
         items_in_list = 5
-    pages = (items_in_list // 20) + 1
+    # pages = (items_in_list // 20) + 1
 
-    with alive_bar(pages, spinner='waves', bar='squares') as bar:
-        for i in range(pages):
-            bar()
-            driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
-            time.sleep(.5)
+    # with alive_bar(pages, spinner='waves', bar='squares') as bar:
+    #     for i in range(pages):
+    #         bar()
+    #         driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+    #         time.sleep(.5)
+    scroll_down(driver)
 
 
     # Get name, episode number/title, left in season, main show link from main watchlist
@@ -232,19 +233,20 @@ def scrape_justwatch(media):
             try:
                 # Visit each page to get genres and runtimes
                 driver.get(this_show_url)
+                time.sleep(.5)
+                driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
                 try:
                     logging.debug('Trying to read text data from show page')
                     elem = WebDriverWait(driver, 30).until(
                         EC.presence_of_element_located((By.XPATH, '//div[@class="title-info title-info"]'))
                     )
+                    driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+                    title_info = driver.find_element(By.XPATH, '//div[@class="title-info title-info"]')
+                    detail_infos = title_info.find_elements(By.XPATH,'//div[@class="detail-infos"]')
                 except:
                     logging.error('Error reading text data from show page')
                     continue
-                finally:
-                    time.sleep(.5)
 
-                title_info = driver.find_element(By.XPATH, '//div[@class="title-info title-info"]')
-                detail_infos = title_info.find_elements(By.XPATH,'//div[@class="detail-infos"]')
 
                 # Loop through each section on the page to get headings and text
                 logging.debug('Looping through each section on the page to get headings and text')
@@ -323,3 +325,16 @@ def scrape_justwatch(media):
     else:
         modules.data_bin_convert.data_to_bin(activity_list, './my_data/saved_data_tv.bin')
     # data_list_everything = modules.data_bin_convert.bin_to_data()
+
+
+def scroll_down(driver):
+    # https://stackoverflow.com/questions/48850974/selenium-scroll-to-end-of-page-in-dynamically-loading-webpagew
+    # A method for scrolling the page.
+    last_height = driver.execute_script("return document.body.scrollHeight")
+    while True:
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(1)
+        new_height = driver.execute_script("return document.body.scrollHeight")
+        if new_height == last_height:
+            break
+        last_height = new_height
