@@ -117,8 +117,20 @@ def generate_table_genre_row(activity_list, genre, hours, random_start = True):
 
 def generate_featured_film_table(show):
     # Create the HTML code string for the featured film
-    str_start = '<p>\n<table width="800px">\n<tr><th colspan="2">Featured Film</th></tr>\n'
-    content = '<tr><td>' + modules.shield.generate_shield_text(show) + '</td>'
+    
+    this_show_url = show.source_url
+    try:
+        # Get year, media type, age rating, and synopsis quickly from ld-json data
+        logging.debug('Trying to read ld_json metadata')
+        show_ld_json_data = modules.ld_json.get_ld_json(this_show_url)
+        image_url = show_ld_json_data['image']
+    except Exception as e:
+        print('Error getting data for ' + this_show_url + '. Skipping...')
+        logging.error(f'{this_show_url=}')
+    
+    str_start = '<p>\n<table width="800px">\n<tr><th colspan="3">Featured Film</th></tr>\n'
+    content = '<tr><td rowspan="3"><img class="featured_film" src="' + image_url + '"></img></td>\n'  # image
+    content += '<td>' + modules.shield.generate_shield_text(show) + '</td>'
     content += '<td rowspan="3">' + show.description + '</td></tr>\n' # synopsis
     content += '<tr><td>' + show.get_category_str() + '</td></tr>\n' # genre
     duration_hr_min = classes.activity.Activity.minutes_to_hour_and_minute(show.duration)
