@@ -6,6 +6,7 @@ import logging
 import time
 import getpass
 
+
 def sign_in(driver):
     # Sign in to JustWatch
     email = ''
@@ -14,7 +15,7 @@ def sign_in(driver):
     sleep_at_the_end = 7
 
     # Look for stored credentials and prompt if none are found
-    if(path.isfile(secret_login_file)):
+    if (path.isfile(secret_login_file)):
         logging.debug('Secret login file found:')
         logging.debug(f'{secret_login_file=}')
         login_data = data_bin_convert.bin_to_data(secret_login_file)
@@ -37,7 +38,7 @@ def sign_in(driver):
         driver.implicitly_wait(2.0)
         driver.find_elements(By.CLASS_NAME, "text-wrapper")[0].click()
         driver.find_elements(By.CLASS_NAME, "firebaseui-list-item")[3].click()
-        
+
         # Sign in with user credentials
         driver.find_element(By.NAME, "email").send_keys(email)
         driver.find_element(By.CLASS_NAME, "firebaseui-id-submit").click()
@@ -56,10 +57,11 @@ def sign_in(driver):
 
 def click_through_privacy_model(driver):
     # input('Please acknowledge the privacy settings, and press Enter to continue.')
-    
+
     # Wait before trying to click
     # TODO: convert sleep to a Selenium wait function
     time.sleep(5)
     # shadow_root = driver.find_element(By.ID, "usercentrics-root").shadow_root
-    save_settings_button = driver.execute_script("""return document.querySelector('#usercentrics-root').shadowRoot.querySelector("button[data-testid='uc-save-button']")""")
+    save_settings_button = driver.execute_script(
+        """return document.querySelector('#usercentrics-root').shadowRoot.querySelector("button[data-testid='uc-save-button']")""")
     save_settings_button.click()

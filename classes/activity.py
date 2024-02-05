@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+
 @dataclass
 class Activity():
     # def __init__(self, activity_type, activity_name, year, age_rating, duration, source_url):
@@ -17,7 +18,6 @@ class Activity():
     source_url: str
     categories: list
     description: str
-    
 
     @staticmethod
     def runtime_to_minutes(runtime_str, round_up=False):
@@ -48,11 +48,11 @@ class Activity():
         hours = runtime_minutes // 60
         minutes = runtime_minutes % 60
         return [hours, minutes]
-    
+
     @staticmethod
     def round_to_next_quarter_hr(runtime_minutes):
         return runtime_minutes + 15 - (runtime_minutes % 15)
-    
+
     def get_category_str(self):
         separator = ', '
         return separator.join(self.categories)
@@ -83,7 +83,6 @@ class Tvshow(Activity):
     next_episode: str
     left_in_season: int
     season_data: list
-    
 
 # @dataclass
 # class Boardgame(Activity):

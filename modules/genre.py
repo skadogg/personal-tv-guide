@@ -20,7 +20,7 @@ def split_by_genre(input_list, genre_str):
             logging.debug(f'Skip:')
             logging.debug(f'{input_list[i].categories=}')
             list_without_genre.append(input_list[i])
-    return [list_with_genre,list_without_genre]
+    return [list_with_genre, list_without_genre]
 
 
 def get_genres_from_scraped_lists():
@@ -34,15 +34,15 @@ def get_genres_from_scraped_lists():
     # genre_str = ''
     genre_list = []
     for i in range(len(data_list_everything)):
-    #     # genre_str += data_list_everything[i][4] + ', '
-    #     genre_str += data_list_everything[i].categories + ', '
+        #     # genre_str += data_list_everything[i][4] + ', '
+        #     genre_str += data_list_everything[i].categories + ', '
         genre_list += data_list_everything[i].categories
 
     # genre_list = sorted(list(set((genre_str.split(', ')))))
 
     # while '' in genre_list:
     #     genre_list.remove('')
-    
+
     logging.debug(genre_list)
 
     modules.data_bin_convert.data_to_bin(genre_list, './my_data/saved_data_genres.bin')
@@ -62,7 +62,7 @@ def trigger_keywords():
     return os.environ.get('TRIGGER_KEYWORDS').split(',')
 
 
-def split_by_keyword(input_list,keyword_list):
+def split_by_keyword(input_list, keyword_list):
     # Takes the list and splits into two lists: one with the given keywords, and one without
     # >>> genre_christmas, remainder = modules.genre.split_by_keyword(data_list_everything,modules.genre.christmas_keywords())
     logging.debug(f'{keyword_list=}')
@@ -88,7 +88,7 @@ def split_by_keyword(input_list,keyword_list):
             list_with_keywords.append(input_list[i])
         else:
             list_without_keywords.append(input_list[i])
-        
+
         logging.debug(f'{str(len(list_with_keywords))=}')
         logging.debug(f'{str(len(list_without_keywords))=}')
-    return [list_with_keywords,list_without_keywords]
+    return [list_with_keywords, list_without_keywords]

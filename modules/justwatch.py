@@ -29,7 +29,7 @@ def get_titles_count(driver):
 
 def get_random_show(list):
     # Takes a random show from the list and returns the chosen show
-    r = random.randint(0,len(list)-1)
+    r = random.randint(0, len(list) - 1)
     return list[r]
 
 
@@ -37,24 +37,24 @@ def get_random_show(list):
 def generate_movies_by_runtime_table(movie_list):
     # Create the HTML table string containing the list of shows sorted by runtime (shortest to longest)
     logging.debug('Generating movies by runtime table')
-    data_movies_by_runtime = sorted(movie_list,key=lambda x:(x.duration))
+    data_movies_by_runtime = sorted(movie_list, key=lambda x: (x.duration))
 
     str_start = modules.html.generate_table_start()
     str_end = modules.html.generate_table_end()
 
-    headers_list = ['Title','Runtime']
+    headers_list = ['Title', 'Runtime']
     content = modules.html.sort_by_runtime_table_header(headers_list)
 
     for i in range(len(data_movies_by_runtime)):
         shield = modules.shield.generate_shield_text(data_movies_by_runtime[i])
         runtime_str = str(data_movies_by_runtime[i].duration)
-        title_and_runtime_list = [shield,runtime_str]
+        title_and_runtime_list = [shield, runtime_str]
         content += modules.html.sort_by_runtime_table_row(title_and_runtime_list)
 
     return str_start + content + str_end
 
 
-def balance_movie_and_tv_lists(movie_list, tv_list, good_ratio = 0.8):
+def balance_movie_and_tv_lists(movie_list, tv_list, good_ratio=0.8):
     # Takes two show lists and returns a more balanced list
     # Currently based on number of titles
     # TODO: Create comparison by runtime
@@ -66,14 +66,14 @@ def balance_movie_and_tv_lists(movie_list, tv_list, good_ratio = 0.8):
     else:
         bigger_list = tv_list
         smaller_list = movie_list
-    
+
     # smaller_list_no_episode_info = []
     # for i in range(len(smaller_list)):
-        
-    while(len(smaller_list) / len(bigger_list) < good_ratio):
+
+    while (len(smaller_list) / len(bigger_list) < good_ratio):
         smaller_list = smaller_list + smaller_list
         logging.debug(f'{len(smaller_list)=}')
-    
+
     return bigger_list + smaller_list
 
 
@@ -81,7 +81,7 @@ def scrape_justwatch(media):
     # Scrape your data from JustWatch.
     # media should be either 'tv' or 'movies'
     import modules.auto_sign_in
-    
+
     media = media.lower()
     logging.debug(f'{media=}')
     load_dotenv(dotenv_path='./.env')
@@ -100,7 +100,7 @@ def scrape_justwatch(media):
     logging.debug('Opening main window (headless by default)')
     driver = webdriver.Chrome(options=options)
     driver.set_page_load_timeout(60)
-    
+
     if media == 'movies':
         driver.get('https://www.justwatch.com/us/lists/my-lists?content_type=movie&sort_by=popular_30_day')
     else:
@@ -110,10 +110,8 @@ def scrape_justwatch(media):
     # driver.implicitly_driwait(1.0)
     # main_window_handle = driver.window_handles[0]
 
-
     # Handle privacy modal
     modules.auto_sign_in.click_through_privacy_model(driver)
-
 
     # Sign in to JustWatch using stored credentials (my_data/secret_login.bin)
     logging.debug('Signing in')
@@ -133,7 +131,6 @@ def scrape_justwatch(media):
     #         time.sleep(.5)
     scroll_down(driver)
 
-
     # Get name, episode number/title, left in season, main show link from main watchlist
     logging.debug('Getting all show cards from main page')
     if media == 'movies':
@@ -150,11 +147,11 @@ def scrape_justwatch(media):
     # show_card_all_links = []
     # show_card_full_text = []
     show_card_data = []
-    for i in range(len(show_cards)):    
-        show_card_main_link = show_cards[i].find_elements(By.TAG_NAME,'a')[0].get_dom_attribute('href')
+    for i in range(len(show_cards)):
+        show_card_main_link = show_cards[i].find_elements(By.TAG_NAME, 'a')[0].get_dom_attribute('href')
         show_card_full_text = show_cards[i].text
         show_card_data.append([show_card_main_link, show_card_full_text])
-    
+
     '''
     show_card_data = [['/us/movie/oppenheimer', "Oppenheimer (2023)\nThe story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II.\n8.4\n29 offers available"], ['/us/movie/killers-of-the-flower-moon', 'Killers of the Flower Moon (2023)\nWhen oil is discovered in 1920s Oklahoma under Osage Nation land, the Osage people are murdered one by one—until the FBI steps in to unravel the mystery.\n7.7\nWatch now'], ['/us/movie/everything-everywhere-all-at-once', "Everything Everywhere All at Once (2022)\nAn aging Chinese immigrant is swept up in an insane adventure, where she alone can save what's important to her by connecting with the lives she could have led in other universes.\n7.8\nWatch now"], ['/us/movie/asteroid-city', 'Asteroid City (2023)\nIn an American desert town circa 1955, the itinerary of a Junior Stargazer/Space Cadet convention is spectacularly disrupted by world-changing events.\n6.5\nWatch now'], ['/us/movie/dumb-money', "Dumb Money (2023)\nDavid vs. Goliath tale about everyday people who flipped the script on Wall Street and got rich by turning GameStop (the video game store) into the world's hottest company.\n6.9\nWatch now"]]
     show_card_data = [['/us/tv-show/love-on-the-spectrum', 'TV\nLove on the Spectrum\nS1 E4\n+1\nEpisode 4\nWatch now'], ['/us/tv-show/kath-and-kim', 'TV\nKath & Kim\nS1 E2\n+6\nGay\nWatch now'], ['/us/tv-show/wizards-of-waverly-place', "TV\nWizards of Waverly Place\nS1 E19\n+2\nAlex's Spring Fling\nWatch now"], ['/us/tv-show/the-mick', 'TV\nThe Mick\nS1 E13\n+4\nThe Bully\nWatch now'], ['/us/tv-show/westworld', 'TV\nWestworld\nS2 E2\n+8\nReunion\nWatch now']]
@@ -171,7 +168,7 @@ def scrape_justwatch(media):
     # episode_number = []
     # episode_left_in_season = []
     # episode_title = []
-    
+
     with alive_bar(len(show_card_data), spinner='waves', bar='squares') as bar:
         for i in range(len(show_card_data)):
             this_show_url = 'https://www.justwatch.com' + show_card_data[i][0]
@@ -179,7 +176,7 @@ def scrape_justwatch(media):
             logging.debug(this_show_url)
             bar.text = this_show_url
             bar()
-            
+
             # this_show_elements = show_card_data[i][1].split(sep='\n')
             # if media == 'movies':
             #     show_name = this_show_elements[0].split(sep=' (')[0]
@@ -228,8 +225,8 @@ def scrape_justwatch(media):
             except Exception as e:
                 print('Error getting data for ' + this_show_url + '. Skipping...')
                 logging.error(f'{this_show_url=}')
-                # continue
-            
+                continue
+
             try:
                 # Visit each page to get genres and runtimes
                 driver.get(this_show_url)
@@ -246,7 +243,6 @@ def scrape_justwatch(media):
                 except:
                     logging.error('Error reading text data from show page')
                     continue
-
 
                 # Loop through each section on the page to get headings and text
                 logging.debug('Looping through each section on the page to get headings and text')
@@ -266,8 +262,8 @@ def scrape_justwatch(media):
             except Exception as e:
                 print("Error getting data for " + this_show_url + " skipping...")
                 continue
-        
-            shows_dict = dict(zip(title_info_heading,title_info_value))
+
+            shows_dict = dict(zip(title_info_heading, title_info_value))
             show_genres = shows_dict.get('GENRES').split(', ')
             logging.debug('Appending to show_genres:')
             logging.debug(f'{show_genres=}')
@@ -279,11 +275,11 @@ def scrape_justwatch(media):
             # year.append(str(show_ld_json_data['dateCreated']).split('-')[0])
             # media_type.append(show_ld_json_data['@type'])
             show_name = show_ld_json_data['name']
-            
+
             date_created = str(show_ld_json_data['dateCreated'])
             # print(date_created)
             year = int(date_created.split('-')[0])
-                            
+
             show_age_rating = show_ld_json_data['contentRating']
             synopsis = show_ld_json_data['description']
             # if media == 'movies':
@@ -295,19 +291,22 @@ def scrape_justwatch(media):
 
             show_runtime_minutes = Activity.runtime_to_minutes(show_runtime, round_up=False)
             if media == 'movies':
-                activity_list.append(Activity(activity_type='movie', activity_name=show_name, year=year, age_rating=show_age_rating, 
-                                            duration=show_runtime_minutes, source_url=this_show_url, categories=show_genres, description=synopsis))
+                activity_list.append(
+                    Activity(activity_type='movie', activity_name=show_name, year=year, age_rating=show_age_rating,
+                             duration=show_runtime_minutes, source_url=this_show_url, categories=show_genres,
+                             description=synopsis))
             else:
-                activity_list.append(Tvshow(activity_type='tv', activity_name=show_name, year=year, age_rating=show_age_rating,
-                                                    duration=show_runtime_minutes, source_url=this_show_url, categories=show_genres,
-                                                    description=synopsis, next_episode=episode_number, left_in_season=episode_left_in_season, season_data=season_data))
+                activity_list.append(
+                    Tvshow(activity_type='tv', activity_name=show_name, year=year, age_rating=show_age_rating,
+                           duration=show_runtime_minutes, source_url=this_show_url, categories=show_genres,
+                           description=synopsis, next_episode=episode_number, left_in_season=episode_left_in_season,
+                           season_data=season_data))
 
     # TODO: quit whenever there's a large exception?
     # driver.close()
     driver.quit()
-    
-    logging.debug('Closing main window')
 
+    logging.debug('Closing main window')
 
     # Pull elements together
     # logging.debug('Pulling it all together into one list')
@@ -316,7 +315,6 @@ def scrape_justwatch(media):
 
     # df = pd.DataFrame(data_list_everything, columns=['Show Name','Episode Number','Episodes Remaining','Episode Title','Genres','Runtime','Age Rating'])
     # html_string = df.to_html()
-
 
     # Save my work
     import modules.data_bin_convert
