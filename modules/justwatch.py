@@ -119,16 +119,6 @@ def scrape_justwatch(media):
 
     # Scroll to the end of the page
     logging.debug('Scrolling to bottom of page')
-    # items_in_list = get_titles_count(driver)
-    # if dev_mode:
-    #     items_in_list = 5
-    # pages = (items_in_list // 20) + 1
-
-    # with alive_bar(pages, spinner='waves', bar='squares') as bar:
-    #     for i in range(pages):
-    #         bar()
-    #         driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
-    #         time.sleep(.5)
     scroll_down(driver)
 
     # # Get name, episode number/title, left in season, main show link from main watchlist
@@ -159,19 +149,15 @@ def scrape_justwatch(media):
     show_card_data = [['/us/movie/oppenheimer', "Oppenheimer (2023)\nThe story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II.\n8.4\n29 offers available"], ['/us/movie/killers-of-the-flower-moon', 'Killers of the Flower Moon (2023)\nWhen oil is discovered in 1920s Oklahoma under Osage Nation land, the Osage people are murdered one by one—until the FBI steps in to unravel the mystery.\n7.7\nWatch now'], ['/us/movie/everything-everywhere-all-at-once', "Everything Everywhere All at Once (2022)\nAn aging Chinese immigrant is swept up in an insane adventure, where she alone can save what's important to her by connecting with the lives she could have led in other universes.\n7.8\nWatch now"], ['/us/movie/asteroid-city', 'Asteroid City (2023)\nIn an American desert town circa 1955, the itinerary of a Junior Stargazer/Space Cadet convention is spectacularly disrupted by world-changing events.\n6.5\nWatch now'], ['/us/movie/dumb-money', "Dumb Money (2023)\nDavid vs. Goliath tale about everyday people who flipped the script on Wall Street and got rich by turning GameStop (the video game store) into the world's hottest company.\n6.9\nWatch now"]]
     show_card_data = [['/us/tv-show/love-on-the-spectrum', 'TV\nLove on the Spectrum\nS1 E4\n+1\nEpisode 4\nWatch now'], ['/us/tv-show/kath-and-kim', 'TV\nKath & Kim\nS1 E2\n+6\nGay\nWatch now'], ['/us/tv-show/wizards-of-waverly-place', "TV\nWizards of Waverly Place\nS1 E19\n+2\nAlex's Spring Fling\nWatch now"], ['/us/tv-show/the-mick', 'TV\nThe Mick\nS1 E13\n+4\nThe Bully\nWatch now'], ['/us/tv-show/westworld', 'TV\nWestworld\nS2 E2\n+8\nReunion\nWatch now']]
     '''
-
-    # i = 0
-    # show_main_link = []
-    # for i in range(len(show_card_all_links)):
-    #     show_main_link.append(show_card_all_links[i][0].get_dom_attribute('href'))
-    #     logging.debug(f'{show_main_link[i]=}')
+    
+    # Compare new show_card_data to stored data
+    
+    # Discard shows that are already stored
+    
+    # Keep shows that do not yet exist
+    
 
     activity_list = []
-    # show_name = []
-    # episode_number = []
-    # episode_left_in_season = []
-    # episode_title = []
-
     with alive_bar(len(show_card_data), spinner='waves', bar='squares') as bar:
         for i in range(len(show_card_data)):
             this_show_url = 'https://www.justwatch.com' + show_card_data[i][0]
@@ -180,15 +166,6 @@ def scrape_justwatch(media):
             bar.text = this_show_url
             bar()
 
-            # this_show_elements = show_card_data[i][1].split(sep='\n')
-            # if media == 'movies':
-            #     show_name = this_show_elements[0].split(sep=' (')[0]
-            #     # year = int(this_show_elements[0].split(sep=' (')[1].split(sep=')')[0])
-            #     logging.debug(f'{show_name[i]=}')
-            #     # episode_number.append('')
-            #     # episode_left_in_season.append('')
-            #     # episode_title.append('')
-            # else:
             if media == 'tv':
                 this_show_elements = show_card_data[i][1].split(sep='\n')
                 # show_name = this_show_elements[1]
@@ -197,29 +174,8 @@ def scrape_justwatch(media):
                 logging.debug(f'{episode_number=}')
                 if this_show_elements[3][0] == "+":
                     episode_left_in_season = int(this_show_elements[3].split('+')[1])
-                    # episode_title = this_show_elements[4]
                 else:
                     episode_left_in_season = 0
-                    # episode_title = this_show_elements[3]
-
-            '''
-            # Get genres, runtime, age rating from show pages
-            # j = 0
-            # show_genres = []
-            # show_runtime = []
-            # show_age_rating = []
-            # year = []
-            # media_type = []
-            # synopsis = []
-            # season_data = []
-            # with alive_bar(len(show_main_link), spinner='waves', bar='squares') as bar:
-            #     for j in range(len(show_main_link)):
-            #         logging.debug(show_main_link)
-            #         bar.text = show_main_link[j]
-            #         bar()
-                
-                # full_url = 'https://www.justwatch.com' + show_main_link[j]
-            '''
 
             try:
                 # Get year, media type, age rating, and synopsis quickly from ld-json data
@@ -273,10 +229,7 @@ def scrape_justwatch(media):
             show_runtime = shows_dict.get('RUNTIME')
             logging.debug('Appending to show_runtime:')
             logging.debug(f'{show_runtime=}')
-            # show_age_rating.append(shows_dict.get('AGE RATING'))
-
-            # year.append(str(show_ld_json_data['dateCreated']).split('-')[0])
-            # media_type.append(show_ld_json_data['@type'])
+            
             show_name = show_ld_json_data['name']
 
             date_created = str(show_ld_json_data['dateCreated'])
@@ -285,9 +238,7 @@ def scrape_justwatch(media):
 
             show_age_rating = show_ld_json_data['contentRating']
             synopsis = show_ld_json_data['description']
-            # if media == 'movies':
-            #     season_data.append('')
-            # else:
+            
             if media == 'tv':
                 season_data = (show_ld_json_data['containsSeason'])
             logging.debug('Appending season_data')
@@ -310,14 +261,6 @@ def scrape_justwatch(media):
     driver.quit()
 
     logging.debug('Closing main window')
-
-    # Pull elements together
-    # logging.debug('Pulling it all together into one list')
-    # data_list_everything = list(zip(show_name,episode_number,episode_left_in_season,episode_title,show_genres,show_runtime,show_age_rating,show_main_link,year,media_type,synopsis,season_data))
-    # sorted(data_list_everything)
-
-    # df = pd.DataFrame(data_list_everything, columns=['Show Name','Episode Number','Episodes Remaining','Episode Title','Genres','Runtime','Age Rating'])
-    # html_string = df.to_html()
 
     # Save my work
     import modules.data_bin_convert
