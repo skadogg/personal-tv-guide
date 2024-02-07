@@ -151,6 +151,20 @@ def scrape_justwatch(media):
     '''
     
     # Compare new show_card_data to stored data
+    show_db = modules.data_bin_convert.bin_to_data('./my_data/saved_data_tv.bin')
+    shows_already_in_db = []
+    shows_not_in_db = []
+    for i in range(len(show_card_data)):
+        show_exists = False
+        slug = show_card_data[i][0]
+        for j in range(len(show_db)):
+            if slug in show_db[j].source_url:
+                show_exists = True
+                break
+        if show_exists:
+            shows_already_in_db.append(show_card_data[i])
+        else:
+            shows_not_in_db.append(show_card_data[i])
     
     # Discard shows that are already stored
     
@@ -257,7 +271,7 @@ def scrape_justwatch(media):
                            season_data=season_data))
 
     # TODO: quit whenever there's a large exception?
-    # driver.close()
+    driver.close()
     driver.quit()
 
     logging.debug('Closing main window')
