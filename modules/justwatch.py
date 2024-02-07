@@ -80,7 +80,7 @@ def balance_movie_and_tv_lists(movie_list, tv_list, good_ratio=0.8):
 def scrape_justwatch(media):
     # Scrape your data from JustWatch.
     # media should be either 'tv' or 'movies'
-    import modules.auto_sign_in
+    import modules.auto_sign_in  # TODO this probably doesn't belong here
 
     media = media.lower()
     logging.debug(f'{media=}')
@@ -151,9 +151,10 @@ def scrape_justwatch(media):
     '''
     
     # Compare new show_card_data to stored data
-    show_db = modules.data_bin_convert.bin_to_data('./my_data/saved_data_tv.bin')
+    show_db = modules.data_bin_convert.bin_to_data('./my_data/saved_data.bin')
     shows_already_in_db = []
     shows_not_in_db = []
+    i = 0
     for i in range(len(show_card_data)):
         show_exists = False
         slug = show_card_data[i][0]
@@ -166,10 +167,16 @@ def scrape_justwatch(media):
         else:
             shows_not_in_db.append(show_card_data[i])
     
+    # >>> shows_already_in_db
+    # [['/us/tv-show/scott-pilgrim-the-anime', 'TV\nScott Pilgrim Takes Off\nS1 E4\n+4\nWhatever\nWatch now'], ['/us/tv-show/the-blacklist', 'TV\nThe Blacklist\nS7 E12\n+7\nCornelius Ruck\nWatch now']]
+    # >>> shows_not_in_db
+    # [['/us/tv-show/one-day-at-a-time-2016', 'TV\nOne Day at a Time\nS2 E3\n+10\nTo Zir, With Love\nWatch now'], ['/us/tv-show/kath-and-kim', 'TV\nKath & Kim\nS1 E2\n+6\nGay\nWatch now'], ['/us/tv-show/wizards-of-waverly-place', "TV\nWizards of Waverly Place\nS1 E19\n+2\nAlex's Spring Fling\nWatch now"]]
+    
     # Discard shows that are already stored
+    shows_already_in_db = []
     
     # Keep shows that do not yet exist
-    
+    show_card_data = shows_not_in_db
 
     activity_list = []
     with alive_bar(len(show_card_data), spinner='waves', bar='squares') as bar:
@@ -276,13 +283,17 @@ def scrape_justwatch(media):
 
     logging.debug('Closing main window')
 
+    # Put newly-collected show data into main database
+    show_db += activity_list
+
     # Save my work
-    import modules.data_bin_convert
-    if media == 'movies':
-        modules.data_bin_convert.data_to_bin(activity_list, './my_data/saved_data_movies.bin')
-    else:
-        modules.data_bin_convert.data_to_bin(activity_list, './my_data/saved_data_tv.bin')
+    import modules.data_bin_convert  # TODO this probably doesn't belong here
+    # if media == 'movies':
+    #     modules.data_bin_convert.data_to_bin(activity_list, './my_data/saved_data_movies.bin')
+    # else:
+    #     modules.data_bin_convert.data_to_bin(activity_list, './my_data/saved_data_tv.bin')
     # data_list_everything = modules.data_bin_convert.bin_to_data()
+    modules.data_bin_convert.data_to_bin(show_db, './my_data/saved_data')
 
 
 def scroll_down(driver):
