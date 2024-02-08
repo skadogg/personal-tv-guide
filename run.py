@@ -28,8 +28,8 @@ else:
 # Scrape your data from JustWatch and stor in .bin files for later
 # These can take a while, so it can sometimes be useful to store your data, especially while developing
 logging.info('Scraping data from JustWatch')
-modules.justwatch.scrape_justwatch('TV')
-modules.justwatch.scrape_justwatch('Movies')
+# modules.justwatch.scrape_justwatch('TV')
+# modules.justwatch.scrape_justwatch('Movies')
 
 # Read all genres from scraped data and store in .bin file for later
 logging.info('Reading genres from scraped data')
@@ -115,9 +115,9 @@ html_handle.write(modules.html.generate_table_end())
 # End of writing the main table for your personal TV guide
 
 
-# # # Featured Film
-# logging.info('Writing Featured Film table')
-# html_handle.write(modules.html.generate_featured_film_table(modules.justwatch.get_random_show(data_list_movies)))
+# Featured Film
+logging.info('Writing Featured Film table')
+html_handle.write(modules.html.generate_featured_film_table(modules.justwatch.get_random_show(data_list_everything)))
 
 # # Write table for time left in TV series
 # logging.info('Writing time left in TV series table')
