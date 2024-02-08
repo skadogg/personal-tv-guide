@@ -283,7 +283,7 @@ table {
 }
 
 .badge_red {
-  padding: 3px;
+  padding: 5px;
   text-decoration: none;
   display: inline-block;
   background: linear-gradient(to bottom, var(--nord11), var(--nord3) 95%);
@@ -291,7 +291,7 @@ table {
 }
 
 .badge_blue {
-  padding: 3px;
+  padding: 5px;
   text-decoration: none;
   display: inline-block;
   background: linear-gradient(to bottom, var(--nord10), var(--nord3) 95%);
@@ -299,7 +299,7 @@ table {
 }
 
 .badge_green {
-  padding: 3px;
+  padding: 5px;
   text-decoration: none;
   display: inline-block;
   background: linear-gradient(to bottom, var(--nord14), var(--nord3) 95%);
@@ -307,7 +307,7 @@ table {
 }
 
 .badge_other {
-  padding: 3px;
+  padding: 5px;
   text-decoration: none;
   display: inline-block;
   background: linear-gradient(to bottom, var(--nord15), var(--nord3) 95%);
