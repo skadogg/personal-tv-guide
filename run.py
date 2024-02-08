@@ -28,8 +28,8 @@ else:
 # Scrape your data from JustWatch and stor in .bin files for later
 # These can take a while, so it can sometimes be useful to store your data, especially while developing
 logging.info('Scraping data from JustWatch')
-# modules.justwatch.scrape_justwatch('TV')
-# modules.justwatch.scrape_justwatch('Movies')
+modules.justwatch.scrape_justwatch('TV')
+modules.justwatch.scrape_justwatch('Movies')
 
 # Read all genres from scraped data and store in .bin file for later
 logging.info('Reading genres from scraped data')
@@ -130,8 +130,8 @@ for i in range(len(time_info)):
 html_handle.write('</table>\n</p>\n')
 
 # # # Movies sorted by runtime
-# logging.info('Writing Movies sorted by runtime table')
-# html_handle.write(modules.justwatch.generate_movies_by_runtime_table(data_list_movies))
+logging.info('Writing Movies sorted by runtime table')
+html_handle.write(modules.justwatch.generate_movies_by_runtime_table(data_list_everything))
 
 # Finish writing HTML output
 html_handle.write(modules.html.generate_html_end())

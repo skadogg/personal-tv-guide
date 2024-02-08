@@ -48,10 +48,11 @@ def generate_movies_by_runtime_table(movie_list):
     content = modules.html.sort_by_runtime_table_header(headers_list)
 
     for i in range(len(data_movies_by_runtime)):
-        shield = modules.shield.generate_shield_text(data_movies_by_runtime[i])
-        runtime_str = str(data_movies_by_runtime[i].duration)
-        title_and_runtime_list = [shield, runtime_str]
-        content += modules.html.sort_by_runtime_table_row(title_and_runtime_list)
+        if data_movies_by_runtime[i].activity_type == 'movie':
+            shield = modules.shield.generate_shield_text(data_movies_by_runtime[i])
+            runtime_str = str(data_movies_by_runtime[i].duration)
+            title_and_runtime_list = [shield, runtime_str]
+            content += modules.html.sort_by_runtime_table_row(title_and_runtime_list)
 
     return str_start + content + str_end
 
