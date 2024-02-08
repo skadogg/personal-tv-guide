@@ -155,7 +155,7 @@ def scrape_justwatch(media):
     shows_already_in_db = []
     shows_not_in_db = []
     i = 0
-    for i in range(len(show_card_data)):
+    for i in range(len(show_card_data)):  # TODO: show some kind of progress while comparing
         show_exists = False
         slug = show_card_data[i][0]
         for j in range(len(show_db)):
@@ -293,7 +293,7 @@ def scrape_justwatch(media):
     # else:
     #     modules.data_bin_convert.data_to_bin(activity_list, './my_data/saved_data_tv.bin')
     # data_list_everything = modules.data_bin_convert.bin_to_data()
-    modules.data_bin_convert.data_to_bin(show_db, './my_data/saved_data')
+    modules.data_bin_convert.data_to_bin(show_db, './my_data/saved_data.bin')
 
 
 def scroll_down(driver):

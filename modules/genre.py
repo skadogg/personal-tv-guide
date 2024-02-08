@@ -26,10 +26,11 @@ def split_by_genre(input_list, genre_str):
 def get_genres_from_scraped_lists():
     # Read through the data and find all genres that exist there.
     # Data gets stored in .bin file``
-    data_list_movies = modules.data_bin_convert.bin_to_data('./my_data/saved_data_movies.bin')
-    data_list_tv = modules.data_bin_convert.bin_to_data('./my_data/saved_data_tv.bin')
+    # data_list_movies = modules.data_bin_convert.bin_to_data('./my_data/saved_data_movies.bin')
+    # data_list_tv = modules.data_bin_convert.bin_to_data('./my_data/saved_data_tv.bin')
 
-    data_list_everything = data_list_movies + data_list_tv
+    # data_list_everything = data_list_movies + data_list_tv
+    data_list_everything = modules.data_bin_convert.bin_to_data('./my_data/saved_data.bin')
 
     # genre_str = ''
     genre_list = []
