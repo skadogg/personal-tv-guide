@@ -29,8 +29,10 @@ def get_titles_count(driver):
 
 def get_random_show(list):
     # Takes a random show from the list and returns the chosen show
-    r = random.randint(0, len(list) - 1)
-    return list[r]
+    while True:
+        r = random.randint(0, len(list) - 1)
+        if list[r].activity_type == 'movie':
+            return list[r]
 
 
 # Movies sorted by runtime
