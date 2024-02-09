@@ -36,12 +36,13 @@ logging.info('Reading genres from scraped data')
 modules.genre.get_genres_from_scraped_lists()
 
 # Restore scraped data from stored .bin files and combine into a full list of all shows
-data_list_movies = modules.data_bin_convert.bin_to_data('./my_data/saved_data_movies.bin')
-data_list_tv = modules.data_bin_convert.bin_to_data('./my_data/saved_data_tv.bin')
-balance_factor = 4  # TODO base this on how many hours in final report (with some comments)
-logging.info('Combining movie and tv data into balanced list')
-logging.info(f'{balance_factor=}')
-data_list_everything = modules.justwatch.balance_movie_and_tv_lists(data_list_movies, data_list_tv, balance_factor)
+# data_list_movies = modules.data_bin_convert.bin_to_data('./my_data/saved_data_movies.bin')
+# data_list_tv = modules.data_bin_convert.bin_to_data('./my_data/saved_data_tv.bin')
+# balance_factor = 4  # TODO base this on how many hours in final report (with some comments)
+# logging.info('Combining movie and tv data into balanced list')
+# logging.info(f'{balance_factor=}')
+# data_list_everything = modules.justwatch.balance_movie_and_tv_lists(data_list_movies, data_list_tv, balance_factor)
+data_list_everything = modules.data_bin_convert.bin_to_data('./my_data/saved_data.bin')
 
 # Restore genres from stored .bin file
 all_genres = modules.data_bin_convert.bin_to_data('./my_data/saved_data_genres.bin')
@@ -114,13 +115,13 @@ html_handle.write(modules.html.generate_table_end())
 # End of writing the main table for your personal TV guide
 
 
-# # Featured Film
+# Featured Film
 logging.info('Writing Featured Film table')
-html_handle.write(modules.html.generate_featured_film_table(modules.justwatch.get_random_show(data_list_movies)))
+html_handle.write(modules.html.generate_featured_film_table(modules.justwatch.get_random_show(data_list_everything)))
 
 # Write table for time left in TV series
 logging.info('Writing time left in TV series table')
-time_info = modules.runtime.time_left_in_tv_series_report(data_list_tv)
+time_info = modules.runtime.time_left_in_tv_series_report(data_list_everything)
 html_handle.write('<p>\n<table>\n<th>Title</th><th>Minutes Left</th>\n')
 for i in range(len(time_info)):
     # html_handle.write('<tr><td>' + time_info[i][0] + '</td><td>' + str(round(time_info[i][3] * 100,
@@ -128,9 +129,9 @@ for i in range(len(time_info)):
     html_handle.write('<tr><td>' + time_info[i][0] + '</td><td>' + str(time_info[i][1]) + '</td></tr>')  # minutes left
 html_handle.write('</table>\n</p>\n')
 
-# # Movies sorted by runtime
+# # # Movies sorted by runtime
 logging.info('Writing Movies sorted by runtime table')
-html_handle.write(modules.justwatch.generate_movies_by_runtime_table(data_list_movies))
+html_handle.write(modules.justwatch.generate_movies_by_runtime_table(data_list_everything))
 
 # Finish writing HTML output
 html_handle.write(modules.html.generate_html_end())
