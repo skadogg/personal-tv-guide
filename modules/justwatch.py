@@ -1,17 +1,18 @@
 from alive_progress import alive_bar
+from classes.activity import Activity, Tvshow
 from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 import logging
+import modules.auto_sign_in
 import modules.html
-import modules.runtime
 import modules.ld_json
+import modules.runtime
 import os
 import random
 import time
-from classes.activity import Activity, Tvshow
 
 
 def get_titles_count(driver):
@@ -184,6 +185,10 @@ def scrape_justwatch(media):
     activity_list = []
     with alive_bar(len(show_card_data), spinner='waves', bar='squares') as bar:
         for i in range(len(show_card_data)):
+            reset_every_x_iterations = 25
+            if (i + 1) % reset_every_x_iterations == 0:
+                driver = reset_site_conn(driver)
+            
             this_show_url = 'https://www.justwatch.com' + show_card_data[i][0]
             # print(f"{this_show_url=}")
             logging.debug(this_show_url)
@@ -303,13 +308,17 @@ def scroll_down(driver):
     # https://stackoverflow.com/questions/48850974/selenium-scroll-to-end-of-page-in-dynamically-loading-webpagew
     # A method for scrolling the page.
     last_height = driver.execute_script("return document.body.scrollHeight")
-    while True:
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        time.sleep(1)
-        new_height = driver.execute_script("return document.body.scrollHeight")
-        if new_height == last_height:
-            break
-        last_height = new_height
+    with alive_bar(None, spinner='waves', bar='squares') as bar:
+        while True:
+            bar.text = 'Scrolling down'
+            bar()
+            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = driver.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
 
 def get_show_card_data(driver, media):
     # Get name, episode number/title, left in season, main show link from main watchlist
@@ -327,3 +336,33 @@ def get_show_card_data(driver, media):
         show_card_data.append([show_card_main_link, show_card_full_text])
 
     return show_card_data
+
+
+def reset_site_conn(driver):
+    # Close window
+    driver.close()
+    driver.quit()
+    
+    # Open new window
+    
+    options = webdriver.ChromeOptions()
+
+    # Run the browser in the background without opening a new window
+    options.add_argument("--headless=new")
+    # this will disable image loading
+    options.add_argument('--blink-settings=imagesEnabled=false')
+    options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    options.add_argument('--no-sandbox')
+    # Open main window
+    logging.debug('Opening main window (headless by default)')
+    driver = webdriver.Chrome(options=options)
+    driver.set_page_load_timeout(60)
+    
+    driver.get('https://www.justwatch.com/us/lists/tv-show-tracking?inner_tab=continue_watching')
+    
+    driver.maximize_window()
+
+    # Handle privacy modal
+    modules.auto_sign_in.click_through_privacy_model(driver)
+    
+    return driver
