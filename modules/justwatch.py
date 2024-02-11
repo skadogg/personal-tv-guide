@@ -358,7 +358,7 @@ def reset_site_conn(driver):
     driver = webdriver.Chrome(options=options)
     driver.set_page_load_timeout(60)
     
-    driver.get('https://www.justwatch.com/us/lists/tv-show-tracking?inner_tab=continue_watching')
+    driver.get('https://www.justwatch.com/')
     
     driver.maximize_window()
 
