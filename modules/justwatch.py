@@ -51,7 +51,7 @@ def generate_movies_by_runtime_table(movie_list):
     for i in range(len(data_movies_by_runtime)):
         if data_movies_by_runtime[i].activity_type == 'movie':
             shield = modules.shield.generate_shield_text(data_movies_by_runtime[i])
-            runtime_str = str(data_movies_by_runtime[i].duration)
+            runtime_str = runtime_str = str(data_movies_by_runtime[i].duration) if data_movies_by_runtime[i].duration != 0 else 'N/A'
             title_and_runtime_list = [shield, runtime_str]
             content += modules.html.sort_by_runtime_table_row(title_and_runtime_list)
 
