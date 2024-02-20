@@ -185,11 +185,6 @@ def scrape_justwatch(media):
     activity_list = []
     with alive_bar(len(show_card_data), spinner='waves', bar='squares') as bar:
         for i in range(len(show_card_data)):
-            
-            # TODO: remove after fixing #96 - 🐛 Scrape fails when show has no runtime listed
-            if show_card_data[i][0] == '/us/movie/twisters':
-                continue
-            
             reset_every_x_iterations = 25
             if (i + 1) % reset_every_x_iterations == 0:
                 driver = reset_site_conn(driver)
