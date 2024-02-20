@@ -151,34 +151,21 @@ def scrape_justwatch(media):
 
     '''
     show_card_data = [['/us/movie/oppenheimer', "Oppenheimer (2023)\nThe story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II.\n8.4\n29 offers available"], ['/us/movie/killers-of-the-flower-moon', 'Killers of the Flower Moon (2023)\nWhen oil is discovered in 1920s Oklahoma under Osage Nation land, the Osage people are murdered one by one—until the FBI steps in to unravel the mystery.\n7.7\nWatch now'], ['/us/movie/everything-everywhere-all-at-once', "Everything Everywhere All at Once (2022)\nAn aging Chinese immigrant is swept up in an insane adventure, where she alone can save what's important to her by connecting with the lives she could have led in other universes.\n7.8\nWatch now"], ['/us/movie/asteroid-city', 'Asteroid City (2023)\nIn an American desert town circa 1955, the itinerary of a Junior Stargazer/Space Cadet convention is spectacularly disrupted by world-changing events.\n6.5\nWatch now'], ['/us/movie/dumb-money', "Dumb Money (2023)\nDavid vs. Goliath tale about everyday people who flipped the script on Wall Street and got rich by turning GameStop (the video game store) into the world's hottest company.\n6.9\nWatch now"]]
-    show_card_data = [['/us/tv-show/love-on-the-spectrum', 'TV\nLove on the Spectrum\nS1 E4\n+1\nEpisode 4\nWatch now'], ['/us/tv-show/kath-and-kim', 'TV\nKath & Kim\nS1 E2\n+6\nGay\nWatch now'], ['/us/tv-show/wizards-of-waverly-place', "TV\nWizards of Waverly Place\nS1 E19\n+2\nAlex's Spring Fling\nWatch now"], ['/us/tv-show/the-mick', 'TV\nThe Mick\nS1 E13\n+4\nThe Bully\nWatch now'], ['/us/tv-show/westworld', 'TV\nWestworld\nS2 E2\n+8\nReunion\nWatch now']]
+    show_card_data = [['/us/tv-show/scrubs', 'TV\nScrubs\nS6 E5\n+17\nMy Friend with Money\nWatch now'], ['/us/tv-show/love-on-the-spectrum-u-s', 'TV\nLove on the Spectrum U.S.\nS2 E2\n+5\nSeason 2\nWatch now']]
     '''
     
     # Compare new show_card_data to stored data
-    show_db = modules.data_bin_convert.bin_to_data('./my_data/saved_data.bin')
-    shows_already_in_db = []
-    shows_not_in_db = []
-    i = 0
-    for i in range(len(show_card_data)):  # TODO: show some kind of progress while comparing
-        show_exists = False
-        slug = show_card_data[i][0]
-        for j in range(len(show_db)):
-            if slug in show_db[j].source_url:
-                show_exists = True
-                break
-        if show_exists:
-            shows_already_in_db.append(show_card_data[i])
-        else:
-            shows_not_in_db.append(show_card_data[i])
+    shows_already_in_db, shows_not_in_db = split_show_card_data(show_card_data)
     
     # >>> shows_already_in_db
     # [['/us/tv-show/scott-pilgrim-the-anime', 'TV\nScott Pilgrim Takes Off\nS1 E4\n+4\nWhatever\nWatch now'], ['/us/tv-show/the-blacklist', 'TV\nThe Blacklist\nS7 E12\n+7\nCornelius Ruck\nWatch now']]
     # >>> shows_not_in_db
     # [['/us/tv-show/one-day-at-a-time-2016', 'TV\nOne Day at a Time\nS2 E3\n+10\nTo Zir, With Love\nWatch now'], ['/us/tv-show/kath-and-kim', 'TV\nKath & Kim\nS1 E2\n+6\nGay\nWatch now'], ['/us/tv-show/wizards-of-waverly-place', "TV\nWizards of Waverly Place\nS1 E19\n+2\nAlex's Spring Fling\nWatch now"]]
     
-    # Discard shows that are already stored
-    shows_already_in_db = []
-    
+    # Update TV episode data
+    if media == 'tv':
+        update_episode_data(shows_already_in_db)
+        
     # Keep shows that do not yet exist
     show_card_data = shows_not_in_db
 
@@ -196,15 +183,7 @@ def scrape_justwatch(media):
             bar()
 
             if media == 'tv':
-                this_show_elements = show_card_data[i][1].split(sep='\n')
-                # show_name = this_show_elements[1]
-                # logging.debug(f'{show_name[i]=}')
-                episode_number = this_show_elements[2]
-                logging.debug(f'{episode_number=}')
-                if this_show_elements[3][0] == "+":
-                    episode_left_in_season = int(this_show_elements[3].split('+')[1])
-                else:
-                    episode_left_in_season = 0
+                episode_number, episode_left_in_season = parse_show_card_string(show_card_data[i])
 
             try:
                 # Get year, media type, age rating, and synopsis quickly from ld-json data
@@ -292,6 +271,7 @@ def scrape_justwatch(media):
     logging.debug('Closing main window')
 
     # Put newly-collected show data into main database
+    show_db = modules.data_bin_convert.bin_to_data('./my_data/saved_data.bin')
     show_db += activity_list
 
     # Save my work
@@ -366,3 +346,58 @@ def reset_site_conn(driver):
     modules.auto_sign_in.click_through_privacy_model(driver)
     
     return driver
+
+
+def update_episode_data(shows_already_in_db):
+    # Update TV episode data
+    show_db = modules.data_bin_convert.bin_to_data('./my_data/saved_data.bin')
+    for i in range(len(shows_already_in_db)):
+        match_found = False
+        slug = shows_already_in_db[i][0]
+        for j in range(len(show_db)):
+            if slug in show_db[j].source_url:
+                match_found = True
+                episode_number, episode_left_in_season = parse_show_card_string(shows_already_in_db[i])
+                logging.debug(f"Updating episode info: {slug=}")
+                show_db[j].next_episode = episode_number
+                show_db[j].left_in_season = episode_left_in_season
+                break
+        if match_found:
+            continue
+    modules.data_bin_convert.data_to_bin(show_db, './my_data/saved_data.bin')
+
+
+def parse_show_card_string(show_card):
+    # Takes show_card
+    # ['/us/tv-show/love-on-the-spectrum-u-s', 'TV\nLove on the Spectrum U.S.\nS2 E2\n+5\nSeason 2\nWatch now']
+    # and returns episode info
+    # ('S2 E2', 5)
+    this_show_elements = show_card[1].split(sep='\n')
+    episode_number = this_show_elements[2]
+    logging.debug(f'{episode_number=}')
+    if this_show_elements[3][0] == "+":
+        episode_left_in_season = int(this_show_elements[3].split('+')[1])
+    else:
+        episode_left_in_season = 0
+    
+    return episode_number, episode_left_in_season
+
+
+def split_show_card_data(show_card_data):
+    # Compare new show_card_data to stored data
+    show_db = modules.data_bin_convert.bin_to_data('./my_data/saved_data.bin')
+    shows_already_in_db = []
+    shows_not_in_db = []
+    i = 0
+    for i in range(len(show_card_data)):  # TODO: show some kind of progress while comparing
+        show_exists = False
+        slug = show_card_data[i][0]
+        for j in range(len(show_db)):
+            if slug in show_db[j].source_url:
+                show_exists = True
+                break
+        if show_exists:
+            shows_already_in_db.append(show_card_data[i])
+        else:
+            shows_not_in_db.append(show_card_data[i])
+    return shows_already_in_db, shows_not_in_db
