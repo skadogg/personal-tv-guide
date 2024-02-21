@@ -47,11 +47,12 @@ data_list_everything = modules.data_bin_convert.bin_to_data('./my_data/saved_dat
 # Restore genres from stored .bin file
 all_genres = modules.data_bin_convert.bin_to_data('./my_data/saved_data_genres.bin')
 
-# Randomize the lists so you don't just end up with super-popular Action/Adventure movies
-# (The output gets sorted later. All is well.)
-logging.info('Shuffling data and genres')
+# Randomize the list
+logging.info('Shuffling data')
 random.shuffle(data_list_everything)
-random.shuffle(all_genres)
+
+# Sort by genre frequency so you don't just end up with super-popular Action/Adventure movies
+all_genres = sorted(all_genres, key = all_genres.count, reverse = False)
 
 # Look through data for keyword matches
 # This can be used for special lists (e.g. movies you only watch during the holidays),
