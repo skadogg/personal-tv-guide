@@ -80,7 +80,7 @@ while len(remainder) > 0:
 # Begin writing HTML output
 logging.info('Writing HTML output')
 logging.info('-------------------')
-html_handle = open(outfile, '+w')
+html_handle = open(outfile, '+w', encoding="utf-8")
 html_handle.write(modules.html.generate_html_start(stylesheet_path))
 
 # Begin writing the main table for your personal TV guide
