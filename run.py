@@ -28,8 +28,13 @@ else:
 # Scrape your data from JustWatch and stor in .bin files for later
 # These can take a while, so it can sometimes be useful to store your data, especially while developing
 logging.info('Scraping data from JustWatch')
-modules.justwatch.scrape_justwatch('TV')
-modules.justwatch.scrape_justwatch('Movies')
+
+# TV in progress
+modules.justwatch.scrape_justwatch('https://www.justwatch.com/us/lists/tv-show-tracking?inner_tab=continue_watching')
+# TV not started
+modules.justwatch.scrape_justwatch('https://www.justwatch.com/us/lists/tv-show-tracking?inner_tab=havent_started')
+# Movies
+modules.justwatch.scrape_justwatch('https://www.justwatch.com/us/lists/my-lists?content_type=movie&sort_by=popular_30_day')
 
 # Read all genres from scraped data and store in .bin file for later
 logging.info('Reading genres from scraped data')
