@@ -7,13 +7,13 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 import logging
 import modules.auto_sign_in
+import modules.data_bin_convert
 import modules.html
 import modules.ld_json
 import modules.runtime
 import os
 import random
 import time
-
 
 def get_titles_count(driver):
     try:
@@ -81,12 +81,13 @@ def balance_movie_and_tv_lists(movie_list, tv_list, good_ratio=0.8):
     return bigger_list + smaller_list
 
 
-def scrape_justwatch(media):
+def scrape_justwatch(url):
     # Scrape your data from JustWatch.
-    # media should be either 'tv' or 'movies'
-    import modules.auto_sign_in  # TODO this probably doesn't belong here
-
-    media = media.lower()
+    if '/tv-show/' in url or 'content_type=show' in url or '/tv-show-tracking' in url:
+        media = 'tv'
+    else:
+        media = 'movies'
+    
     logging.debug(f'{media=}')
     load_dotenv(dotenv_path='./.env')
 
@@ -105,10 +106,7 @@ def scrape_justwatch(media):
     driver = webdriver.Chrome(options=options)
     driver.set_page_load_timeout(60)
 
-    if media == 'movies':
-        driver.get('https://www.justwatch.com/us/lists/my-lists?content_type=movie&sort_by=popular_30_day')
-    else:
-        driver.get('https://www.justwatch.com/us/lists/tv-show-tracking?inner_tab=continue_watching')
+    driver.get(url)
 
     driver.maximize_window()
     # driver.implicitly_driwait(1.0)
@@ -125,29 +123,12 @@ def scrape_justwatch(media):
     logging.debug('Scrolling to bottom of page')
     scroll_down(driver)
 
-    # # Get name, episode number/title, left in season, main show link from main watchlist
-    # logging.debug('Getting all show cards from main page')
-    # if media == 'movies':
-    #     show_cards = driver.find_elements(By.XPATH, '//div[@class="title-card-basic title-card-basic"]')
-    # else:
-    #     show_cards = driver.find_elements(By.XPATH, '//div[@class="title-card-basic title-card-show-episode"]')
-
     show_card_data = get_show_card_data(driver, media)
 
     if dev_mode:
         dev_items = 5
         logging.debug('Dev mode: only looking at first dev_items items in list')
         show_card_data = show_card_data[0:dev_items]
-
-    # logging.debug('Getting all show links from each card')
-    # # show_card_all_links = []
-    # # show_card_full_text = []
-    # show_card_data = []
-    # for i in range(len(show_cards)):
-    #     show_card_main_link = show_cards[i].find_elements(By.TAG_NAME, 'a')[0].get_dom_attribute('href')
-    #     show_card_full_text = show_cards[i].text
-    #     show_card_data.append([show_card_main_link, show_card_full_text])
-    
 
     '''
     show_card_data = [['/us/movie/oppenheimer', "Oppenheimer (2023)\nThe story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II.\n8.4\n29 offers available"], ['/us/movie/killers-of-the-flower-moon', 'Killers of the Flower Moon (2023)\nWhen oil is discovered in 1920s Oklahoma under Osage Nation land, the Osage people are murdered one by one—until the FBI steps in to unravel the mystery.\n7.7\nWatch now'], ['/us/movie/everything-everywhere-all-at-once', "Everything Everywhere All at Once (2022)\nAn aging Chinese immigrant is swept up in an insane adventure, where she alone can save what's important to her by connecting with the lives she could have led in other universes.\n7.8\nWatch now"], ['/us/movie/asteroid-city', 'Asteroid City (2023)\nIn an American desert town circa 1955, the itinerary of a Junior Stargazer/Space Cadet convention is spectacularly disrupted by world-changing events.\n6.5\nWatch now'], ['/us/movie/dumb-money', "Dumb Money (2023)\nDavid vs. Goliath tale about everyday people who flipped the script on Wall Street and got rich by turning GameStop (the video game store) into the world's hottest company.\n6.9\nWatch now"]]
@@ -275,12 +256,6 @@ def scrape_justwatch(media):
     show_db += activity_list
 
     # Save my work
-    import modules.data_bin_convert  # TODO this probably doesn't belong here
-    # if media == 'movies':
-    #     modules.data_bin_convert.data_to_bin(activity_list, './my_data/saved_data_movies.bin')
-    # else:
-    #     modules.data_bin_convert.data_to_bin(activity_list, './my_data/saved_data_tv.bin')
-    # data_list_everything = modules.data_bin_convert.bin_to_data()
     modules.data_bin_convert.data_to_bin(show_db, './my_data/saved_data.bin')
 
 

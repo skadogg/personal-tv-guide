@@ -55,7 +55,10 @@ def percent_complete(minutes_left, minutes_total):
     #     minutes_left = modules.runtime.time_left_in_tv_series(season_data,50,3,21)
     #     minutes_total = modules.runtime.time_left_in_tv_series(season_data,50)
     #     pct_done = modules.runtime.percent_complete(minutes_left, minutes_total)
-    return (minutes_total - minutes_left) / minutes_total
+    try:
+        return (minutes_total - minutes_left) / minutes_total
+    except:
+        return 0
 
 
 def time_left_in_tv_series_report(show_list):
@@ -63,7 +66,13 @@ def time_left_in_tv_series_report(show_list):
     for i in range(len(show_list)):
         if isinstance(show_list[i], Tvshow):
             show_title = modules.shield.generate_shield_text(show_list[i])
-            current_season, current_episode = show_list[i].next_episode.replace('S', '').replace('E', '').split(' ')
+            
+            # print(show_list[i].next_episode)
+            try:
+                current_season, current_episode = show_list[i].next_episode.replace('S', '').replace('E', '').split(' ')
+            except:
+                current_season, current_episode = (1, 1)
+            
             season_data = show_list[i].season_data
             runtime = show_list[i].duration
             # episodes_left
