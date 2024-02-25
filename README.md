@@ -58,6 +58,7 @@ Additional contributors include:
 - [Vivek Panchal](https://github.com/TechWithVP)
 - [Rudransh Bhardwaj](https://github.com/rudransh61)
 - [Leonardo Bringel](https://github.com/LeonardoBringel)
+- [Ash12](https://github.com/Ashrick12)
 
 Thank you to all the contributors for their hard work and dedication to the project!
 
