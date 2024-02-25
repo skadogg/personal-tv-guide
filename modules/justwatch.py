@@ -97,10 +97,6 @@ def scrape_justwatch(url):
     driver = open_site_conn()    
     driver.get(url)
 
-    # Sign in to JustWatch using stored credentials (my_data/secret_login.bin)
-    logging.debug('Signing in')
-    modules.auto_sign_in.sign_in(driver)
-
     # Scroll to the end of the page
     logging.debug('Scrolling to bottom of page')
     scroll_down(driver)
@@ -289,10 +285,12 @@ def open_site_conn():
 
     # Run the browser in the background without opening a new window
     options.add_argument("--headless=new")
+    
     # this will disable image loading
     options.add_argument('--blink-settings=imagesEnabled=false')
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
     options.add_argument('--no-sandbox')
+    
     # Open main window
     logging.debug('Opening main window (headless by default)')
     driver = webdriver.Chrome(options=options)
@@ -306,6 +304,10 @@ def open_site_conn():
 
     # Handle privacy modal
     modules.auto_sign_in.click_through_privacy_model(driver)
+    
+    # Sign in to JustWatch using stored credentials (my_data/secret_login.bin)
+    logging.debug('Signing in')
+    modules.auto_sign_in.sign_in(driver)
     
     return driver
 
@@ -364,5 +366,38 @@ def split_show_card_data(show_card_data):
             shows_not_in_db.append(show_card_data[i])
     return shows_already_in_db, shows_not_in_db
 
-# def remove_already_seen(url):
-#     driver = open_site_conn()
+def remove_already_seen(url):
+    driver = open_site_conn()
+    
+    # Read show_card_data from site
+    driver.get(url)
+    show_card_data = get_show_card_data(driver, 'movies')
+    
+    # Look in main db for matches and remove from db
+    logging.info("Removing already seen from db")
+    show_db = modules.data_bin_convert.bin_to_data('./my_data/saved_data.bin')
+    for i in range(len(show_card_data)):
+        slug = show_card_data[i][0]
+        # print(slug)
+        for j in range(len(show_db)):
+            if slug in show_db[j].source_url:
+                logging.info(f"Removing: {show_db[j].activity_name=}")
+                # print(show_db[j].activity_name)
+                show_db.pop(j)
+                j -= 1
+                break
+    modules.data_bin_convert.data_to_bin(show_db, './my_data/saved_data.bin')
+
+
+def remove_manually_by_url(url):    
+    # Look in main db for matches and remove from db
+    logging.info(f"Removing from db: {url=}")
+    show_db = modules.data_bin_convert.bin_to_data('./my_data/saved_data.bin')
+    for j in range(len(show_db)):
+        if url == show_db[j].source_url:
+            logging.info(f"Removing: {show_db[j].activity_name=}")
+            # print(show_db[j].activity_name)
+            show_db.pop(j)
+            j -= 1
+            break
+    modules.data_bin_convert.data_to_bin(show_db, './my_data/saved_data.bin')

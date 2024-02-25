@@ -28,15 +28,18 @@ else:
 # Scrape your data from JustWatch and store in .bin files for later
 logging.info('Scraping data from JustWatch')
 
+# Manually remove shows
+# modules.justwatch.remove_manually_by_url('https://www.justwatch.com/us/tv-show/great-news')
+
+# Clean up shows already seen
+modules.justwatch.remove_already_seen('https://www.justwatch.com/us/lists/my-lists?inner_tab=seenlist')
+
 # TV in progress
 modules.justwatch.scrape_justwatch('https://www.justwatch.com/us/lists/tv-show-tracking?inner_tab=continue_watching')
 # TV not started
 modules.justwatch.scrape_justwatch('https://www.justwatch.com/us/lists/tv-show-tracking?inner_tab=havent_started')
 # Movies
 modules.justwatch.scrape_justwatch('https://www.justwatch.com/us/lists/my-lists?content_type=movie&sort_by=popular_30_day')
-
-# # Already seen
-# modules.justwatch.remove_already_seen('https://www.justwatch.com/us/lists/my-lists?inner_tab=seenlist')
 
 # Read all genres from scraped data and store in .bin file for later
 logging.info('Reading genres from scraped data')
