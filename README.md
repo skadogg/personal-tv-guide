@@ -71,7 +71,7 @@ Q: What is **Personal TV Guide**?
 
 A: **Personal TV Guide** creates a custom TV guide using the shows and movies from your JustWatch watchlist. It also provides an easy way to see how much time you have left in a show.
 
-Q: How do I install Project Title?
+Q: How do I install **Personal TV Guide**?
 
 A: Follow the installation steps in the README file.
 
@@ -93,14 +93,14 @@ A: Update the .env file you created in Step #5 during Installation. Here's what 
 | *genre*_KEYWORDS | N | If creating custom rows in the table, enter a comma-separated list of strings to match. This is currently case-sensitive. |
 | DEV_MODE | N | Set to False for normal use. When developing and testing, set to True to limit the number of titles read from the source. |
 
-Q: How do I use Project Title?
+Q: How do I use **Personal TV Guide**?
 
 A: Follow the usage steps in the README file.
 
-Q: How do I contribute to Project Title?
+Q: How do I contribute to **Personal TV Guide**?
 
 A: Follow the contributing guidelines in the README file.
 
-Q: What license is Project Title released under?
+Q: What license is **Personal TV Guide** released under?
 
 A: **Personal TV Guide** is released under the GPL-3.0 license. See the [LICENSE](./LICENSE) file for details.
