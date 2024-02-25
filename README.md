@@ -1,81 +1,106 @@
 # Personal TV Guide
-![logo](images/logo_text.png)
+![Personal TV Guide logo](./images/logo_text.png)
 
+Scrape your JustWatch watchlist data and turn it into HTML to serve as your own **Personal TV Guide**! 
 
-## About
-Scrape your watchlist data from JustWatch and turn it into HTML to serve as your own Personal TV Guide!
+# Introduction
+Remember the weekly [TV guide](./images/1987-TV-Featured1.jpg) that came with the newspaper? It was the only useful thing in there - aside from the [comic section](./images/tv1.jpg). **Personal TV Guide** creates a custom TV guide using the shows and movies from your watchlist. It also provides an easy way to see how much time you have left in a show.
+
+# Installation
+
+To install **Personal TV Guide**, follow these steps:
+
+1. Clone the repository: `git clone https://github.com/skadogg/personal-tv-guide.git`
+2. Navigate to the project directory: `cd personal-tv-guide`
+3. Install dependencies: `pip install -r requirements.txt`
+4. Create a *my_data* folder for your private data: `mkdir my_data`
+5. Copy the sample .env file to your main folder: `cp ./sample_files/.env-sample ./.env`
+6. Start the project: `python run.py`
+
+# Usage
+
+To use **Personal TV Guide**, follow these steps:
+
+1. Open the project in your favorite code editor.
+2. Modify the .env file to fit your needs.
+3. Start the project: `python run.py`.
+5. Use the project as desired.
+6. Open `./my_data/out.html` to view your **Personal TV Guide**.
 
 ![screenshot](images/screenshot2024-01-29.png)
 
+# Contributing
 
-- [About](#about)
-- [Background](#background)
-- [How to get it working](#how-to-get-it-working)
-  - [Install the required Python modules](#install-the-required-python-modules)
-  - [Make *my\_data* folder](#make-my_data-folder)
-  - [Make *.env* file](#make-env-file)
-  - [Run it](#run-it)
-    - [A note on credentials](#a-note-on-credentials)
-- [Acknowledgements](#acknowledgements)
-  - [Theme](#theme)
-  - [Badges](#badges)
-  - [gitmoji](#gitmoji)
+If you'd like to contribute to **Personal TV Guide**, here are some guidelines:
 
+1. Fork the repository.
+2. Create a new branch for your changes.
+3. Make your changes.
+4. Write tests to cover your changes.
+5. Run the tests to ensure they pass.
+6. Commit your changes.
+7. Push your changes to your forked repository.
+8. Submit a pull request.
 
-## Background
-Remember the weekly TV guide that came with the newspaper? It was the only useful thing in there - aside from the comic section.
+# License
 
+**Personal TV Guide** is released under the GPL-3.0 license. See the [LICENSE](./LICENSE) file for details.
 
-![1987](images/1987-TV-Featured1.jpg)
+# Authors and Acknowledgment
 
+**Personal TV Guide** was created by [Wes Anderson](https://github.com/skadogg).
 
-## How to get it working
+Additional contributors include:
 
-### Install the required Python modules
-```
-pip install -r requirements.txt
-```
+- [Ajay Jain](https://github.com/code-master-ajay)
+- [Abhay](https://github.com/perriDplatypus)
+- [Khalil Habib Shariff](https://github.com/Khaleelhabeeb)
+- [Vivek Panchal](https://github.com/TechWithVP)
+- [Rudransh Bhardwaj](https://github.com/rudransh61)
+- [Leonardo Bringel](https://github.com/LeonardoBringel)
 
-### Make *my_data* folder
-Create this folder. This is where your private info goes
+Thank you to all the contributors for their hard work and dedication to the project!
 
-### Make *.env* file
+<!-- # Code of Conduct
 
-To get started, make a copy of */sample_files/.env-sample* and name it */.env*. This is where to set up your variables before continuing with the other steps.
+Please note that this project is released with a Contributor Code of Conduct. By participating in this project, you agree to abide by its terms. See the **[CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)** file for more information. -->
+
+# FAQ
+
+Q: What is **Personal TV Guide**?
+
+A: **Personal TV Guide** creates a custom TV guide using the shows and movies from your JustWatch watchlist. It also provides an easy way to see how much time you have left in a show.
+
+Q: How do I install Project Title?
+
+A: Follow the installation steps in the README file.
+
+Q: How does **Personal TV Guide** read my JustWatch watchlists?
+
+A: The first time you run the program, you will be prompted to enter your JustWatch credentials. These get stored in a local file in your private *my_data* folder.
+
+Q: How do I customize my **Personal TV Guide**?
+
+A: Update the .env file you created in Step #5 during Installation. Here's what each value does:
 
 | Variable | Required? | Description |
 | --- | :---: | --- |
-| WHEN_TO_START | y | The first hour in your guide's timeline |
-| HOURS_TO_PRINT | y | How many hours worth of data to include in timeline |
-| STYLESHEET_PATH | y | Where to find the CSS stylesheet |
-| OUTFILE | y | The name of the HTML file you want to generate |
-| USE_KEYWORD_LIST | n | set to True to enable keyword lists. |
-| *genre*_KEYWORDS | n | If creating custom rows in the table, enter a comma-separated list of strings to match. This is currently case-sensitive. |
-| DEV_MODE | n | Set to False for normal use. When developing and testing, set to True to limit the number of titles read from the source. |
+| WHEN_TO_START | Y | The first hour in your guide's timeline |
+| HOURS_TO_PRINT | Y | How many hours worth of data to include in timeline |
+| STYLESHEET_PATH | Y | Where to find the CSS stylesheet |
+| OUTFILE | Y | The name of the HTML file you want to generate |
+| USE_KEYWORD_LIST | N | set to True to enable keyword lists. |
+| *genre*_KEYWORDS | N | If creating custom rows in the table, enter a comma-separated list of strings to match. This is currently case-sensitive. |
+| DEV_MODE | N | Set to False for normal use. When developing and testing, set to True to limit the number of titles read from the source. |
 
+Q: How do I use Project Title?
 
-### Run it
-Each of these will pause and wait for you to sign in, as mentioned above. Once they finish, they will write the data to .bin files. These will be used in the next step.
+A: Follow the usage steps in the README file.
 
-#### A note on credentials
-The first time you run the program, you will be prompted to enter your JustWatch credentials. These get stored in a local file in your *my_data* folder that will be ignored in any new commits you might make to the repository.
+Q: How do I contribute to Project Title?
 
-```
-python run.py
-```
+A: Follow the contributing guidelines in the README file.
 
-If all goes well, you'll have an output file (probably in *my_data*) that will show your Personal TV Guide!
+Q: What license is Project Title released under?
 
-
-## Acknowledgements
-
-### Theme
-The default stylesheet is using the [Nord theme](https://www.nordtheme.com/).
-
-### Badges
-Custom activity badges are inspired by [Shields.io](https://shields.io/), which I probably saw originally on [awesome-badges](https://github.com/badges/awesome-badges).
-
-### gitmoji
-🎨 We use [gitmoji](https://gitmoji.dev/) to enhance our commit statements. 🚀
-
-[![gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square)](https://gitmoji.dev/)
+A: **Personal TV Guide** is released under the GPL-3.0 license. See the [LICENSE](./LICENSE) file for details.
