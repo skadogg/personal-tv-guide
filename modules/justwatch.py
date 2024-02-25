@@ -93,27 +93,9 @@ def scrape_justwatch(url):
 
     dev_mode = os.environ.get('DEV_MODE').lower() == 'true'
 
-    options = webdriver.ChromeOptions()
-
-    # Run the browser in the background without opening a new window
-    options.add_argument("--headless=new")
-    # this will disable image loading
-    options.add_argument('--blink-settings=imagesEnabled=false')
-    options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    options.add_argument('--no-sandbox')
-    # Open main window
-    logging.debug('Opening main window (headless by default)')
-    driver = webdriver.Chrome(options=options)
-    driver.set_page_load_timeout(60)
-
+    # Create webdriver instance to connect to site
+    driver = open_site_conn()    
     driver.get(url)
-
-    driver.maximize_window()
-    # driver.implicitly_driwait(1.0)
-    # main_window_handle = driver.window_handles[0]
-
-    # Handle privacy modal
-    modules.auto_sign_in.click_through_privacy_model(driver)
 
     # Sign in to JustWatch using stored credentials (my_data/secret_login.bin)
     logging.debug('Signing in')
@@ -299,7 +281,10 @@ def reset_site_conn(driver):
     driver.quit()
     
     # Open new window
-    
+    return open_site_conn()
+
+
+def open_site_conn():
     options = webdriver.ChromeOptions()
 
     # Run the browser in the background without opening a new window
@@ -316,6 +301,8 @@ def reset_site_conn(driver):
     driver.get('https://www.justwatch.com/')
     
     driver.maximize_window()
+    # # driver.implicitly_driwait(1.0)
+    # # main_window_handle = driver.window_handles[0]
 
     # Handle privacy modal
     modules.auto_sign_in.click_through_privacy_model(driver)
@@ -376,3 +363,6 @@ def split_show_card_data(show_card_data):
         else:
             shows_not_in_db.append(show_card_data[i])
     return shows_already_in_db, shows_not_in_db
+
+# def remove_already_seen(url):
+#     driver = open_site_conn()

@@ -25,8 +25,7 @@ else:
     logging.basicConfig(filename='./my_data/run.log', encoding='utf-8', level=logging.INFO, filemode='w',
                         format="%(asctime)s %(levelname)s %(message)s")
 
-# Scrape your data from JustWatch and stor in .bin files for later
-# These can take a while, so it can sometimes be useful to store your data, especially while developing
+# Scrape your data from JustWatch and store in .bin files for later
 logging.info('Scraping data from JustWatch')
 
 # TV in progress
@@ -35,6 +34,9 @@ modules.justwatch.scrape_justwatch('https://www.justwatch.com/us/lists/tv-show-t
 modules.justwatch.scrape_justwatch('https://www.justwatch.com/us/lists/tv-show-tracking?inner_tab=havent_started')
 # Movies
 modules.justwatch.scrape_justwatch('https://www.justwatch.com/us/lists/my-lists?content_type=movie&sort_by=popular_30_day')
+
+# # Already seen
+# modules.justwatch.remove_already_seen('https://www.justwatch.com/us/lists/my-lists?inner_tab=seenlist')
 
 # Read all genres from scraped data and store in .bin file for later
 logging.info('Reading genres from scraped data')
