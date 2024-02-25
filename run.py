@@ -25,9 +25,14 @@ else:
     logging.basicConfig(filename='./my_data/run.log', encoding='utf-8', level=logging.INFO, filemode='w',
                         format="%(asctime)s %(levelname)s %(message)s")
 
-# Scrape your data from JustWatch and stor in .bin files for later
-# These can take a while, so it can sometimes be useful to store your data, especially while developing
+# Scrape your data from JustWatch and store in .bin files for later
 logging.info('Scraping data from JustWatch')
+
+# Manually remove shows
+# modules.justwatch.remove_manually_by_url('https://www.justwatch.com/us/tv-show/great-news')
+
+# Clean up shows already seen
+modules.justwatch.remove_already_seen('https://www.justwatch.com/us/lists/my-lists?inner_tab=seenlist')
 
 # TV in progress
 modules.justwatch.scrape_justwatch('https://www.justwatch.com/us/lists/tv-show-tracking?inner_tab=continue_watching')
