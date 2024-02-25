@@ -30,6 +30,7 @@ logging.info('Scraping data from JustWatch')
 
 # Manually remove shows
 # modules.justwatch.remove_manually_by_url('https://www.justwatch.com/us/tv-show/great-news')
+# modules.justwatch.remove_manually_by_percentage(1)
 
 # Clean up shows already seen
 modules.justwatch.remove_already_seen('https://www.justwatch.com/us/lists/my-lists?inner_tab=seenlist')

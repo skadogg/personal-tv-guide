@@ -401,3 +401,15 @@ def remove_manually_by_url(url):
             j -= 1
             break
     modules.data_bin_convert.data_to_bin(show_db, './my_data/saved_data.bin')
+
+
+def remove_manually_by_percentage(pct):    
+    # Remove oldest pct% of shows from db
+    logging.info(f"Removing from db: {pct=}")
+    show_db = modules.data_bin_convert.bin_to_data('./my_data/saved_data.bin')
+    
+    num_shows = len(show_db)
+    num_to_remove = int(num_shows * (pct / 100))
+    show_db = show_db[num_to_remove:num_shows]
+    
+    modules.data_bin_convert.data_to_bin(show_db, './my_data/saved_data.bin')
