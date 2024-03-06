@@ -303,7 +303,7 @@ def open_site_conn():
     # # main_window_handle = driver.window_handles[0]
 
     # Handle privacy modal
-    modules.auto_sign_in.click_through_privacy_model(driver)
+    # modules.auto_sign_in.click_through_privacy_modal(driver)
     
     # Sign in to JustWatch using stored credentials (my_data/secret_login.bin)
     logging.debug('Signing in')
