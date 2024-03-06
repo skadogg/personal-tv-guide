@@ -55,7 +55,7 @@ def sign_in(driver):
         time.sleep(sleep_at_the_end)
 
 
-def click_through_privacy_model(driver):
+def click_through_privacy_modal(driver):
     # input('Please acknowledge the privacy settings, and press Enter to continue.')
 
     # Wait before trying to click
