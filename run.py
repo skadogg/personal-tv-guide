@@ -134,14 +134,22 @@ html_handle.write(modules.html.generate_featured_film_table(modules.justwatch.ge
 # Write table for time left in TV series
 logging.info('Writing time left in TV series table')
 time_info = modules.runtime.time_left_in_tv_series_report(data_list_everything)
-html_handle.write('<p>\n<table>\n<th>Title</th><th>Minutes Left</th>\n')
+html_handle.write('<p>\n<table>\n<th>Title</th><th>Minutes Left</th><th>Minutes Per Episode</th><th>Next Episode</th>\n')
+
 for i in range(len(time_info)):
-    # html_handle.write('<tr><td>' + time_info[i][0] + '</td><td>' + str(round(time_info[i][3] * 100,
-    # 0)) + '%</td></tr>') #percent done
-    html_handle.write('<tr><td>' + time_info[i][0] + '</td><td>' + str(time_info[i][1]) + '</td></tr>')  # minutes left
+    time_info_title = time_info[i][0]
+    time_info_min_left = str(time_info[i][1])
+    time_info_ep_runtime = str(time_info[i][4])
+    
+    time_info_next_ep = time_info[i][5]
+    if time_info_next_ep != 'S1 E1':
+        time_info_next_ep += ' ▶️'
+    
+    html_handle.write('<tr><td>' + time_info_title + '</td><td>' + time_info_min_left + '</td><td>' + time_info_ep_runtime + '</td><td>' + time_info_next_ep + '</td></tr>')  # minutes left
+
 html_handle.write('</table>\n</p>\n')
 
-# # # Movies sorted by runtime
+# Movies sorted by runtime
 logging.info('Writing Movies sorted by runtime table')
 html_handle.write(modules.justwatch.generate_movies_by_runtime_table(data_list_everything))
 
