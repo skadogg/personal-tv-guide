@@ -1,5 +1,16 @@
+"""Functions related to custom shields
+"""
+
 def generate_shield_text(input_activity):
-    # Given a show list, generates text with a link to the show and its rating
+    """Given a show list, generates text with a link to the show and its rating
+
+    Args:
+        input_activity (Activity): A type of Activity, usually a TV show or movie
+
+    Returns:
+        str: HTML string to display a custom shield/badge
+    """
+
     rating = input_activity.age_rating if input_activity.age_rating else '&nbsp;'
     if rating in ['TV-Y7', 'TV-G', 'TV-PG', 'PG', 'G']:
         rating_color = 'badge_green'

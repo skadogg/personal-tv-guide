@@ -57,7 +57,7 @@ modules.genre.get_genres_from_scraped_lists()
 # Restore scraped data from stored .bin files and combine into a full list of all shows
 # data_list_movies = modules.data_bin_convert.bin_to_data('./my_data/saved_data_movies.bin')
 # data_list_tv = modules.data_bin_convert.bin_to_data('./my_data/saved_data_tv.bin')
-# balance_factor = 4  # TODO base this on how many hours in final report (with some comments)
+# balance_factor = 4  # Issue #116
 # logging.info('Combining movie and tv data into balanced list')
 # logging.info(f'{balance_factor=}')
 # data_list_everything = modules.justwatch.balance_movie_and_tv_lists(data_list_movies,
