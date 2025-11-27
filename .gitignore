@@ -1,14 +1,12 @@
-sandbox
-.vscode
-__pycache__
-secret*
-/*.bin
-out.html
-.env
-chromedriver/chromedriver.exe
-my_env/
-/.env
-my_data/
-/.venv/
-.idea
+# .gitignore
+
 /old_static_version_4/
+
+# Python virtual environment
+venv/
+
+# Local credentials
+.env
+
+# Local SQLite Database
+db.sqlite3
