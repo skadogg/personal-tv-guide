@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+
 @dataclass
 class Activity():
     # def __init__(self, activity_type, activity_name, year, age_rating, duration, source_url):
@@ -17,7 +18,6 @@ class Activity():
     source_url: str
     categories: list
     description: str
-    
 
     @staticmethod
     def runtime_to_minutes(runtime_str, round_up=False):
@@ -26,33 +26,37 @@ class Activity():
         # If round_up, rounds up to the next 15-minute increment
         # logging.debug('Converting runtime:')
         # logging.debug(f'{runtime_str=}')
-        if 'h' in runtime_str:
-            # split into hours/minutes
-            runtime_split = runtime_str.split("h")
-            runtime_minutes = (int(runtime_split[0]) * 60) + int(runtime_split[1].split("min")[0])
-        else:
-            runtime_minutes = int(runtime_str.split("min")[0])
-        # logging.debug(f'{str(runtime_minutes)=}')
+        if runtime_str:
+            if 'h' in runtime_str:
+                # split into hours/minutes
+                runtime_split = runtime_str.split("h")
+                runtime_minutes = (int(runtime_split[0]) * 60) + int(runtime_split[1].split("min")[0])
+            else:
+                runtime_minutes = int(runtime_str.split("min")[0])
+            # logging.debug(f'{str(runtime_minutes)=}')
 
-        if round_up:
-            # logging.debug('Rounding:')
-            # runtime_rounded_up = runtime_minutes + 15 - (runtime_minutes % 15)
-            # logging.debug(f'{str(runtime_rounded_up)=}')
-            # return runtime_rounded_up
-            return Activity.round_to_next_quarter_hr(runtime_minutes)
+            if round_up:
+                # logging.debug('Rounding:')
+                # runtime_rounded_up = runtime_minutes + 15 - (runtime_minutes % 15)
+                # logging.debug(f'{str(runtime_rounded_up)=}')
+                # return runtime_rounded_up
+                return Activity.round_to_next_quarter_hr(runtime_minutes)
+            else:
+                return runtime_minutes
         else:
-            return runtime_minutes
+            # Checking if runtime_str is not None, If None returning 0
+            return 0
 
     @staticmethod
     def minutes_to_hour_and_minute(runtime_minutes):
         hours = runtime_minutes // 60
         minutes = runtime_minutes % 60
         return [hours, minutes]
-    
+
     @staticmethod
     def round_to_next_quarter_hr(runtime_minutes):
         return runtime_minutes + 15 - (runtime_minutes % 15)
-    
+
     def get_category_str(self):
         separator = ', '
         return separator.join(self.categories)
@@ -83,7 +87,6 @@ class Tvshow(Activity):
     next_episode: str
     left_in_season: int
     season_data: list
-    
 
 # @dataclass
 # class Boardgame(Activity):
