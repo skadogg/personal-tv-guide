@@ -11,3 +11,4 @@ my_env/
 my_data/
 /.venv/
 .idea
+/old_static_version_4/
